@@ -1,0 +1,7 @@
+{
+  "cron_job_id": 1,
+  "cron_expression": "*/15 * * * *",
+  "edge_function_name": "check-reminders",
+  "cron_job_name": "check-reminders_invoke",
+  "raw_sql": "\n            CREATE OR REPLACE PROCEDURE check_reminders_addff7b2()\n            LANGUAGE plpgsql\n            AS $$\n            BEGIN\n            PERFORM net.http_post(\n            url:='https://evtvbxemblcsqkbptujd.supabase.co/functions/v1/check-reminders',\n            headers:=jsonb_build_object('Content-Type', 'application/json'),\n            body:='{\"edge_function_name\":\"check-reminders\"}',\n            timeout_milliseconds:=10000\n            );\n            COMMIT;\n            END;\n            $$;\n\n            SELECT cron.schedule('check-reminders_invoke', '*/15 * * * *', 'CALL check_reminders_addff7b2()');\n            "
+}
