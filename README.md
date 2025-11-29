@@ -56,8 +56,8 @@ A modern, lightweight web-based Kanban board management application built with R
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd kanban/xiandan-kanban/xiandan-kanban-app
+git clone https://github.com/zhouhao/kanban-supabase.git
+cd kanban-supabase/xiandan-kanban-app
 ```
 
 ### 2. Install Dependencies
