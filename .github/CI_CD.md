@@ -26,22 +26,24 @@ The project uses **GitHub Actions** for automated testing, linting, type checkin
 
 **Environment**:
 - OS: Ubuntu Latest
-- Node.js: 20.x
+- Node.js: 22.x
 - Package Manager: pnpm 10
 
 **Steps**:
 
 1. **Checkout code** - Clones the repository
-2. **Setup pnpm** - Installs pnpm package manager
-3. **Setup Node.js** - Configures Node.js with pnpm caching
-4. **Install dependencies** - Runs `pnpm install --frozen-lockfile`
-5. **Type checking** - Runs `tsc --noEmit` to verify TypeScript
-6. **Linting** - Runs `pnpm lint` to check code quality
-7. **Unit tests** - Runs `pnpm test:run` to execute all tests
-8. **Coverage** - Generates coverage report with `pnpm test:coverage`
-9. **Upload to Codecov** - Uploads coverage data (if token configured)
-10. **Archive coverage** - Saves coverage report as artifact
-11. **PR comment** - Posts test results as comment on pull requests
+2. **Setup pnpm** - Installs pnpm package manager (v10)
+3. **Get pnpm store** - Determines pnpm cache directory path
+4. **Setup Node.js** - Configures Node.js 22.x runtime
+5. **Setup pnpm cache** - Configures caching for pnpm store
+6. **Install dependencies** - Runs `pnpm install --frozen-lockfile`
+7. **Type checking** - Runs `tsc --noEmit` to verify TypeScript
+8. **Linting** - Runs `pnpm lint` to check code quality
+9. **Unit tests** - Runs `pnpm test:run` to execute all tests
+10. **Coverage** - Generates coverage report with `pnpm test:coverage`
+11. **Upload to Codecov** - Uploads coverage data (if token configured)
+12. **Archive coverage** - Saves coverage report as artifact
+13. **PR comment** - Posts test results as comment on pull requests
 
 ## Status Checks
 
@@ -170,19 +172,32 @@ After setup, add to README:
 
 ### Caching
 
-The workflow uses pnpm caching to speed up dependency installation:
+The workflow uses pnpm store caching to speed up dependency installation:
 
 ```yaml
-- uses: actions/setup-node@v4
+- name: Get pnpm store directory
+  run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+- name: Setup pnpm cache
+  uses: actions/cache@v4
   with:
-    cache: 'pnpm'
-    cache-dependency-path: xiandan-kanban-app/pnpm-lock.yaml
+    path: ${{ env.STORE_PATH }}
+    key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+    restore-keys: |
+      ${{ runner.os }}-pnpm-store-
 ```
 
+**How it works**:
+- Dynamically detects the pnpm store directory
+- Caches the entire pnpm store (not just node_modules)
+- Uses lockfile hash as cache key for invalidation
+- Falls back to partial cache matches via restore-keys
+
 **Benefits**:
-- Faster CI runs
+- Faster CI runs (cached dependencies skip download)
 - Reduced bandwidth usage
 - More consistent builds
+- Works correctly with monorepo structure
 
 ### Path Filtering
 
