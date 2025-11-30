@@ -30,6 +30,15 @@ export const BoardView = () => {
   const board = boards.find(b => b.id === boardId);
   const boardColumns = columns.filter(c => c.board_id === boardId);
 
+  // Update page title when board changes
+  useEffect(() => {
+    if (board) {
+      document.title = `${board.name} - 咸蛋快板`;
+    } else {
+      document.title = '加载中... - 咸蛋快板';
+    }
+  }, [board]);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {

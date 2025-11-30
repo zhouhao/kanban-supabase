@@ -6,6 +6,28 @@ import { Dashboard } from './components/Dashboard/Dashboard';
 import { BoardView } from './components/Board/BoardView';
 import { useAuthStore } from './stores/authStore';
 
+// 404 Page Component
+const NotFoundPage = () => {
+  useEffect(() => {
+    document.title = '404 页面不存在 - 咸蛋快板';
+  }, []);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-secondary-50">
+      <div className="text-center">
+        <h1 className="text-6xl font-bold text-neutral-900 mb-4">404</h1>
+        <p className="text-neutral-600 mb-6">页面不存在</p>
+        <a
+          href="/dashboard"
+          className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg inline-block transition-colors"
+        >
+          返回首页
+        </a>
+      </div>
+    </div>
+  );
+};
+
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuthStore();
@@ -98,25 +120,9 @@ function App() {
 
         {/* Default Route */}
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        
+
         {/* 404 Route */}
-        <Route
-          path="*"
-          element={
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-secondary-50">
-              <div className="text-center">
-                <h1 className="text-6xl font-bold text-neutral-900 mb-4">404</h1>
-                <p className="text-neutral-600 mb-6">页面不存在</p>
-                <a
-                  href="/dashboard"
-                  className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg inline-block transition-colors"
-                >
-                  返回首页
-                </a>
-              </div>
-            </div>
-          }
-        />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

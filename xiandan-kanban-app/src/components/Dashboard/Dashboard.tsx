@@ -21,6 +21,10 @@ export const Dashboard = () => {
   const [activeTab, setActiveTab] = useState<'boards' | 'stats'>('boards');
 
   useEffect(() => {
+    document.title = '仪表板 - 咸蛋快板';
+  }, []);
+
+  useEffect(() => {
     if (user) {
       fetchBoards(user.id);
     }
