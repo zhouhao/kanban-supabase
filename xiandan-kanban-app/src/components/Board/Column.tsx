@@ -34,7 +34,7 @@ export const Column = ({
   });
 
   return (
-    <div className="bg-neutral-50 rounded-xl p-4 min-w-[320px] max-w-[320px] flex flex-col max-h-[calc(100vh-220px)]">
+    <div className="bg-neutral-50 rounded-xl p-4 min-w-[480px] max-w-[480px] flex flex-col max-h-[calc(100vh-220px)]">
       {/* Column Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
