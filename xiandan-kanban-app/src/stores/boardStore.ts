@@ -30,6 +30,7 @@ interface BoardState {
 
   // Board CRUD
   fetchBoards: (userId: string) => Promise<void>;
+  fetchBoard: (boardId: string) => Promise<void>;
   createBoard: (board: Omit<Board, 'id' | 'created_at' | 'updated_at'>) => Promise<Board | null>;
   updateBoard: (id: string, updates: Partial<Board>) => Promise<void>;
   deleteBoard: (id: string) => Promise<void>;
@@ -63,6 +64,31 @@ export const useBoardStore = create<BoardState>((set, get) => ({
 
       if (error) throw error;
       set({ boards: data || [], loading: false });
+    } catch (error: any) {
+      set({ error: error.message, loading: false });
+    }
+  },
+
+  fetchBoard: async (boardId: string) => {
+    set({ loading: true, error: null });
+    try {
+      const { data, error } = await supabase
+        .from('boards')
+        .select('*')
+        .eq('id', boardId)
+        .single();
+
+      if (error) throw error;
+
+      // Add or update the board in the store
+      set(state => {
+        const existingIndex = state.boards.findIndex(b => b.id === boardId);
+        const updatedBoards = existingIndex >= 0
+          ? state.boards.map(b => b.id === boardId ? data : b)
+          : [...state.boards, data];
+
+        return { boards: updatedBoards, loading: false };
+      });
     } catch (error: any) {
       set({ error: error.message, loading: false });
     }
