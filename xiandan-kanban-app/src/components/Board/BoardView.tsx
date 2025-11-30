@@ -25,7 +25,7 @@ export const BoardView = () => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [selectedColumnId, setSelectedColumnId] = useState<string>('');
   const [activeTask, setActiveTask] = useState<Task | null>(null);
-  const [isFetchingBoard, setIsFetchingBoard] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const board = boards.find(b => b.id === boardId);
   const boardColumns = columns.filter(c => c.board_id === boardId);
@@ -40,20 +40,26 @@ export const BoardView = () => {
 
   useEffect(() => {
     if (boardId) {
-      // Fetch the board if it's not already in the store
-      const board = boards.find(b => b.id === boardId);
-      if (!board) {
-        setIsFetchingBoard(true);
-        fetchBoard(boardId).finally(() => setIsFetchingBoard(false));
-      }
+      const loadBoard = async () => {
+        // Fetch the board if it's not already in the store
+        const existingBoard = boards.find(b => b.id === boardId);
+        if (!existingBoard) {
+          await fetchBoard(boardId);
+        }
 
-      // Fetch columns and set up realtime subscription
-      fetchColumns(boardId);
-      subscribeToColumns(boardId);
+        // Fetch columns and set up realtime subscription
+        fetchColumns(boardId);
+        subscribeToColumns(boardId);
 
-      // Fetch all tasks for the board at once
-      fetchAllTasksForBoard(boardId);
-      subscribeToTasks(boardId);
+        // Fetch all tasks for the board at once
+        fetchAllTasksForBoard(boardId);
+        subscribeToTasks(boardId);
+
+        // Mark initial load as complete
+        setIsInitialLoad(false);
+      };
+
+      loadBoard();
     }
     return () => {
       unsubscribeFromColumns();
@@ -143,8 +149,8 @@ export const BoardView = () => {
     setShowTaskDetail(true);
   };
 
-  // Show loading state while fetching board
-  if (!board && isFetchingBoard) {
+  // Show loading state while initial load
+  if (isInitialLoad || (loading && !board)) {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="text-center">
@@ -155,8 +161,8 @@ export const BoardView = () => {
     );
   }
 
-  // Show error state if board not found after fetching
-  if (!board && !isFetchingBoard) {
+  // Show error state if board not found after loading
+  if (!board && !isInitialLoad) {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="text-center">
