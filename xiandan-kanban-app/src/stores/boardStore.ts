@@ -77,9 +77,26 @@ export const useBoardStore = create<BoardState>((set, get) => ({
         .single();
 
       if (error) throw error;
-      set(state => ({ 
+
+      // Auto-create default columns: Todo, In Progress, Done
+      const defaultColumns = [
+        { board_id: data.id, name: 'Todo', color: '#3B82F6', position: 0 },
+        { board_id: data.id, name: 'In Progress', color: '#F59E0B', position: 1 },
+        { board_id: data.id, name: 'Done', color: '#10B981', position: 2 },
+      ];
+
+      const { error: columnsError } = await supabase
+        .from('columns')
+        .insert(defaultColumns);
+
+      // Log error but don't fail - user can add columns manually
+      if (columnsError) {
+        console.error('Failed to create default columns:', columnsError);
+      }
+
+      set(state => ({
         boards: [data, ...state.boards],
-        loading: false 
+        loading: false
       }));
       return data;
     } catch (error: any) {
