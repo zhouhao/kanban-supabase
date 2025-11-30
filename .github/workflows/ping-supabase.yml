@@ -1,0 +1,23 @@
+name: Ping Supabase Tasks API
+
+on:
+  schedule:
+    # Runs every 2 hours at minute 0
+    - cron: '0 */2 * * *'
+  # Allow manual runs
+  workflow_dispatch: {}
+
+jobs:
+  call-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Supabase REST API
+        run: |
+          set -euo pipefail
+          echo "Calling Supabase REST API..."
+          curl -sS -f \
+            -H "apikey: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}" \
+            -H "Accept: application/json" \
+            "https://${{ secrets.SUPABASE_PROJECT_ID }}.supabase.co/rest/v1/tasks?select=*" \
+            
+          echo "Request completed successfully."
