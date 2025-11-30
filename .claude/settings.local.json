@@ -11,7 +11,8 @@
       "Bash(pnpm lint:*)",
       "Bash(pnpm build:*)",
       "Skill(superpowers:brainstorming)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(pnpm test:coverage:*)"
     ],
     "deny": [],
     "ask": []
