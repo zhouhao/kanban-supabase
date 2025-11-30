@@ -34,23 +34,27 @@ export const Column = ({
   });
 
   return (
-    <div className="bg-neutral-50 rounded-xl p-4 min-w-[480px] max-w-[480px] flex flex-col max-h-[calc(100vh-220px)]">
-      {/* Column Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <h3 className="font-semibold text-neutral-900">{column.name}</h3>
-          <span className="bg-neutral-200 text-neutral-600 text-xs font-medium px-2 py-0.5 rounded-full">
-            {columnTasks.length}
-          </span>
-        </div>
-        
-        <div className="relative">
-          <button
-            onClick={() => setShowMenu(!showMenu)}
-            className="p-1 hover:bg-neutral-200 rounded transition-colors"
-          >
-            <MoreVertical className="w-4 h-4 text-neutral-500" />
-          </button>
+    <div className="rounded-xl overflow-hidden min-w-[480px] max-w-[480px] flex flex-col max-h-[calc(100vh-220px)]">
+      {/* Column Header with color */}
+      <div
+        className="px-4 py-3 mb-2"
+        style={{ backgroundColor: column.color }}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <h3 className="font-semibold text-white">{column.name}</h3>
+            <span className="bg-white bg-opacity-30 text-white text-xs font-medium px-2 py-0.5 rounded-full">
+              {columnTasks.length}
+            </span>
+          </div>
+
+          <div className="relative">
+            <button
+              onClick={() => setShowMenu(!showMenu)}
+              className="p-1 hover:bg-white hover:bg-opacity-20 rounded transition-colors"
+            >
+              <MoreVertical className="w-4 h-4 text-white" />
+            </button>
           
           {showMenu && (
             <div className="absolute right-0 top-8 bg-white rounded-lg shadow-large border border-neutral-200 py-1 z-10 min-w-[120px]">
@@ -76,14 +80,16 @@ export const Column = ({
               </button>
             </div>
           )}
+          </div>
         </div>
       </div>
 
       {/* Tasks List */}
-      <div
-        ref={setNodeRef}
-        className="flex-1 overflow-y-auto space-y-3 pr-1 scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-neutral-100"
-      >
+      <div className="bg-neutral-50 flex-1 p-4 pt-2 flex flex-col overflow-hidden">
+        <div
+          ref={setNodeRef}
+          className="flex-1 overflow-y-auto space-y-3 pr-1 scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-neutral-100 min-h-0"
+        >
         <SortableContext items={columnTasks.map(t => t.id)} strategy={verticalListSortingStrategy}>
           {columnTasks.map((task) => (
             <TaskCard
@@ -101,16 +107,17 @@ export const Column = ({
             暂无任务
           </div>
         )}
-      </div>
+        </div>
 
-      {/* Add Task Button */}
-      <button
-        onClick={() => onCreateTask(column.id)}
-        className="mt-4 w-full bg-white hover:bg-neutral-50 border-2 border-dashed border-neutral-300 hover:border-primary-400 text-neutral-600 hover:text-primary-600 font-medium py-2.5 rounded-lg transition-all flex items-center justify-center gap-2"
-      >
-        <Plus className="w-5 h-5" />
-        添加任务
-      </button>
+        {/* Add Task Button */}
+        <button
+          onClick={() => onCreateTask(column.id)}
+          className="mt-4 w-full bg-white hover:bg-neutral-50 border-2 border-dashed border-neutral-300 hover:border-primary-400 text-neutral-600 hover:text-primary-600 font-medium py-2.5 rounded-lg transition-all flex items-center justify-center gap-2"
+        >
+          <Plus className="w-5 h-5" />
+          添加任务
+        </button>
+      </div>
     </div>
   );
 };
