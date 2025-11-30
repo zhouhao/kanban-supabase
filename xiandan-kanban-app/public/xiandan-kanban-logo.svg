@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  xiandan-kanban-app Logo (SVG)
+  - Simple, background-free mark
+  - Colored light blue by default
+  - Scales cleanly at small and large sizes
+-->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 48 48"
+  width="48"
+  height="48"
+  fill="none"
+  stroke="#38bdf8"
+  stroke-width="2.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-labelledby="title desc"
+  role="img"
+>
+  <title id="title">Xiandan Kanban Logo</title>
+  <desc id="desc">Minimal kanban board mark with three columns and cards, no background</desc>
+
+  <!-- Three subtle column rails -->
+  <path d="M10 8 v32" opacity="0.5"/>
+  <path d="M24 8 v32" opacity="0.5"/>
+  <path d="M38 8 v32" opacity="0.5"/>
+
+  <!-- Cards (rounded rectangles) -->
+  <!-- Column 1 -->
+  <rect x="6.5" y="10" width="7" height="6" rx="2"/>
+  <rect x="6.5" y="20" width="7" height="10" rx="2"/>
+
+  <!-- Column 2 -->
+  <rect x="20.5" y="12" width="7" height="8" rx="2"/>
+  <rect x="20.5" y="24" width="7" height="6" rx="2"/>
+
+  <!-- Column 3 -->
+  <rect x="34.5" y="16" width="7" height="6" rx="2"/>
+  <rect x="34.5" y="26" width="7" height="10" rx="2"/>
+
+  <!-- Accent checkmark (subtle hint of progress) -->
+  <path d="M14 38 l4 4 l8 -8"/>
+</svg>
