@@ -1,341 +1,341 @@
-# 咸蛋快板看板应用 - 技术选型与项目架构设计
+# Xiandan Kanban Board Application - Technology Selection and Project Architecture Design
 
-## 1. 应用定位与目标用户群体
+## 1. Application Positioning and Target User Groups
 
-### 1.1 应用定位
-- **产品定位**: 轻量级、现代化的在线看板管理系统
-- **核心理念**: 简洁易用、高效协作、可视化管理
-- **使用场景**: 
-  - 团队任务管理
-  - 个人项目管理  
-  - 敏捷开发流程管理
-  - 业务流程可视化
+### 1.1 Application Positioning
+- **Product Positioning**: Lightweight, modern online kanban management system
+- **Core Concept**: Simple and easy to use, efficient collaboration, visual management
+- **Usage Scenarios**: 
+  - Team task management
+  - Personal project management  
+  - Agile development process management
+  - Business process visualization
 
-### 1.2 目标用户群体
-- **主要用户**: 
-  - 中小型团队的产品经理、开发人员
-  - 自由职业者
-  - 学生团队项目组
-  - 初创公司团队
+### 1.2 Target User Groups
+- **Primary Users**: 
+  - Product managers and developers in small to medium-sized teams
+  - Freelancers
+  - Student project teams
+  - Startup teams
 
-- **用户特征**:
-  - 对效率工具有需求但不需要复杂功能
-  - 重视用户体验和界面美观
-  - 希望快速上手、无学习成本
-  - 多设备同步需求（桌面端、移动端）
+- **User Characteristics**:
+  - Need for efficiency tools but don't require complex features
+  - Value user experience and interface aesthetics
+  - Want to get started quickly with no learning curve
+  - Multi-device synchronization needs (desktop, mobile)
 
-## 2. 前端技术栈
+## 2. Frontend Technology Stack
 
-### 2.1 核心技术栈
-- **框架**: React 18+ (并发特性 + Suspense)
-- **开发语言**: TypeScript 5.0+
-- **构建工具**: Vite 4.0+
-- **UI框架**: Tailwind CSS 3.0+
-- **状态管理**: Zustand + React Query
-- **路由管理**: React Router v6
+### 2.1 Core Technology Stack
+- **Framework**: React 18+ (concurrent features + Suspense)
+- **Development Language**: TypeScript 5.0+
+- **Build Tool**: Vite 4.0+
+- **UI Framework**: Tailwind CSS 3.0+
+- **State Management**: Zustand + React Query
+- **Route Management**: React Router v6
 
-### 2.2 UI组件库
-- **主组件库**: Headless UI (无样式、高度可定制)
-- **图标库**: Heroicons
-- **图表组件**: Recharts (数据可视化)
-- **拖拽功能**: @dnd-kit/core (现代化拖拽库)
+### 2.2 UI Component Libraries
+- **Main Component Library**: Headless UI (unstyled, highly customizable)
+- **Icon Library**: Heroicons
+- **Chart Components**: Recharts (data visualization)
+- **Drag and Drop**: @dnd-kit/core (modern drag and drop library)
 
-### 2.3 开发工具链
-- **代码格式化**: Prettier
-- **代码检查**: ESLint + TypeScript ESLint
-- **Git提交**: Husky + lint-staged + Conventional Commits
-- **测试框架**: Vitest + React Testing Library
-- **组件文档**: Storybook
+### 2.3 Development Tool Chain
+- **Code Formatting**: Prettier
+- **Code Linting**: ESLint + TypeScript ESLint
+- **Git Commits**: Husky + lint-staged + Conventional Commits
+- **Testing Framework**: Vitest + React Testing Library
+- **Component Documentation**: Storybook
 
-### 2.4 前端架构模式
-- **组件模式**: 原子设计（Atoms、Molecules、Organisms、Templates、Pages）
-- **状态管理**: 
-  - 全局状态：Zustand (用户信息、主题设置)
-  - 服务端状态：React Query (数据获取、缓存)
-  - 本地状态：useState + useReducer
-- **数据获取**: React Query + Supabase JS SDK
-- **实时更新**: Supabase Realtime
+### 2.4 Frontend Architecture Pattern
+- **Component Pattern**: Atomic Design (Atoms, Molecules, Organisms, Templates, Pages)
+- **State Management**: 
+  - Global state: Zustand (user info, theme settings)
+  - Server state: React Query (data fetching, caching)
+  - Local state: useState + useReducer
+- **Data Fetching**: React Query + Supabase JS SDK
+- **Real-time Updates**: Supabase Realtime
 
-## 3. 后端技术栈
+## 3. Backend Technology Stack
 
-### 3.1 核心后端服务
-- **BaaS平台**: Supabase (PostgreSQL + 实时API + 认证 + 存储)
-- **边缘函数**: Supabase Edge Functions (Deno运行时)
-- **数据库**: PostgreSQL 15+
-- **缓存**: Supabase内置Redis (会话、速率限制)
+### 3.1 Core Backend Services
+- **BaaS Platform**: Supabase (PostgreSQL + Real-time API + Auth + Storage)
+- **Edge Functions**: Supabase Edge Functions (Deno runtime)
+- **Database**: PostgreSQL 15+
+- **Cache**: Supabase built-in Redis (sessions, rate limiting)
 
-### 3.2 后端架构设计
+### 3.2 Backend Architecture Design
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   前端应用      │────│   Supabase API   │────│   PostgreSQL    │
-│   (React)       │    │   (自动生成API)  │    │   (主数据库)    │
+│   Frontend App  │────│   Supabase API   │────│   PostgreSQL    │
+│   (React)       │    │   (Auto API)     │    │   (Main DB)     │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
          │                       │                       │
          │                       │                       │
          ▼                       ▼                       ▼
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
 │  Edge Functions │    │   Supabase Auth  │    │   Supabase      │
-│  (业务逻辑)      │    │   (认证授权)      │    │   Realtime      │
+│  (Business Logic)│    │   (Auth & AuthZ) │    │   Realtime      │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
 ```
 
-### 3.3 数据库设计
-#### 核心表结构
-- **用户表 (users)**: 用户基本信息、偏好设置
-- **项目表 (projects)**: 看板项目、团队信息
-- **列表表 (boards)**: 看板中的列表/列
-- **任务表 (cards)**: 任务卡片、详细信息
-- **成员表 (project_members)**: 项目成员关系和权限
-- **附件表 (attachments)**: 任务相关文件
-- **活动日志表 (activities)**: 操作历史记录
+### 3.3 Database Design
+#### Core Table Structure
+- **users table**: Basic user information, preference settings
+- **projects table**: Kanban projects, team information
+- **boards table**: Lists/columns in kanban
+- **cards table**: Task cards, detailed information
+- **members table**: Project member relationships and permissions
+- **attachments table**: Task-related files
+- **activity_logs table**: Operation history records
 
-#### 关系设计
-- 用户与项目：多对多关系
-- 项目与看板：一对多关系
-- 看板与列表：一对多关系
-- 列表与卡片：一对多关系
-- 用户与卡片：多对多关系（指派、关注）
+#### Relationship Design
+- Users to Projects: Many-to-many relationship
+- Projects to Boards: One-to-many relationship
+- Boards to Lists: One-to-many relationship
+- Lists to Cards: One-to-many relationship
+- Users to Cards: Many-to-many relationship (assignment, following)
 
-### 3.4 API设计
-- **RESTful API**: Supabase自动生成CRUD接口
-- **实时API**: WebSocket连接支持实时更新
-- **自定义API**: Edge Functions处理复杂业务逻辑
-- **文件API**: Supabase Storage处理文件上传
+### 3.4 API Design
+- **RESTful API**: Supabase auto-generates CRUD interfaces
+- **Real-time API**: WebSocket connections support real-time updates
+- **Custom API**: Edge Functions handle complex business logic
+- **File API**: Supabase Storage handles file uploads
 
-## 4. 邮件服务集成方案
+## 4. Email Service Integration Plan
 
-### 4.1 邮件服务架构
+### 4.1 Email Service Architecture
 ```
-邮件发送流程:
-前端触发 → Edge Function → SMTP服务 → 发送邮件 → 日志记录
+Email sending flow:
+Frontend trigger → Edge Function → SMTP service → Send email → Log record
 ```
 
-### 4.2 Edge Function实现
-- **邮件发送函数**: `send-email`
-- **模板管理**: 动态模板渲染
-- **队列处理**: 邮件发送队列避免阻塞
-- **错误处理**: 失败重试机制
+### 4.2 Edge Function Implementation
+- **Email sending function**: `send-email`
+- **Template management**: Dynamic template rendering
+- **Queue processing**: Email sending queue to avoid blocking
+- **Error handling**: Failed retry mechanism
 
-### 4.3 SMTP服务配置
-- **服务提供商**: Resend (开发者友好) / SendGrid / AWS SES
-- **发送类型**:
-  - 事务性邮件：任务指派通知、评论提醒
-  - 营销邮件：产品更新、功能介绍
-- **邮件模板**: 
-  - HTML模板 + 纯文本版本
-  - 多语言支持
-  - 响应式设计
+### 4.3 SMTP Service Configuration
+- **Service Provider**: Resend (developer-friendly) / SendGrid / AWS SES
+- **Sending Types**:
+  - Transactional emails: task assignment notifications, comment reminders
+  - Marketing emails: product updates, feature introductions
+- **Email Templates**: 
+  - HTML templates + plain text versions
+  - Multi-language support
+  - Responsive design
 
-### 4.4 邮件功能清单
-- 用户注册激活邮件
-- 任务指派通知
-- 任务状态变更通知
-- 评论@通知
-- 团队邀请邮件
-- 密码重置邮件
-- 周报/日报邮件
+### 4.4 Email Feature List
+- User registration activation email
+- Task assignment notification
+- Task status change notification
+- Comment @ notification
+- Team invitation email
+- Password reset email
+- Weekly/daily email reports
 
-## 5. 项目结构规范
+## 5. Project Structure Standards
 
-### 5.1 前端项目结构
+### 5.1 Frontend Project Structure
 ```
 src/
-├── components/          # 组件库
-│   ├── atoms/          # 原子组件
-│   ├── molecules/      # 分子组件  
-│   ├── organisms/      # 有机体组件
-│   └── templates/      # 模板组件
-├── pages/              # 页面组件
-├── hooks/              # 自定义Hook
-├── store/              # 状态管理
-├── services/           # API服务
-├── utils/              # 工具函数
-├── types/              # TypeScript类型定义
-├── styles/             # 全局样式
-├── constants/          # 常量定义
-└── config/             # 配置文件
+├── components/          # Component library
+│   ├── atoms/          # Atomic components
+│   ├── molecules/      # Molecular components  
+│   ├── organisms/      # Organism components
+│   └── templates/      # Template components
+├── pages/              # Page components
+├── hooks/              # Custom Hooks
+├── store/              # State management
+├── services/           # API services
+├── utils/              # Utility functions
+├── types/              # TypeScript type definitions
+├── styles/             # Global styles
+├── constants/          # Constants definition
+└── config/             # Configuration files
 ```
 
-### 5.2 后端项目结构 (Supabase)
+### 5.2 Backend Project Structure (Supabase)
 ```
 supabase/
 ├── functions/          # Edge Functions
-│   ├── send-email/     # 邮件发送
-│   ├── notifications/  # 通知处理
-│   └── analytics/      # 数据分析
-├── migrations/         # 数据库迁移
-├── seed.sql           # 测试数据
-└── config.toml        # Supabase配置
+│   ├── send-email/     # Email sending
+│   ├── notifications/  # Notification handling
+│   └── analytics/      # Data analysis
+├── migrations/         # Database migrations
+├── seed.sql           # Test data
+└── config.toml        # Supabase configuration
 ```
 
-### 5.3 目录命名规范
-- **组件名**: PascalCase (如 `UserCard`)
-- **文件/目录**: kebab-case (如 `user-profile`)
-- **变量/函数**: camelCase (如 `getUserInfo`)
-- **常量**: UPPER_SNAKE_CASE (如 `MAX_FILE_SIZE`)
+### 5.3 Naming Conventions
+- **Component names**: PascalCase (e.g., `UserCard`)
+- **Files/Directories**: kebab-case (e.g., `user-profile`)
+- **Variables/Functions**: camelCase (e.g., `getUserInfo`)
+- **Constants**: UPPER_SNAKE_CASE (e.g., `MAX_FILE_SIZE`)
 
-### 5.4 代码规范
-- **Git提交规范**: Conventional Commits
+### 5.4 Code Standards
+- **Git commit standards**: Conventional Commits
   ```
-  feat: 新功能
-  fix: 修复bug
-  docs: 文档更新
-  style: 代码格式化
-  refactor: 代码重构
-  test: 测试相关
-  chore: 构建过程或辅助工具变动
+  feat: New feature
+  fix: Bug fix
+  docs: Documentation update
+  style: Code formatting
+  refactor: Code refactoring
+  test: Testing related
+  chore: Build process or auxiliary tool changes
   ```
 
-## 6. 开发最佳实践
+## 6. Development Best Practices
 
-### 6.1 前端开发规范
-- **组件设计原则**:
-  - 单一职责：每个组件只负责一个功能
-  - 组合优于继承：通过组合实现复杂功能
-  - 无状态优先：优先使用无状态组件
-  - Props接口：明确定义组件的Props类型
+### 6.1 Frontend Development Standards
+- **Component Design Principles**:
+  - Single responsibility: Each component is responsible for one function
+  - Composition over inheritance: Implement complex functions through composition
+  - Stateless first: Prioritize stateless components
+  - Props interface: Clearly define component Props types
 
-- **状态管理原则**:
-  - 最小化全局状态：只在全局状态中存储用户相关数据
-  - 服务端状态分离：服务器数据使用React Query管理
-  - 不可变数据：使用不可变数据结构
+- **State Management Principles**:
+  - Minimize global state: Only store user-related data in global state
+  - Server state separation: Server data managed with React Query
+  - Immutable data: Use immutable data structures
 
-### 6.2 数据库最佳实践
-- **索引策略**: 
-  - 外键字段创建索引
-  - 查询频繁字段建立复合索引
-  - 时间字段建立时间范围索引
-- **数据约束**: 
-  - 适当使用CHECK约束
-  - 外键约束保证数据一致性
-  - 使用枚举类型限制状态值
+### 6.2 Database Best Practices
+- **Index Strategy**: 
+  - Create indexes on foreign key fields
+  - Build composite indexes on frequently queried fields
+  - Create time range indexes on time fields
+- **Data Constraints**: 
+  - Use CHECK constraints appropriately
+  - Foreign key constraints ensure data consistency
+  - Use enum types to limit status values
 
-### 6.3 Edge Functions最佳实践
-- **函数设计**:
-  - 单一职责：每个函数只处理一个具体任务
-  - 错误处理：统一的错误处理和日志记录
-  - 输入验证：严格的参数验证
-  - 响应格式：统一的响应数据结构
+### 6.3 Edge Functions Best Practices
+- **Function Design**:
+  - Single responsibility: Each function handles one specific task
+  - Error handling: Unified error handling and logging
+  - Input validation: Strict parameter validation
+  - Response format: Unified response data structure
 
-### 6.4 测试策略
-- **单元测试**: 组件逻辑、工具函数
-- **集成测试**: API接口、数据库操作
-- **E2E测试**: 关键用户流程
-- **测试覆盖率**: 目标覆盖率 > 80%
+### 6.4 Testing Strategy
+- **Unit Testing**: Component logic, utility functions
+- **Integration Testing**: API interfaces, database operations
+- **E2E Testing**: Key user flows
+- **Test Coverage**: Target coverage > 80%
 
-## 7. 性能优化策略
+## 7. Performance Optimization Strategies
 
-### 7.1 前端性能优化
-- **代码分割**: React.lazy + Suspense实现路由级代码分割
-- **资源优化**:
-  - 图片优化：WebP格式、懒加载、响应式图片
-  - 字体优化：字体子集、预加载关键字体
-  - CSS优化：Tailwind CSS的PurgeCSS
+### 7.1 Frontend Performance Optimization
+- **Code Splitting**: React.lazy + Suspense for route-level code splitting
+- **Resource Optimization**:
+  - Image optimization: WebP format, lazy loading, responsive images
+  - Font optimization: Font subsets, preload critical fonts
+  - CSS optimization: Tailwind CSS's PurgeCSS
 
-- **缓存策略**:
-  - 浏览器缓存：静态资源长期缓存
-  - React Query缓存：智能的请求缓存
-  - Service Worker：离线支持
+- **Caching Strategy**:
+  - Browser cache: Long-term cache for static resources
+  - React Query cache: Intelligent request caching
+  - Service Worker: Offline support
 
-- **渲染优化**:
-  - 虚拟滚动：大列表性能优化
-  - 批量更新：React 18的并发特性
-  - 防抖节流：用户输入优化
+- **Rendering Optimization**:
+  - Virtual scrolling: Performance optimization for large lists
+  - Batch updates: React 18's concurrent features
+  - Debounce and throttle: User input optimization
 
-### 7.2 后端性能优化
-- **数据库优化**:
-  - 查询优化：使用EXPLAIN分析查询计划
-  - 连接池：Supabase内置连接池管理
-  - 批量操作：减少数据库查询次数
+### 7.2 Backend Performance Optimization
+- **Database Optimization**:
+  - Query optimization: Use EXPLAIN to analyze query plans
+  - Connection pool: Supabase built-in connection pool management
+  - Batch operations: Reduce database query frequency
 
-- **API优化**:
-  - 分页策略：Cursor-based分页
-  - 数据压缩：Gzip压缩响应
-  - CDN加速：静态资源CDN分发
+- **API Optimization**:
+  - Pagination strategy: Cursor-based pagination
+  - Data compression: Gzip compression for responses
+  - CDN acceleration: CDN distribution for static resources
 
-- **实时性优化**:
-  - 增量更新：只同步变化的数据
-  - 连接复用：WebSocket连接池
-  - 消息队列：异步处理非关键操作
+- **Real-time Optimization**:
+  - Incremental updates: Only sync changed data
+  - Connection reuse: WebSocket connection pool
+  - Message queue: Asynchronous processing for non-critical operations
 
-## 8. 安全性考虑
+## 8. Security Considerations
 
-### 8.1 认证授权安全
-- **用户认证**: 
-  - JWT Token + Refresh Token机制
-  - 多因子认证支持(MFA)
-  - OAuth第三方登录
+### 8.1 Authentication and Authorization Security
+- **User Authentication**: 
+  - JWT Token + Refresh Token mechanism
+  - Multi-factor authentication support (MFA)
+  - OAuth third-party login
 
-- **权限控制**:
-  - Row Level Security (RLS) 策略
-  - 基于角色的权限控制(RBAC)
-  - API访问频率限制
+- **Permission Control**:
+  - Row Level Security (RLS) policies
+  - Role-based permission control (RBAC)
+  - API access frequency limits
 
-### 8.2 数据安全
-- **数据加密**:
-  - 传输加密：HTTPS/WSS强制加密
-  - 存储加密：敏感数据字段加密
-  - 密钥管理：环境变量安全存储
+### 8.2 Data Security
+- **Data Encryption**:
+  - Transport encryption: HTTPS/WSS forced encryption
+  - Storage encryption: Sensitive data field encryption
+  - Key management: Environment variable secure storage
 
-- **输入验证**:
-  - SQL注入防护：使用参数化查询
-  - XSS防护：输出转义 + CSP策略
-  - CSRF防护：SameSite Cookie + Token验证
+- **Input Validation**:
+  - SQL injection protection: Use parameterized queries
+  - XSS protection: Output escaping + CSP policies
+  - CSRF protection: SameSite Cookie + Token verification
 
-### 8.3 运维安全
-- **环境隔离**:
-  - 开发/测试/生产环境分离
-  - 数据库访问权限分级
-  - 敏感信息环境变量管理
+### 8.3 Operations Security
+- **Environment Isolation**:
+  - Development/test/production environment separation
+  - Database access permission levels
+  - Sensitive information environment variable management
 
-- **监控审计**:
-  - 操作日志记录
-  - 异常访问告警
-  - 安全漏洞扫描
+- **Monitoring and Auditing**:
+  - Operation log recording
+  - Abnormal access alerts
+  - Security vulnerability scanning
 
-## 9. 部署与运维
+## 9. Deployment and Operations
 
-### 9.1 部署架构
-- **前端部署**: Vercel / Netlify
-- **后端服务**: Supabase Cloud
-- **CDN加速**: 全球CDN节点
-- **域名配置**: 自定义域名 + SSL证书
+### 9.1 Deployment Architecture
+- **Frontend Deployment**: Vercel / Netlify
+- **Backend Services**: Supabase Cloud
+- **CDN Acceleration**: Global CDN nodes
+- **Domain Configuration**: Custom domain + SSL certificate
 
-### 9.2 CI/CD流程
+### 9.2 CI/CD Flow
 ```
-Git Push → GitHub Actions → 构建测试 → 部署预览 → 生产发布
+Git Push → GitHub Actions → Build and Test → Deploy Preview → Production Release
 ```
 
-### 9.3 监控告警
-- **应用监控**: 性能指标、错误率监控
-- **数据库监控**: 查询性能、连接数监控
-- **用户行为**: 用户使用情况分析
-- **告警机制**: 关键指标异常告警
+### 9.3 Monitoring and Alerting
+- **Application Monitoring**: Performance metrics, error rate monitoring
+- **Database Monitoring**: Query performance, connection count monitoring
+- **User Behavior**: User usage analysis
+- **Alert Mechanism**: Critical metric anomaly alerts
 
-## 10. 技术选型总结
+## 10. Technology Selection Summary
 
-### 10.1 优势
-- **开发效率**: Supabase提供完整的BaaS解决方案，减少后端开发工作量
-- **用户体验**: React + Tailwind CSS确保现代化、响应式的用户界面
-- **扩展性**: 模块化架构支持功能扩展
-- **维护性**: TypeScript提供类型安全，减少运行时错误
-- **成本控制**: Supabase按使用量付费，适合小团队
+### 10.1 Advantages
+- **Development Efficiency**: Supabase provides complete BaaS solution, reducing backend development workload
+- **User Experience**: React + Tailwind CSS ensures modern, responsive user interface
+- **Scalability**: Modular architecture supports feature extension
+- **Maintainability**: TypeScript provides type safety, reducing runtime errors
+- **Cost Control**: Supabase pay-per-use pricing, suitable for small teams
 
-### 10.2 风险与应对
-- **供应商依赖**: 准备备选方案，降低供应商锁定风险
-- **性能瓶颈**: 通过缓存、CDN、数据库优化应对
-- **安全风险**: 多层次安全防护，定期安全审计
-- **数据迁移**: 制定数据备份和迁移策略
+### 10.2 Risks and Mitigation
+- **Vendor Dependency**: Prepare backup solutions to reduce vendor lock-in risk
+- **Performance Bottlenecks**: Address through caching, CDN, database optimization
+- **Security Risks**: Multi-layer security protection, regular security audits
+- **Data Migration**: Develop data backup and migration strategies
 
-### 10.3 后续发展
-- **功能扩展**: 移动端App、桌面应用
-- **AI集成**: 智能任务推荐、自动状态优化
-- **国际化**: 多语言、多时区支持
-- **企业版**: 私有部署、权限管理增强
+### 10.3 Future Development
+- **Feature Extension**: Mobile App, desktop application
+- **AI Integration**: Intelligent task recommendations, automatic status optimization
+- **Internationalization**: Multi-language, multi-timezone support
+- **Enterprise Edition**: Private deployment, enhanced permission management
 
 ---
 
-**文档版本**: v1.0  
-**创建日期**: 2025-11-29  
-**最后更新**: 2025-11-29  
-**作者**: 技术架构组
+**Document Version**: v1.0  
+**Creation Date**: 2025-11-29  
+**Last Updated**: 2025-11-29  
+**Author**: Technical Architecture Team
