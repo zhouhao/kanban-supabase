@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { supabase } from '../lib/supabase';
+import type { RealtimeChannel } from '@supabase/supabase-js';
 
 export interface Task {
   id: string;
@@ -46,10 +47,15 @@ interface TaskState {
 
   // Task CRUD
   fetchTasks: (columnId: string) => Promise<void>;
+  fetchAllTasksForBoard: (boardId: string) => Promise<void>;
   createTask: (task: Omit<Task, 'id' | 'created_at' | 'updated_at' | 'is_deleted' | 'is_completed' | 'completed_at'>) => Promise<Task | null>;
   updateTask: (id: string, updates: Partial<Task>) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
   moveTask: (taskId: string, newColumnId: string, newPosition: number) => Promise<void>;
+
+  // Realtime subscriptions
+  subscribeToTasks: (boardId: string) => void;
+  unsubscribeFromTasks: () => void;
 
   // Comments
   fetchComments: (taskId: string) => Promise<void>;
@@ -63,6 +69,8 @@ interface TaskState {
   // Batch operations
   batchUpdateTasks: (updates: Array<{ id: string; position: number }>) => Promise<void>;
 }
+
+let tasksChannel: RealtimeChannel | null = null;
 
 export const useTaskStore = create<TaskState>((set, get) => ({
   tasks: [],
@@ -82,7 +90,13 @@ export const useTaskStore = create<TaskState>((set, get) => ({
         .order('position', { ascending: true });
 
       if (error) throw error;
-      set({ tasks: data || [], loading: false });
+
+      // Merge tasks instead of replacing - keep tasks from other columns
+      set(state => {
+        const otherTasks = state.tasks.filter(t => t.column_id !== columnId);
+        const newTasks = [...otherTasks, ...(data || [])];
+        return { tasks: newTasks, loading: false };
+      });
     } catch (error: any) {
       set({ error: error.message, loading: false });
     }
@@ -154,17 +168,14 @@ export const useTaskStore = create<TaskState>((set, get) => ({
         .eq('id', taskId);
 
       if (error) throw error;
-      
-      // Refetch tasks to ensure consistency
-      const task = get().tasks.find(t => t.id === taskId);
-      if (task) {
-        await get().fetchTasks(task.column_id);
-        if (newColumnId !== task.column_id) {
-          await get().fetchTasks(newColumnId);
-        }
-      }
-      
-      set({ loading: false });
+
+      // Update local state immediately for better UX (realtime will sync)
+      set(state => ({
+        tasks: state.tasks.map(t =>
+          t.id === taskId ? { ...t, column_id: newColumnId, position: newPosition } : t
+        ),
+        loading: false
+      }));
     } catch (error: any) {
       set({ error: error.message, loading: false });
     }
@@ -276,9 +287,9 @@ export const useTaskStore = create<TaskState>((set, get) => ({
       const promises = updates.map(({ id, position }) =>
         supabase.from('tasks').update({ position }).eq('id', id)
       );
-      
+
       await Promise.all(promises);
-      
+
       set(state => ({
         tasks: state.tasks.map(task => {
           const update = updates.find(u => u.id === task.id);
@@ -288,6 +299,73 @@ export const useTaskStore = create<TaskState>((set, get) => ({
       }));
     } catch (error: any) {
       set({ error: error.message, loading: false });
+    }
+  },
+
+  fetchAllTasksForBoard: async (boardId: string) => {
+    set({ loading: true, error: null });
+    try {
+      const { data, error } = await supabase
+        .from('tasks')
+        .select('*')
+        .eq('board_id', boardId)
+        .eq('is_deleted', false)
+        .order('position', { ascending: true });
+
+      if (error) throw error;
+      set({ tasks: data || [], loading: false });
+    } catch (error: any) {
+      set({ error: error.message, loading: false });
+    }
+  },
+
+  subscribeToTasks: (boardId: string) => {
+    // Unsubscribe from previous subscription if exists
+    if (tasksChannel) {
+      supabase.removeChannel(tasksChannel);
+      tasksChannel = null;
+    }
+
+    // Create new subscription for tasks in this board
+    tasksChannel = supabase
+      .channel(`tasks:board_id=eq.${boardId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'tasks',
+          filter: `board_id=eq.${boardId}`,
+        },
+        (payload) => {
+          if (payload.eventType === 'INSERT') {
+            const newTask = payload.new as Task;
+            if (!newTask.is_deleted) {
+              set(state => ({
+                tasks: [...state.tasks, newTask],
+              }));
+            }
+          } else if (payload.eventType === 'UPDATE') {
+            const updatedTask = payload.new as Task;
+            set(state => ({
+              tasks: updatedTask.is_deleted
+                ? state.tasks.filter(t => t.id !== updatedTask.id)
+                : state.tasks.map(t => t.id === updatedTask.id ? updatedTask : t),
+            }));
+          } else if (payload.eventType === 'DELETE') {
+            set(state => ({
+              tasks: state.tasks.filter(t => t.id !== payload.old.id),
+            }));
+          }
+        }
+      )
+      .subscribe();
+  },
+
+  unsubscribeFromTasks: () => {
+    if (tasksChannel) {
+      supabase.removeChannel(tasksChannel);
+      tasksChannel = null;
     }
   },
 }));

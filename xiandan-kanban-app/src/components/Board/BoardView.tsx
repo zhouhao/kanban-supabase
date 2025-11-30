@@ -15,7 +15,7 @@ export const BoardView = () => {
   const { boardId } = useParams<{ boardId: string }>();
   const navigate = useNavigate();
   const { boards, columns, fetchColumns, deleteColumn, subscribeToColumns, unsubscribeFromColumns } = useBoardStore();
-  const { tasks, fetchTasks, moveTask, deleteTask } = useTaskStore();
+  const { tasks, fetchAllTasksForBoard, moveTask, deleteTask, subscribeToTasks, unsubscribeFromTasks } = useTaskStore();
   
   const [showColumnModal, setShowColumnModal] = useState(false);
   const [showTaskModal, setShowTaskModal] = useState(false);
@@ -39,20 +39,19 @@ export const BoardView = () => {
 
   useEffect(() => {
     if (boardId) {
+      // Fetch columns and set up realtime subscription
       fetchColumns(boardId);
       subscribeToColumns(boardId);
+
+      // Fetch all tasks for the board at once
+      fetchAllTasksForBoard(boardId);
+      subscribeToTasks(boardId);
     }
     return () => {
       unsubscribeFromColumns();
+      unsubscribeFromTasks();
     };
   }, [boardId]);
-
-  useEffect(() => {
-    // Fetch tasks for all columns
-    boardColumns.forEach(column => {
-      fetchTasks(column.id);
-    });
-  }, [boardColumns.length]);
 
   const handleDragStart = (event: DragStartEvent) => {
     const task = tasks.find(t => t.id === event.active.id);
