@@ -1,7 +1,7 @@
 # 咸蛋快板 (Xiandan Kanban)
 
 [![Unit Tests](https://github.com/zhouhao/kanban-supabase/actions/workflows/test.yml/badge.svg)](https://github.com/zhouhao/kanban-supabase/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/zhouhao/kanban-supabase/branch/master/graph/badge.svg)](https://codecov.io/gh/zhouhao/kanban-supabase)
+[![codecov](https://codecov.io/github/zhouhao/kanban-supabase/graph/badge.svg?token=ZC3Y0S3KES)](https://codecov.io/github/zhouhao/kanban-supabase)
 
 A modern, lightweight web-based Kanban board management application built with React and Supabase.
 
