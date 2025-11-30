@@ -1,7 +1,7 @@
 -- Migration: enable_rls_policies
 -- Created at: 1764397678
 
--- 启用RLS
+-- Enable RLS
 ALTER TABLE user_profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE boards ENABLE ROW LEVEL SECURITY;
 ALTER TABLE board_members ENABLE ROW LEVEL SECURITY;
@@ -12,7 +12,7 @@ ALTER TABLE reminders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE task_activities ENABLE ROW LEVEL SECURITY;
 ALTER TABLE email_logs ENABLE ROW LEVEL SECURITY;
 
--- 用户资料表RLS策略
+-- User profiles table RLS policies
 CREATE POLICY "Users can view own profile" ON user_profiles
   FOR SELECT USING (auth.uid() = id);
 
@@ -22,7 +22,7 @@ CREATE POLICY "Users can update own profile" ON user_profiles
 CREATE POLICY "Users can insert own profile" ON user_profiles
   FOR INSERT WITH CHECK (auth.uid() = id);
 
--- 看板表RLS策略
+-- Boards table RLS policies
 CREATE POLICY "Board owners can manage boards" ON boards
   FOR ALL USING (auth.uid() = user_id);
 
@@ -34,7 +34,7 @@ CREATE POLICY "Board members can view boards" ON boards
     )
   );
 
--- 看板成员表RLS策略
+-- Board members table RLS policies
 CREATE POLICY "Board members can view members" ON board_members
   FOR SELECT USING (
     board_id IN (
@@ -51,7 +51,7 @@ CREATE POLICY "Board owners can manage members" ON board_members
     )
   );
 
--- 列配置表RLS策略
+-- Columns configuration table RLS policies
 CREATE POLICY "Column access based on board membership" ON columns
   FOR ALL USING (
     board_id IN (
@@ -61,7 +61,7 @@ CREATE POLICY "Column access based on board membership" ON columns
     )
   );
 
--- 任务表RLS策略
+-- Tasks table RLS policies
 CREATE POLICY "Task access based on board membership" ON tasks
   FOR ALL USING (
     board_id IN (
@@ -71,7 +71,7 @@ CREATE POLICY "Task access based on board membership" ON tasks
     )
   );
 
--- 任务标签表RLS策略
+-- Task tags table RLS policies
 CREATE POLICY "Task tags access" ON task_tags
   FOR ALL USING (
     task_id IN (
@@ -84,7 +84,7 @@ CREATE POLICY "Task tags access" ON task_tags
     )
   );
 
--- 提醒设置表RLS策略
+-- Reminders table RLS policies
 CREATE POLICY "Reminders access" ON reminders
   FOR ALL USING (
     task_id IN (
@@ -97,7 +97,7 @@ CREATE POLICY "Reminders access" ON reminders
     )
   );
 
--- 任务活动日志表RLS策略
+-- Task activities table RLS policies
 CREATE POLICY "Task activities access" ON task_activities
   FOR SELECT USING (
     task_id IN (
@@ -113,7 +113,7 @@ CREATE POLICY "Task activities access" ON task_activities
 CREATE POLICY "Task activities insert" ON task_activities
   FOR INSERT WITH CHECK (auth.uid() = user_id);
 
--- 邮件日志表RLS策略
+-- Email logs table RLS policies
 CREATE POLICY "Users can view own email logs" ON email_logs
   FOR SELECT USING (
     recipient_email IN (

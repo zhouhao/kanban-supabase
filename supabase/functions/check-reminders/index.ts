@@ -17,7 +17,7 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const supabase = createClient(supabaseUrl, supabaseKey)
 
-    // 查询需要发送的提醒
+    // Query reminders that need to be sent
     const now = new Date().toISOString()
     const { data: reminders, error: fetchError } = await supabase
       .from('reminders')
@@ -32,7 +32,7 @@ serve(async (req) => {
 
     if (!reminders || reminders.length === 0) {
       return new Response(
-        JSON.stringify({ message: '没有待发送的提醒' }),
+        JSON.stringify({ message: 'No pending reminders' }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
@@ -40,7 +40,7 @@ serve(async (req) => {
     const sentReminders = []
 
     for (const reminder of reminders) {
-      // 获取任务信息
+      // Get task information
       const { data: task } = await supabase
         .from('tasks')
         .select('title, assignee_id, due_date')
@@ -48,7 +48,7 @@ serve(async (req) => {
         .maybeSingle()
 
       if (task && task.assignee_id) {
-        // 获取用户邮箱
+        // Get user email
         const { data: profile } = await supabase
           .from('user_profiles')
           .select('email')
@@ -56,7 +56,7 @@ serve(async (req) => {
           .maybeSingle()
 
         if (profile) {
-          // 调用发送邮件函数
+          // Call send email function
           const emailResponse = await fetch(`${supabaseUrl}/functions/v1/send-email-reminder`, {
             method: 'POST',
             headers: {
@@ -72,7 +72,7 @@ serve(async (req) => {
           })
 
           if (emailResponse.ok) {
-            // 标记提醒已发送
+            // Mark reminder as sent
             await supabase
               .from('reminders')
               .update({ is_sent: true, sent_at: new Date().toISOString() })
@@ -96,7 +96,7 @@ serve(async (req) => {
       }
     )
   } catch (error) {
-    console.error('检查提醒失败:', error)
+    console.error('Failed to check reminders:', error)
     return new Response(
       JSON.stringify({ error: error.message }),
       { 

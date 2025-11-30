@@ -1,7 +1,7 @@
 -- Migration: create_user_profile_trigger
 -- Created at: 1764399216
 
--- 创建函数，在用户注册时自动创建profile
+-- Create function to automatically create profile when user registers
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -16,7 +16,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- 创建触发器
+-- Create trigger
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
