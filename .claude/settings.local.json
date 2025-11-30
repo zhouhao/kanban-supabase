@@ -10,7 +10,8 @@
       "Bash(pnpm install:*)",
       "Bash(pnpm lint:*)",
       "Bash(pnpm build:*)",
-      "Skill(superpowers:brainstorming)"
+      "Skill(superpowers:brainstorming)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
