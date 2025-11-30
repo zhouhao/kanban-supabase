@@ -27,7 +27,9 @@ export const Column = ({
 }: ColumnProps) => {
   const [showMenu, setShowMenu] = useState(false);
   const { tasks } = useTaskStore();
-  const columnTasks = tasks.filter(task => task.column_id === column.id);
+  const columnTasks = tasks
+    .filter(task => task.column_id === column.id)
+    .sort((a, b) => a.position - b.position);
 
   const { setNodeRef } = useDroppable({
     id: column.id,
@@ -64,6 +66,7 @@ export const Column = ({
                   setShowMenu(false);
                 }}
                 className="w-full px-4 py-2 text-left text-sm hover:bg-neutral-50 flex items-center gap-2 text-neutral-700"
+                aria-label="Edit"
               >
                 <Edit2 className="w-4 h-4" />
                 Edit
@@ -74,6 +77,7 @@ export const Column = ({
                   setShowMenu(false);
                 }}
                 className="w-full px-4 py-2 text-left text-sm hover:bg-neutral-50 flex items-center gap-2 text-danger"
+                aria-label="Delete"
               >
                 <Trash2 className="w-4 h-4" />
                 Delete

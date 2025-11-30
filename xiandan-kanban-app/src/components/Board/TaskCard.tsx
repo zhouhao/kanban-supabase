@@ -57,6 +57,8 @@ export const TaskCard = ({ task, onEdit, onDelete, onOpenDetails }: TaskCardProp
       style={style}
       {...attributes}
       {...listeners}
+      role="button"
+      tabIndex={0}
       className={`bg-white rounded-lg p-4 shadow-soft hover:shadow-medium transition-all cursor-move border border-neutral-200 hover:border-primary-300 group ${
         task.is_completed ? 'opacity-75' : ''
       }`}
@@ -91,6 +93,7 @@ export const TaskCard = ({ task, onEdit, onDelete, onOpenDetails }: TaskCardProp
                   setShowMenu(false);
                 }}
                 className="w-full px-4 py-2 text-left text-sm hover:bg-neutral-50 flex items-center gap-2 text-neutral-700"
+                aria-label="Edit"
               >
                 <Edit2 className="w-4 h-4" />
                 Edit
@@ -102,6 +105,7 @@ export const TaskCard = ({ task, onEdit, onDelete, onOpenDetails }: TaskCardProp
                   setShowMenu(false);
                 }}
                 className="w-full px-4 py-2 text-left text-sm hover:bg-neutral-50 flex items-center gap-2 text-danger"
+                aria-label="Delete"
               >
                 <Trash2 className="w-4 h-4" />
                 Delete
@@ -121,7 +125,7 @@ export const TaskCard = ({ task, onEdit, onDelete, onOpenDetails }: TaskCardProp
       {/* Priority Badge */}
       <div className="mb-3">
         <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium border ${priorityColors[task.priority]}`}>
-          Priority: {priorityLabels[task.priority]}
+          {priorityLabels[task.priority]}
         </span>
       </div>
 

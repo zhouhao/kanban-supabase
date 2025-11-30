@@ -45,7 +45,7 @@ export const LoginPage = () => {
 
         {/* Login Card */}
         <div className="bg-white rounded-2xl shadow-large p-8 animate-fade-in">
-          <h2 className="text-2xl font-semibold text-neutral-900 mb-6">Login Account</h2>
+          <h2 className="text-2xl font-semibold text-neutral-900 mb-6">Login to Xiandan Kanban</h2>
           
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email Input */}

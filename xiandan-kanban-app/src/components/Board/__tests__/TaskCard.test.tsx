@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { TaskCard } from '../TaskCard'
 import type { Task } from '../../../stores/taskStore'
 
@@ -100,23 +100,49 @@ describe('TaskCard', () => {
     expect(mockOnOpenDetails).toHaveBeenCalledWith(mockTask)
   })
 
-  it('should call onEdit when clicking edit button', () => {
+  it('should call onEdit when clicking edit button', async () => {
     renderTaskCard()
 
-    const editButton = screen.getByRole('button', { name: /Edit/i })
-    fireEvent.click(editButton)
+    // First click the menu button to show the menu
+    const menuButtons = screen.getAllByRole('button', { name: '' })
+    fireEvent.click(menuButtons[0])
 
-    expect(mockOnEdit).toHaveBeenCalledWith(mockTask)
+    // Wait for the edit button to appear
+    await waitFor(() => {
+      const editButtons = screen.getAllByRole('button', { name: /Edit/i })
+      expect(editButtons.length).toBeGreaterThan(0)
+    })
+
+    // Then click the edit button
+    const editButtons = screen.getAllByRole('button', { name: /Edit/i })
+    fireEvent.click(editButtons[0])
+
+    await waitFor(() => {
+      expect(mockOnEdit).toHaveBeenCalledWith(mockTask)
+    })
     expect(mockOnOpenDetails).not.toHaveBeenCalled()
   })
 
-  it('should call onDelete when clicking delete button', () => {
+  it('should call onDelete when clicking delete button', async () => {
     renderTaskCard()
 
-    const deleteButton = screen.getByRole('button', { name: /Delete/i })
-    fireEvent.click(deleteButton)
+    // First click the menu button to show the menu
+    const menuButtons = screen.getAllByRole('button', { name: '' })
+    fireEvent.click(menuButtons[0])
 
-    expect(mockOnDelete).toHaveBeenCalledWith(mockTask.id)
+    // Wait for the delete button to appear
+    await waitFor(() => {
+      const deleteButtons = screen.getAllByRole('button', { name: /Delete/i })
+      expect(deleteButtons.length).toBeGreaterThan(0)
+    })
+
+    // Then click the delete button
+    const deleteButtons = screen.getAllByRole('button', { name: /Delete/i })
+    fireEvent.click(deleteButtons[0])
+
+    await waitFor(() => {
+      expect(mockOnDelete).toHaveBeenCalledWith(mockTask.id)
+    })
     expect(mockOnOpenDetails).not.toHaveBeenCalled()
   })
 

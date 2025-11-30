@@ -104,12 +104,13 @@ describe('Column', () => {
   }
 
   it('should render column header with name and color', () => {
-    renderColumn()
+    const { container } = renderColumn()
 
     expect(screen.getByText('Todo')).toBeInTheDocument()
 
-    const header = screen.getByText('Todo').closest('div')
-    expect(header).toHaveStyle({ backgroundColor: '#3B82F6' })
+    // Find the div with inline style backgroundColor
+    const header = container.querySelector('[style*="background-color"]') as HTMLElement
+    expect(header).toHaveStyle({ backgroundColor: 'rgb(59, 130, 246)' })
   })
 
   it('should render task count badge', () => {
@@ -147,8 +148,13 @@ describe('Column', () => {
   it('should call onEditColumn when clicking edit column button', () => {
     renderColumn()
 
-    const editButton = screen.getByRole('button', { name: /Edit Column/i })
-    fireEvent.click(editButton)
+    // First click the column menu button (first button with empty name in the column header)
+    const menuButtons = screen.getAllByRole('button', { name: '' })
+    fireEvent.click(menuButtons[0])
+
+    // Then click the edit button
+    const editButtons = screen.getAllByRole('button', { name: /Edit/i })
+    fireEvent.click(editButtons[0])
 
     expect(mockOnEditColumn).toHaveBeenCalledWith(mockColumn)
   })
@@ -156,8 +162,13 @@ describe('Column', () => {
   it('should call onDeleteColumn when clicking delete column button', () => {
     renderColumn()
 
-    const deleteButton = screen.getByRole('button', { name: /Delete Column/i })
-    fireEvent.click(deleteButton)
+    // First click the column menu button (first button with empty name in the column header)
+    const menuButtons = screen.getAllByRole('button', { name: '' })
+    fireEvent.click(menuButtons[0])
+
+    // Then click the delete button
+    const deleteButtons = screen.getAllByRole('button', { name: /Delete/i })
+    fireEvent.click(deleteButtons[0])
 
     expect(mockOnDeleteColumn).toHaveBeenCalledWith('col-1')
   })
@@ -208,9 +219,9 @@ describe('Column', () => {
       color: '#10B981',
     }
 
-    renderColumn(greenColumn)
+    const { container } = renderColumn(greenColumn)
 
-    const header = screen.getByText('Done').closest('div')
-    expect(header).toHaveStyle({ backgroundColor: '#10B981' })
+    const header = container.querySelector('[style*="background-color"]') as HTMLElement
+    expect(header).toHaveStyle({ backgroundColor: 'rgb(16, 185, 129)' })
   })
 })

@@ -123,6 +123,8 @@ export const Dashboard = () => {
               {boards.map((board) => (
                 <div
                   key={board.id}
+                  role="button"
+                  tabIndex={0}
                   className="bg-white rounded-xl p-6 shadow-soft hover:shadow-medium transition-all cursor-pointer border border-neutral-200 hover:border-primary-300 group"
                   onClick={() => navigate(`/board/${board.id}`)}
                 >
@@ -136,6 +138,7 @@ export const Dashboard = () => {
                         handleDeleteBoard(board.id, board.name);
                       }}
                       className="opacity-0 group-hover:opacity-100 p-1 hover:bg-danger-light rounded transition-all"
+                      aria-label="Delete"
                     >
                       <Settings className="w-4 h-4 text-neutral-500 hover:text-danger" />
                     </button>

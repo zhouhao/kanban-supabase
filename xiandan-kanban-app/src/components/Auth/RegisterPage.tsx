@@ -57,7 +57,7 @@ export const RegisterPage = () => {
 
         {/* Register Card */}
         <div className="bg-white rounded-2xl shadow-large p-8 animate-fade-in">
-          <h2 className="text-2xl font-semibold text-neutral-900 mb-6">Register Account</h2>
+          <h2 className="text-2xl font-semibold text-neutral-900 mb-6">Register Xiandan Kanban Account</h2>
           
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Username Input */}
@@ -167,11 +167,11 @@ export const RegisterPage = () => {
           <div className="mt-6 text-center">
             <p className="text-neutral-600">
               Already have an account?{' '}
-              <Link 
-                to="/login" 
+              <Link
+                to="/login"
                 className="text-primary-500 hover:text-primary-600 font-medium transition-colors"
               >
-                Login now
+                Login Now
               </Link>
             </p>
           </div>
