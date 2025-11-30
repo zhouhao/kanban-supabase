@@ -4,7 +4,9 @@
       "Bash(pnpm add:*)",
       "Bash(echo:*)",
       "Bash(source:*)",
-      "Bash(pnpm test:run:*)"
+      "Bash(pnpm test:run:*)",
+      "Bash(mkdir:*)",
+      "Bash(pnpm exec tsc:*)"
     ],
     "deny": [],
     "ask": []
