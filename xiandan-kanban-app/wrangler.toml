@@ -2,7 +2,7 @@
 ## This fixes the deploy error requiring a compatibility_date and
 ## points Wrangler at the built static assets.
 
-name = "xiandan-kanban-app"
+name = "kanban-supabase"
 compatibility_date = "2025-11-30"
 
 # If you prefer to keep using the CLI flag `--assets=./dist`,
