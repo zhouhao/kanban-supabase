@@ -14,9 +14,9 @@ import { TaskDetailModal } from './TaskDetailModal';
 export const BoardView = () => {
   const { boardId } = useParams<{ boardId: string }>();
   const navigate = useNavigate();
-  const { boards, columns, fetchBoard, fetchColumns, deleteColumn, subscribeToColumns, unsubscribeFromColumns } = useBoardStore();
+  const { boards, columns, fetchBoard, fetchColumns, deleteColumn, subscribeToColumns, unsubscribeFromColumns, loading } = useBoardStore();
   const { tasks, fetchAllTasksForBoard, moveTask, deleteTask, subscribeToTasks, unsubscribeFromTasks } = useTaskStore();
-  
+
   const [showColumnModal, setShowColumnModal] = useState(false);
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [showTaskDetail, setShowTaskDetail] = useState(false);
@@ -25,6 +25,7 @@ export const BoardView = () => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [selectedColumnId, setSelectedColumnId] = useState<string>('');
   const [activeTask, setActiveTask] = useState<Task | null>(null);
+  const [isFetchingBoard, setIsFetchingBoard] = useState(false);
 
   const board = boards.find(b => b.id === boardId);
   const boardColumns = columns.filter(c => c.board_id === boardId);
@@ -42,7 +43,8 @@ export const BoardView = () => {
       // Fetch the board if it's not already in the store
       const board = boards.find(b => b.id === boardId);
       if (!board) {
-        fetchBoard(boardId);
+        setIsFetchingBoard(true);
+        fetchBoard(boardId).finally(() => setIsFetchingBoard(false));
       }
 
       // Fetch columns and set up realtime subscription
@@ -141,7 +143,20 @@ export const BoardView = () => {
     setShowTaskDetail(true);
   };
 
-  if (!board) {
+  // Show loading state while fetching board
+  if (!board && isFetchingBoard) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
+          <p className="text-neutral-600">加载中...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state if board not found after fetching
+  if (!board && !isFetchingBoard) {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="text-center">
