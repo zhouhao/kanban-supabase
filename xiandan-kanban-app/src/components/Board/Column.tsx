@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Plus, MoreVertical, Edit2, Trash2 } from 'lucide-react';
@@ -26,16 +26,12 @@ export const Column = ({
   onOpenTaskDetails,
 }: ColumnProps) => {
   const [showMenu, setShowMenu] = useState(false);
-  const { tasks, fetchTasks } = useTaskStore();
+  const { tasks } = useTaskStore();
   const columnTasks = tasks.filter(task => task.column_id === column.id);
 
   const { setNodeRef } = useDroppable({
     id: column.id,
   });
-
-  useEffect(() => {
-    fetchTasks(column.id);
-  }, [column.id]);
 
   return (
     <div className="bg-neutral-50 rounded-xl p-4 min-w-[320px] max-w-[320px] flex flex-col max-h-[calc(100vh-220px)]">
