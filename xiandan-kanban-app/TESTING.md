@@ -461,7 +461,25 @@ it('should create board when form is submitted', async () => {
 
 ## Continuous Integration
 
-Tests are designed to run in CI/CD environments:
+### GitHub Actions
+
+This project includes a GitHub Actions workflow that automatically runs tests on every push and pull request.
+
+**Workflow File**: `.github/workflows/test.yml`
+
+The CI pipeline performs the following checks:
+
+1. **Type Checking** - Runs `tsc --noEmit` to catch type errors
+2. **Linting** - Runs ESLint to enforce code quality standards
+3. **Unit Tests** - Runs all tests with `pnpm test:run`
+4. **Coverage** - Generates coverage reports
+5. **Coverage Upload** - Uploads coverage to Codecov (optional)
+
+**View Status**: Check the status badge at the top of the README or visit the Actions tab on GitHub.
+
+### Running Tests in CI/CD
+
+Tests are designed to run in any CI/CD environment:
 
 ```bash
 # CI command
@@ -472,6 +490,31 @@ This command:
 - Runs all tests once (no watch mode)
 - Exits with error code if tests fail
 - Perfect for GitHub Actions, GitLab CI, etc.
+
+### Setting Up Codecov (Optional)
+
+To enable coverage reporting:
+
+1. Sign up at [codecov.io](https://codecov.io)
+2. Add your repository
+3. Add `CODECOV_TOKEN` to GitHub repository secrets
+4. Coverage will be automatically uploaded on each CI run
+
+### Workflow Triggers
+
+The test workflow runs on:
+- **Push** to `master`, `main`, or `develop` branches (when files in `xiandan-kanban-app/` change)
+- **Pull Requests** to `master`, `main`, or `develop` branches
+- **Manual trigger** via workflow_dispatch
+
+### Local CI Simulation
+
+To simulate the CI environment locally:
+
+```bash
+# Run the full CI check locally
+pnpm exec tsc --noEmit && pnpm lint && pnpm test:run && pnpm test:coverage
+```
 
 ## Troubleshooting
 
