@@ -6,7 +6,10 @@
       "Bash(source:*)",
       "Bash(pnpm test:run:*)",
       "Bash(mkdir:*)",
-      "Bash(pnpm exec tsc:*)"
+      "Bash(pnpm exec tsc:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm build:*)"
     ],
     "deny": [],
     "ask": []
