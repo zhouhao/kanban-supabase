@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Salted Egg Kanban (Xiandan Kanban) is a web-based Kanban board management application built with React, TypeScript, and Supabase. The application enables users to create multiple boards, manage tasks across columns, and receive email reminders.
+Xiandan Kanban is a web-based Kanban board management application built with React, TypeScript, and Supabase. The application enables users to create multiple boards, manage tasks across columns, and receive email reminders.
 
 **Working Directory**: The main application is located in `xiandan-kanban/xiandan-kanban-app/`
 
