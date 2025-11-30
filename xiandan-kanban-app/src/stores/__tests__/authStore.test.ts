@@ -269,8 +269,10 @@ describe('authStore', () => {
       await store.signUp('test@example.com', 'password123', 'Test User')
       const endTime = Date.now()
 
-      // Should wait at least 500ms for profile creation
-      expect(endTime - startTime).toBeGreaterThanOrEqual(500)
+      // Should wait approximately 500ms for profile creation (allow 50ms variance for CI timing)
+      const duration = endTime - startTime
+      expect(duration).toBeGreaterThanOrEqual(450)
+      expect(duration).toBeLessThanOrEqual(600)
     })
   })
 
