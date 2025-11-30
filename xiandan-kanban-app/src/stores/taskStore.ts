@@ -162,9 +162,37 @@ export const useTaskStore = create<TaskState>((set, get) => ({
   moveTask: async (taskId, newColumnId, newPosition) => {
     set({ loading: true, error: null });
     try {
+      // Fetch column name to check if it's a "Done" column
+      const { data: columnData, error: columnError } = await supabase
+        .from('columns')
+        .select('name')
+        .eq('id', newColumnId)
+        .single();
+
+      if (columnError) throw columnError;
+
+      // Check if moving to or from a "Done" column (case-insensitive)
+      const isDoneColumn = columnData.name.toLowerCase().includes('done');
+
+      // Prepare update object
+      const updates: any = {
+        column_id: newColumnId,
+        position: newPosition,
+      };
+
+      // Auto-complete tasks when moved to "Done" column
+      if (isDoneColumn) {
+        updates.is_completed = true;
+        updates.completed_at = new Date().toISOString();
+      } else {
+        // Uncomplete tasks when moved away from "Done" column
+        updates.is_completed = false;
+        updates.completed_at = null;
+      }
+
       const { error } = await supabase
         .from('tasks')
-        .update({ column_id: newColumnId, position: newPosition })
+        .update(updates)
         .eq('id', taskId);
 
       if (error) throw error;
@@ -172,7 +200,7 @@ export const useTaskStore = create<TaskState>((set, get) => ({
       // Update local state immediately for better UX (realtime will sync)
       set(state => ({
         tasks: state.tasks.map(t =>
-          t.id === taskId ? { ...t, column_id: newColumnId, position: newPosition } : t
+          t.id === taskId ? { ...t, ...updates } : t
         ),
         loading: false
       }));

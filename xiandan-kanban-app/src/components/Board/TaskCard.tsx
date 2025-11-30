@@ -57,12 +57,18 @@ export const TaskCard = ({ task, onEdit, onDelete, onOpenDetails }: TaskCardProp
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-white rounded-lg p-4 shadow-soft hover:shadow-medium transition-all cursor-move border border-neutral-200 hover:border-primary-300 group"
+      className={`bg-white rounded-lg p-4 shadow-soft hover:shadow-medium transition-all cursor-move border border-neutral-200 hover:border-primary-300 group ${
+        task.is_completed ? 'opacity-75' : ''
+      }`}
       onClick={() => onOpenDetails(task)}
     >
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
-        <h3 className="text-neutral-900 font-medium flex-1 pr-2 line-clamp-2">
+        <h3 className={`font-medium flex-1 pr-2 line-clamp-2 ${
+          task.is_completed
+            ? 'text-neutral-500 line-through'
+            : 'text-neutral-900'
+        }`}>
           {task.title}
         </h3>
         <div className="relative">
