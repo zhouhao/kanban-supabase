@@ -1,0 +1,11 @@
+## Cloudflare Workers configuration for xiandan-kanban-app
+## This fixes the deploy error requiring a compatibility_date and
+## points Wrangler at the built static assets.
+
+name = "xiandan-kanban-app"
+compatibility_date = "2025-11-30"
+
+# If you prefer to keep using the CLI flag `--assets=./dist`,
+# you can remove this section. With this set, `npx wrangler deploy`
+# (without the flag) will deploy the contents of ./dist.
+assets = { directory = "./dist" }
