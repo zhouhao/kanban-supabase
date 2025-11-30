@@ -300,6 +300,7 @@ describe('boardStore', () => {
           id: 'col-1',
           board_id: 'board-1',
           name: 'To Do',
+          color: '#3B82F6',
           position: 0,
           created_at: '2024-01-01T00:00:00Z',
           updated_at: '2024-01-01T00:00:00Z',
@@ -308,6 +309,7 @@ describe('boardStore', () => {
           id: 'col-2',
           board_id: 'board-1',
           name: 'In Progress',
+          color: '#F59E0B',
           position: 1,
           created_at: '2024-01-01T00:00:00Z',
           updated_at: '2024-01-01T00:00:00Z',
@@ -352,6 +354,7 @@ describe('boardStore', () => {
       const newColumn = {
         board_id: 'board-1',
         name: 'Done',
+        color: '#10B981',
         position: 2,
       }
 
@@ -383,6 +386,7 @@ describe('boardStore', () => {
         id: 'col-1',
         board_id: 'board-1',
         name: 'Old Name',
+        color: '#6B7280',
         position: 0,
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-01T00:00:00Z',
@@ -414,6 +418,7 @@ describe('boardStore', () => {
             id: 'col-1',
             board_id: 'board-1',
             name: 'To Do',
+            color: '#3B82F6',
             position: 0,
             created_at: '2024-01-01T00:00:00Z',
             updated_at: '2024-01-01T00:00:00Z',
@@ -422,6 +427,7 @@ describe('boardStore', () => {
             id: 'col-2',
             board_id: 'board-1',
             name: 'Done',
+            color: '#10B981',
             position: 1,
             created_at: '2024-01-01T00:00:00Z',
             updated_at: '2024-01-01T00:00:00Z',

@@ -14,7 +14,7 @@ import { TaskDetailModal } from './TaskDetailModal';
 export const BoardView = () => {
   const { boardId } = useParams<{ boardId: string }>();
   const navigate = useNavigate();
-  const { boards, columns, fetchColumns, deleteColumn, subscribeToColumns, unsubscribeFromColumns } = useBoardStore();
+  const { boards, columns, fetchBoard, fetchColumns, deleteColumn, subscribeToColumns, unsubscribeFromColumns } = useBoardStore();
   const { tasks, fetchAllTasksForBoard, moveTask, deleteTask, subscribeToTasks, unsubscribeFromTasks } = useTaskStore();
   
   const [showColumnModal, setShowColumnModal] = useState(false);
@@ -39,6 +39,12 @@ export const BoardView = () => {
 
   useEffect(() => {
     if (boardId) {
+      // Fetch the board if it's not already in the store
+      const board = boards.find(b => b.id === boardId);
+      if (!board) {
+        fetchBoard(boardId);
+      }
+
       // Fetch columns and set up realtime subscription
       fetchColumns(boardId);
       subscribeToColumns(boardId);

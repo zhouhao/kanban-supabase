@@ -11,11 +11,13 @@ interface CreateColumnModalProps {
 export const CreateColumnModal = ({ boardId, column, onClose }: CreateColumnModalProps) => {
   const { createColumn, updateColumn, loading } = useBoardStore();
   const [name, setName] = useState('');
+  const [color, setColor] = useState('#6B7280');
   const [error, setError] = useState('');
 
   useEffect(() => {
     if (column) {
       setName(column.name);
+      setColor(column.color);
     }
   }, [column]);
 
@@ -30,12 +32,13 @@ export const CreateColumnModal = ({ boardId, column, onClose }: CreateColumnModa
 
     if (column) {
       // Update existing column
-      await updateColumn(column.id, { name: name.trim() });
+      await updateColumn(column.id, { name: name.trim(), color });
     } else {
       // Create new column
       const result = await createColumn({
         board_id: boardId,
         name: name.trim(),
+        color,
         position: 0, // Will be adjusted by backend
       });
       
@@ -77,6 +80,26 @@ export const CreateColumnModal = ({ boardId, column, onClose }: CreateColumnModa
               disabled={loading}
               autoFocus
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-neutral-700 mb-2">
+              颜色
+            </label>
+            <div className="flex gap-2 flex-wrap">
+              {['#3B82F6', '#F59E0B', '#10B981', '#EF4444', '#8B5CF6', '#EC4899', '#6B7280', '#14B8A6'].map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => setColor(c)}
+                  className={`w-10 h-10 rounded-lg border-2 transition-all ${
+                    color === c ? 'border-neutral-900 scale-110' : 'border-neutral-300 hover:scale-105'
+                  }`}
+                  style={{ backgroundColor: c }}
+                  disabled={loading}
+                />
+              ))}
+            </div>
           </div>
 
           {error && (
