@@ -60,21 +60,21 @@ describe('TaskCard', () => {
   it('should display priority badge', () => {
     renderTaskCard()
 
-    expect(screen.getByText('中')).toBeInTheDocument()
+    expect(screen.getByText('Medium')).toBeInTheDocument()
   })
 
   it('should show high priority badge for high priority task', () => {
     const highPriorityTask = { ...mockTask, priority: 'high' as const }
     renderTaskCard(highPriorityTask)
 
-    expect(screen.getByText('高')).toBeInTheDocument()
+    expect(screen.getByText('High')).toBeInTheDocument()
   })
 
   it('should show low priority badge for low priority task', () => {
     const lowPriorityTask = { ...mockTask, priority: 'low' as const }
     renderTaskCard(lowPriorityTask)
 
-    expect(screen.getByText('低')).toBeInTheDocument()
+    expect(screen.getByText('Low')).toBeInTheDocument()
   })
 
   it('should show completed styling for completed task', () => {
@@ -103,7 +103,7 @@ describe('TaskCard', () => {
   it('should call onEdit when clicking edit button', () => {
     renderTaskCard()
 
-    const editButton = screen.getByRole('button', { name: /编辑/i })
+    const editButton = screen.getByRole('button', { name: /Edit/i })
     fireEvent.click(editButton)
 
     expect(mockOnEdit).toHaveBeenCalledWith(mockTask)
@@ -113,7 +113,7 @@ describe('TaskCard', () => {
   it('should call onDelete when clicking delete button', () => {
     renderTaskCard()
 
-    const deleteButton = screen.getByRole('button', { name: /删除/i })
+    const deleteButton = screen.getByRole('button', { name: /Delete/i })
     fireEvent.click(deleteButton)
 
     expect(mockOnDelete).toHaveBeenCalledWith(mockTask.id)

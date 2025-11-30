@@ -33,9 +33,9 @@ export const BoardView = () => {
   // Update page title when board changes
   useEffect(() => {
     if (board) {
-      document.title = `${board.name} - 咸蛋快板`;
+      document.title = `${board.name} - Xiandan Kanban`;
     } else {
-      document.title = '加载中... - 咸蛋快板';
+      document.title = 'Loading... - Xiandan Kanban';
     }
   }, [board]);
 
@@ -130,7 +130,7 @@ export const BoardView = () => {
   };
 
   const handleDeleteColumn = async (columnId: string) => {
-    if (window.confirm('确定要删除此列吗？列中的所有任务也会被删除。')) {
+    if (window.confirm('Are you sure you want to delete this column? All tasks in this column will also be deleted.')) {
       await deleteColumn(columnId);
     }
   };
@@ -148,7 +148,7 @@ export const BoardView = () => {
   };
 
   const handleDeleteTask = async (taskId: string) => {
-    if (window.confirm('确定要删除此任务吗？')) {
+    if (window.confirm('Are you sure you want to delete this task?')) {
       await deleteTask(taskId);
     }
   };
@@ -164,7 +164,7 @@ export const BoardView = () => {
       <div className="flex items-center justify-center h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
-          <p className="text-neutral-600">加载中...</p>
+          <p className="text-neutral-600">Loading...</p>
         </div>
       </div>
     );
@@ -175,12 +175,12 @@ export const BoardView = () => {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="text-center">
-          <p className="text-neutral-600 mb-4">看板不存在</p>
+          <p className="text-neutral-600 mb-4">Board does not exist</p>
           <button
             onClick={() => navigate('/dashboard')}
             className="text-primary-500 hover:text-primary-600"
           >
-            返回仪表板
+            Back to Dashboard
           </button>
         </div>
       </div>
@@ -212,7 +212,7 @@ export const BoardView = () => {
             className="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors shadow-soft"
           >
             <Plus className="w-5 h-5" />
-            添加列
+            Add Column
           </button>
         </div>
       </div>
@@ -237,13 +237,13 @@ export const BoardView = () => {
             {boardColumns.length === 0 && (
               <div className="flex items-center justify-center w-full">
                 <div className="text-center">
-                  <p className="text-neutral-500 mb-4">还没有列，开始创建第一个列吧</p>
+                  <p className="text-neutral-500 mb-4">No columns yet, create your first column</p>
                   <button
                     onClick={handleCreateColumn}
                     className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors mx-auto"
                   >
                     <Plus className="w-5 h-5" />
-                    创建列
+                    Create Column
                   </button>
                 </div>
               </div>

@@ -33,12 +33,12 @@ export const CreateTaskModal = ({ boardId, columnId, task, onClose }: CreateTask
     setError('');
 
     if (!title.trim()) {
-      setError('请输入任务标题');
+      setError('Please enter task title');
       return;
     }
 
     if (!user) {
-      setError('用户未登录');
+      setError('User not logged in');
       return;
     }
 
@@ -66,7 +66,7 @@ export const CreateTaskModal = ({ boardId, columnId, task, onClose }: CreateTask
       });
 
       if (!result) {
-        setError('创建任务失败');
+        setError('Failed to create task');
         return;
       }
     }
@@ -79,7 +79,7 @@ export const CreateTaskModal = ({ boardId, columnId, task, onClose }: CreateTask
       <div className="bg-white rounded-2xl shadow-large max-w-lg w-full p-6 animate-fade-in">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold text-neutral-900">
-            {task ? '编辑任务' : '创建新任务'}
+            {task ? 'Edit Task' : 'Create New Task'}
           </h2>
           <button
             onClick={onClose}
@@ -92,14 +92,14 @@ export const CreateTaskModal = ({ boardId, columnId, task, onClose }: CreateTask
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-2">
-              任务标题 <span className="text-danger">*</span>
+              Task Title <span className="text-danger">*</span>
             </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full px-4 py-3 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-              placeholder="例如：完成产品设计"
+              placeholder="e.g., Complete product design"
               disabled={loading}
               autoFocus
             />
@@ -107,13 +107,13 @@ export const CreateTaskModal = ({ boardId, columnId, task, onClose }: CreateTask
 
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-2">
-              描述（可选）
+              Description (Optional)
             </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full px-4 py-3 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
-              placeholder="详细描述任务内容"
+              placeholder="Describe the task in detail"
               rows={4}
               disabled={loading}
             />
@@ -122,7 +122,7 @@ export const CreateTaskModal = ({ boardId, columnId, task, onClose }: CreateTask
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-neutral-700 mb-2">
-                优先级
+                Priority
               </label>
               <select
                 value={priority}
@@ -130,15 +130,15 @@ export const CreateTaskModal = ({ boardId, columnId, task, onClose }: CreateTask
                 className="w-full px-4 py-3 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                 disabled={loading}
               >
-                <option value="low">低</option>
-                <option value="medium">中</option>
-                <option value="high">高</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-neutral-700 mb-2">
-                截止日期
+                Due Date
               </label>
               <div className="relative">
                 <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400" />
@@ -166,7 +166,7 @@ export const CreateTaskModal = ({ boardId, columnId, task, onClose }: CreateTask
               className="flex-1 px-4 py-3 border border-neutral-200 text-neutral-700 rounded-lg hover:bg-neutral-50 transition-colors font-medium"
               disabled={loading}
             >
-              取消
+              Cancel
             </button>
             <button
               type="submit"
@@ -176,10 +176,10 @@ export const CreateTaskModal = ({ boardId, columnId, task, onClose }: CreateTask
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  {task ? '更新中...' : '创建中...'}
+                  {task ? 'Updating...' : 'Creating...'}
                 </>
               ) : (
-                task ? '更新任务' : '创建任务'
+                <>{task ? 'Update Task' : 'Create Task'}</>
               )}
             </button>
           </div>

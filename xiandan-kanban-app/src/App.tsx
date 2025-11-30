@@ -9,19 +9,19 @@ import { useAuthStore } from './stores/authStore';
 // 404 Page Component
 const NotFoundPage = () => {
   useEffect(() => {
-    document.title = '404 页面不存在 - 咸蛋快板';
+    document.title = '404 Page Not Found - Xiandan Kanban';
   }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-secondary-50">
       <div className="text-center">
         <h1 className="text-6xl font-bold text-neutral-900 mb-4">404</h1>
-        <p className="text-neutral-600 mb-6">页面不存在</p>
+        <p className="text-neutral-600 mb-6">Page not found</p>
         <a
           href="/dashboard"
           className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg inline-block transition-colors"
         >
-          返回首页
+          Back to Home
         </a>
       </div>
     </div>
@@ -37,7 +37,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-secondary-50">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-neutral-600">加载中...</p>
+          <p className="text-neutral-600">Loading...</p>
         </div>
       </div>
     );
@@ -59,7 +59,7 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-secondary-50">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-neutral-600">加载中...</p>
+          <p className="text-neutral-600">Loading...</p>
         </div>
       </div>
     );

@@ -132,13 +132,13 @@ describe('Column', () => {
 
     renderColumn()
 
-    expect(screen.getByText('暂无任务')).toBeInTheDocument()
+    expect(screen.getByText('No tasks yet')).toBeInTheDocument()
   })
 
   it('should call onCreateTask when clicking add task button', () => {
     renderColumn()
 
-    const addButton = screen.getByRole('button', { name: /添加任务/i })
+    const addButton = screen.getByRole('button', { name: /Add Task/i })
     fireEvent.click(addButton)
 
     expect(mockOnCreateTask).toHaveBeenCalledWith('col-1')
@@ -147,7 +147,7 @@ describe('Column', () => {
   it('should call onEditColumn when clicking edit column button', () => {
     renderColumn()
 
-    const editButton = screen.getByRole('button', { name: /编辑列/i })
+    const editButton = screen.getByRole('button', { name: /Edit Column/i })
     fireEvent.click(editButton)
 
     expect(mockOnEditColumn).toHaveBeenCalledWith(mockColumn)
@@ -156,7 +156,7 @@ describe('Column', () => {
   it('should call onDeleteColumn when clicking delete column button', () => {
     renderColumn()
 
-    const deleteButton = screen.getByRole('button', { name: /删除列/i })
+    const deleteButton = screen.getByRole('button', { name: /Delete Column/i })
     fireEvent.click(deleteButton)
 
     expect(mockOnDeleteColumn).toHaveBeenCalledWith('col-1')

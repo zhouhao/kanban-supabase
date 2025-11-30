@@ -41,27 +41,27 @@ describe('RegisterPage', () => {
   it('should render register form', () => {
     renderRegisterPage()
 
-    expect(screen.getByText('注册咸蛋快板账号')).toBeInTheDocument()
-    expect(screen.getByLabelText('用户名')).toBeInTheDocument()
-    expect(screen.getByLabelText('邮箱')).toBeInTheDocument()
-    expect(screen.getAllByLabelText('密码')[0]).toBeInTheDocument()
-    expect(screen.getByLabelText('确认密码')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /注册/i })).toBeInTheDocument()
+    expect(screen.getByText('Register Xiandan Kanban Account')).toBeInTheDocument()
+    expect(screen.getByLabelText('Username')).toBeInTheDocument()
+    expect(screen.getByLabelText('Email Address')).toBeInTheDocument()
+    expect(screen.getAllByLabelText('Password')[0]).toBeInTheDocument()
+    expect(screen.getByLabelText('Confirm Password')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Register/i })).toBeInTheDocument()
   })
 
   it('should update page title on mount', () => {
     renderRegisterPage()
-    expect(document.title).toBe('注册 - 咸蛋快板')
+    expect(document.title).toBe('Register - Xiandan Kanban')
   })
 
   it('should show error when submitting empty form', async () => {
     renderRegisterPage()
 
-    const submitButton = screen.getByRole('button', { name: /注册/i })
+    const submitButton = screen.getByRole('button', { name: /Register/i })
     fireEvent.click(submitButton)
 
     await waitFor(() => {
-      expect(screen.getByText('请填写所有字段')).toBeInTheDocument()
+      expect(screen.getByText('Please fill in all fields')).toBeInTheDocument()
     })
 
     expect(mockSignUp).not.toHaveBeenCalled()
@@ -70,11 +70,11 @@ describe('RegisterPage', () => {
   it('should show error when passwords do not match', async () => {
     renderRegisterPage()
 
-    const usernameInput = screen.getByLabelText('用户名')
-    const emailInput = screen.getByLabelText('邮箱')
-    const passwordInputs = screen.getAllByLabelText('密码')
-    const confirmPasswordInput = screen.getByLabelText('确认密码')
-    const submitButton = screen.getByRole('button', { name: /注册/i })
+    const usernameInput = screen.getByLabelText('Username')
+    const emailInput = screen.getByLabelText('Email Address')
+    const passwordInputs = screen.getAllByLabelText('Password')
+    const confirmPasswordInput = screen.getByLabelText('Confirm Password')
+    const submitButton = screen.getByRole('button', { name: /Register/i })
 
     fireEvent.change(usernameInput, { target: { value: 'testuser' } })
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
@@ -83,7 +83,7 @@ describe('RegisterPage', () => {
     fireEvent.click(submitButton)
 
     await waitFor(() => {
-      expect(screen.getByText('两次密码输入不一致')).toBeInTheDocument()
+      expect(screen.getByText('Passwords do not match')).toBeInTheDocument()
     })
 
     expect(mockSignUp).not.toHaveBeenCalled()
@@ -92,11 +92,11 @@ describe('RegisterPage', () => {
   it('should show error when password is too short', async () => {
     renderRegisterPage()
 
-    const usernameInput = screen.getByLabelText('用户名')
-    const emailInput = screen.getByLabelText('邮箱')
-    const passwordInputs = screen.getAllByLabelText('密码')
-    const confirmPasswordInput = screen.getByLabelText('确认密码')
-    const submitButton = screen.getByRole('button', { name: /注册/i })
+    const usernameInput = screen.getByLabelText('Username')
+    const emailInput = screen.getByLabelText('Email Address')
+    const passwordInputs = screen.getAllByLabelText('Password')
+    const confirmPasswordInput = screen.getByLabelText('Confirm Password')
+    const submitButton = screen.getByRole('button', { name: /Register/i })
 
     fireEvent.change(usernameInput, { target: { value: 'testuser' } })
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
@@ -105,7 +105,7 @@ describe('RegisterPage', () => {
     fireEvent.click(submitButton)
 
     await waitFor(() => {
-      expect(screen.getByText('密码至少需要6个字符')).toBeInTheDocument()
+      expect(screen.getByText('Password must be at least 6 characters')).toBeInTheDocument()
     })
 
     expect(mockSignUp).not.toHaveBeenCalled()
@@ -116,11 +116,11 @@ describe('RegisterPage', () => {
 
     renderRegisterPage()
 
-    const usernameInput = screen.getByLabelText('用户名')
-    const emailInput = screen.getByLabelText('邮箱')
-    const passwordInputs = screen.getAllByLabelText('密码')
-    const confirmPasswordInput = screen.getByLabelText('确认密码')
-    const submitButton = screen.getByRole('button', { name: /注册/i })
+    const usernameInput = screen.getByLabelText('Username')
+    const emailInput = screen.getByLabelText('Email Address')
+    const passwordInputs = screen.getAllByLabelText('Password')
+    const confirmPasswordInput = screen.getByLabelText('Confirm Password')
+    const submitButton = screen.getByRole('button', { name: /Register/i })
 
     fireEvent.change(usernameInput, { target: { value: 'testuser' } })
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
@@ -138,11 +138,11 @@ describe('RegisterPage', () => {
 
     renderRegisterPage()
 
-    const usernameInput = screen.getByLabelText('用户名')
-    const emailInput = screen.getByLabelText('邮箱')
-    const passwordInputs = screen.getAllByLabelText('密码')
-    const confirmPasswordInput = screen.getByLabelText('确认密码')
-    const submitButton = screen.getByRole('button', { name: /注册/i })
+    const usernameInput = screen.getByLabelText('Username')
+    const emailInput = screen.getByLabelText('Email Address')
+    const passwordInputs = screen.getAllByLabelText('Password')
+    const confirmPasswordInput = screen.getByLabelText('Confirm Password')
+    const submitButton = screen.getByRole('button', { name: /Register/i })
 
     fireEvent.change(usernameInput, { target: { value: 'testuser' } })
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
@@ -156,15 +156,15 @@ describe('RegisterPage', () => {
   })
 
   it('should show error message on failed registration', async () => {
-    mockSignUp.mockResolvedValue({ success: false, error: '邮箱已被使用' })
+    mockSignUp.mockResolvedValue({ success: false, error: 'Email already in use' })
 
     renderRegisterPage()
 
-    const usernameInput = screen.getByLabelText('用户名')
-    const emailInput = screen.getByLabelText('邮箱')
-    const passwordInputs = screen.getAllByLabelText('密码')
-    const confirmPasswordInput = screen.getByLabelText('确认密码')
-    const submitButton = screen.getByRole('button', { name: /注册/i })
+    const usernameInput = screen.getByLabelText('Username')
+    const emailInput = screen.getByLabelText('Email Address')
+    const passwordInputs = screen.getAllByLabelText('Password')
+    const confirmPasswordInput = screen.getByLabelText('Confirm Password')
+    const submitButton = screen.getByRole('button', { name: /Register/i })
 
     fireEvent.change(usernameInput, { target: { value: 'testuser' } })
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
@@ -173,7 +173,7 @@ describe('RegisterPage', () => {
     fireEvent.click(submitButton)
 
     await waitFor(() => {
-      expect(screen.getByText('邮箱已被使用')).toBeInTheDocument()
+      expect(screen.getByText('Email already in use')).toBeInTheDocument()
     })
 
     expect(mockNavigate).not.toHaveBeenCalled()
@@ -187,14 +187,14 @@ describe('RegisterPage', () => {
 
     renderRegisterPage()
 
-    const submitButton = screen.getByRole('button', { name: /注册中/i })
+    const submitButton = screen.getByRole('button', { name: /Registering/i })
     expect(submitButton).toBeDisabled()
   })
 
   it('should have link to login page', () => {
     renderRegisterPage()
 
-    const loginLink = screen.getByText('立即登录')
+    const loginLink = screen.getByText('Login Now')
     expect(loginLink).toBeInTheDocument()
     expect(loginLink.closest('a')).toHaveAttribute('href', '/login')
   })

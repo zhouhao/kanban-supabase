@@ -19,12 +19,12 @@ export const CreateBoardModal = ({ onClose }: CreateBoardModalProps) => {
     setError('');
 
     if (!name.trim()) {
-      setError('请输入看板名称');
+      setError('Please enter board name');
       return;
     }
 
     if (!user) {
-      setError('用户未登录');
+      setError('User not logged in');
       return;
     }
 
@@ -37,7 +37,7 @@ export const CreateBoardModal = ({ onClose }: CreateBoardModalProps) => {
     if (result) {
       onClose();
     } else {
-      setError('创建看板失败');
+      setError('Failed to create board');
     }
   };
 
@@ -45,7 +45,7 @@ export const CreateBoardModal = ({ onClose }: CreateBoardModalProps) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-2xl shadow-large max-w-md w-full p-6 animate-fade-in">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold text-neutral-900">创建新看板</h2>
+          <h2 className="text-xl font-semibold text-neutral-900">Create New Board</h2>
           <button
             onClick={onClose}
             className="p-1 hover:bg-neutral-100 rounded transition-colors"
@@ -57,14 +57,14 @@ export const CreateBoardModal = ({ onClose }: CreateBoardModalProps) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-2">
-              看板名称 <span className="text-danger">*</span>
+              Board Name <span className="text-danger">*</span>
             </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-3 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-              placeholder="例如：产品开发"
+              placeholder="e.g., Product Development"
               disabled={loading}
               autoFocus
             />
@@ -72,13 +72,13 @@ export const CreateBoardModal = ({ onClose }: CreateBoardModalProps) => {
 
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-2">
-              描述（可选）
+              Description (Optional)
             </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full px-4 py-3 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
-              placeholder="简要描述这个看板的用途"
+              placeholder="Briefly describe the purpose of this board"
               rows={3}
               disabled={loading}
             />
@@ -97,7 +97,7 @@ export const CreateBoardModal = ({ onClose }: CreateBoardModalProps) => {
               className="flex-1 px-4 py-3 border border-neutral-200 text-neutral-700 rounded-lg hover:bg-neutral-50 transition-colors font-medium"
               disabled={loading}
             >
-              取消
+              Cancel
             </button>
             <button
               type="submit"
@@ -107,10 +107,10 @@ export const CreateBoardModal = ({ onClose }: CreateBoardModalProps) => {
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  创建中...
+                  Creating...
                 </>
               ) : (
-                '创建看板'
+                'Create Board'
               )}
             </button>
           </div>

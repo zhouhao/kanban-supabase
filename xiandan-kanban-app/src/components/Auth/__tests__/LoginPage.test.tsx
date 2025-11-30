@@ -41,25 +41,25 @@ describe('LoginPage', () => {
   it('should render login form', () => {
     renderLoginPage()
 
-    expect(screen.getByText('登录到咸蛋快板')).toBeInTheDocument()
-    expect(screen.getByLabelText('邮箱')).toBeInTheDocument()
-    expect(screen.getByLabelText('密码')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /登录/i })).toBeInTheDocument()
+    expect(screen.getByText('Login to Xiandan Kanban')).toBeInTheDocument()
+    expect(screen.getByLabelText('Email Address')).toBeInTheDocument()
+    expect(screen.getByLabelText('Password')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Login/i })).toBeInTheDocument()
   })
 
   it('should update page title on mount', () => {
     renderLoginPage()
-    expect(document.title).toBe('登录 - 咸蛋快板')
+    expect(document.title).toBe('Login - Xiandan Kanban')
   })
 
   it('should show error when submitting empty form', async () => {
     renderLoginPage()
 
-    const submitButton = screen.getByRole('button', { name: /登录/i })
+    const submitButton = screen.getByRole('button', { name: /Login/i })
     fireEvent.click(submitButton)
 
     await waitFor(() => {
-      expect(screen.getByText('请填写所有字段')).toBeInTheDocument()
+      expect(screen.getByText('Please fill in all fields')).toBeInTheDocument()
     })
 
     expect(mockSignIn).not.toHaveBeenCalled()
@@ -70,9 +70,9 @@ describe('LoginPage', () => {
 
     renderLoginPage()
 
-    const emailInput = screen.getByLabelText('邮箱')
-    const passwordInput = screen.getByLabelText('密码')
-    const submitButton = screen.getByRole('button', { name: /登录/i })
+    const emailInput = screen.getByLabelText('Email Address')
+    const passwordInput = screen.getByLabelText('Password')
+    const submitButton = screen.getByRole('button', { name: /Login/i })
 
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
     fireEvent.change(passwordInput, { target: { value: 'password123' } })
@@ -88,9 +88,9 @@ describe('LoginPage', () => {
 
     renderLoginPage()
 
-    const emailInput = screen.getByLabelText('邮箱')
-    const passwordInput = screen.getByLabelText('密码')
-    const submitButton = screen.getByRole('button', { name: /登录/i })
+    const emailInput = screen.getByLabelText('Email Address')
+    const passwordInput = screen.getByLabelText('Password')
+    const submitButton = screen.getByRole('button', { name: /Login/i })
 
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
     fireEvent.change(passwordInput, { target: { value: 'password123' } })
@@ -102,20 +102,20 @@ describe('LoginPage', () => {
   })
 
   it('should show error message on failed login', async () => {
-    mockSignIn.mockResolvedValue({ success: false, error: '登录失败：邮箱或密码错误' })
+    mockSignIn.mockResolvedValue({ success: false, error: 'Login failed: email or password incorrect' })
 
     renderLoginPage()
 
-    const emailInput = screen.getByLabelText('邮箱')
-    const passwordInput = screen.getByLabelText('密码')
-    const submitButton = screen.getByRole('button', { name: /登录/i })
+    const emailInput = screen.getByLabelText('Email Address')
+    const passwordInput = screen.getByLabelText('Password')
+    const submitButton = screen.getByRole('button', { name: /Login/i })
 
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
     fireEvent.change(passwordInput, { target: { value: 'wrongpassword' } })
     fireEvent.click(submitButton)
 
     await waitFor(() => {
-      expect(screen.getByText('登录失败：邮箱或密码错误')).toBeInTheDocument()
+      expect(screen.getByText('Login failed: email or password incorrect')).toBeInTheDocument()
     })
 
     expect(mockNavigate).not.toHaveBeenCalled()
@@ -129,14 +129,14 @@ describe('LoginPage', () => {
 
     renderLoginPage()
 
-    const submitButton = screen.getByRole('button', { name: /登录中/i })
+    const submitButton = screen.getByRole('button', { name: /Logging in/i })
     expect(submitButton).toBeDisabled()
   })
 
   it('should have link to register page', () => {
     renderLoginPage()
 
-    const registerLink = screen.getByText('立即注册')
+    const registerLink = screen.getByText('Register Now')
     expect(registerLink).toBeInTheDocument()
     expect(registerLink.closest('a')).toHaveAttribute('href', '/register')
   })
