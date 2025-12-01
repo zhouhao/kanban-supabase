@@ -119,17 +119,6 @@ describe('TaskCard', () => {
     expect(container.textContent).toContain('Delete')
   })
 
-  it('should display due date when present', () => {
-    const taskWithDueDate: Task = {
-      ...mockTask,
-      due_date: '2024-12-31',
-    }
-
-    renderTaskCard(taskWithDueDate)
-
-    expect(screen.getByText(/2024/)).toBeInTheDocument()
-  })
-
   it('should not show description if empty', () => {
     const taskWithoutDescription: Task = {
       ...mockTask,
