@@ -28,7 +28,7 @@ export const Dashboard = () => {
     if (user) {
       fetchBoards(user.id);
     }
-  }, [user]);
+  }, [user, fetchBoards]);
 
   const handleSignOut = async () => {
     await signOut();

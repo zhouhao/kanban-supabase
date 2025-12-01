@@ -42,7 +42,7 @@ export const TaskDetailModal = ({ task, onClose }: TaskDetailModalProps) => {
   useEffect(() => {
     fetchComments(task.id);
     fetchReminders(task.id);
-  }, [task.id]);
+  }, [task.id, fetchComments, fetchReminders]);
 
   const handleAddComment = async (e: React.FormEvent) => {
     e.preventDefault();

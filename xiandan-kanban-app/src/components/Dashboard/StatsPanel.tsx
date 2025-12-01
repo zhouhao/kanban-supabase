@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { 
   BarChart, 
   Bar, 
@@ -13,8 +13,8 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import { TrendingUp, CheckCircle, Clock, AlertCircle } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
-import { useAuthStore } from '../../stores/authStore';
+import { supabase } from '@/lib/supabase.ts';
+import { useAuthStore } from '@/stores/authStore.ts';
 
 interface TaskStats {
   total: number;
@@ -60,13 +60,7 @@ export const StatsPanel = () => {
   const [boardStats, setBoardStats] = useState<BoardStats[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (user) {
-      fetchStats();
-    }
-  }, [user]);
-
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     if (!user) return;
     
     setLoading(true);
@@ -129,7 +123,13 @@ export const StatsPanel = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchStats();
+    }
+  }, [user, fetchStats]);
 
   const statusData = [
     { name: 'Completed', value: taskStats.completed, color: COLORS.completed },

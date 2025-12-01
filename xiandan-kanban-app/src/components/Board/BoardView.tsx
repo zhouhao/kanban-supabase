@@ -74,7 +74,7 @@ export const BoardView = () => {
       unsubscribeFromColumns();
       unsubscribeFromTasks();
     };
-  }, [boardId]);
+  }, [boardId, boards, fetchBoard, fetchColumns, subscribeToColumns, fetchAllTasksForBoard, subscribeToTasks, unsubscribeFromColumns, unsubscribeFromTasks]);
 
   const handleDragStart = (event: DragStartEvent) => {
     const task = tasks.find(t => t.id === event.active.id);
