@@ -305,7 +305,7 @@ Additional documentation is available in the `docs/` directory:
 
 ## License
 
-[License information to be added]
+MIT
 
 ## Support
 
