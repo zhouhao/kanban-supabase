@@ -1,142 +1,142 @@
-# 咸蛋快板看板应用 UI/UX设计规范
+# Xiandan Kanban Board Application UI/UX Design Specification
 
-## 1. 设计概述
+## 1. Design Overview
 
-### 1.1 产品定位
-"咸蛋快板"是一款现代化看板管理工具，采用敏捷开发理念，为用户提供直观、高效的任务管理体验。
+### 1.1 Product Positioning
+"Xiandan Kanban" is a modern kanban management tool that adopts agile development concepts to provide users with intuitive and efficient task management experience.
 
-### 1.2 设计原则
-- **简洁直观**: 界面简洁，减少认知负担
-- **高效便捷**: 最短路径完成核心操作
-- **视觉舒适**: 淡蓝色主题营造轻松氛围
-- **响应迅速**: 流畅的交互动画和即时反馈
+### 1.2 Design Principles
+- **Simple and Intuitive**: Clean interface with reduced cognitive load
+- **Efficient and Convenient**: Complete core operations in shortest path
+- **Visual Comfort**: Light blue theme creates relaxed atmosphere
+- **Responsive**: Smooth interaction animations and instant feedback
 
-### 1.3 目标用户
-- 敏捷开发团队
-- 项目管理人员
-- 内容创作团队
-- 个人效率管理用户
+### 1.3 Target Users
+- Agile development teams
+- Project management personnel
+- Content creation teams
+- Personal efficiency management users
 
-## 2. 色彩系统
+## 2. Color System
 
-### 2.1 主色调 (淡蓝色系)
+### 2.1 Primary Colors (Light Blue Series)
 
-#### 主色
+#### Primary Colors
 - **Primary Blue**: #3B82F6 (RGB: 59, 130, 246)
 - **Primary Dark**: #2563EB (RGB: 37, 99, 235)
 - **Primary Light**: #60A5FA (RGB: 96, 165, 250)
 
-#### 辅助色
+#### Secondary Colors
 - **Secondary Blue**: #E0F2FE (RGB: 224, 242, 254)
 - **Accent Blue**: #BAE6FD (RGB: 186, 230, 253)
 - **Info Blue**: #0EA5E9 (RGB: 14, 165, 233)
 
-#### 功能色彩
-- **Success**: #10B981 (RGB: 16, 185, 129) - 成功状态
-- **Warning**: #F59E0B (RGB: 245, 158, 11) - 警告状态
-- **Error**: #EF4444 (RGB: 239, 68, 68) - 错误状态
-- **Neutral**: #6B7280 (RGB: 107, 114, 128) - 中性文本
+#### Functional Colors
+- **Success**: #10B981 (RGB: 16, 185, 129) - Success status
+- **Warning**: #F59E0B (RGB: 245, 158, 11) - Warning status
+- **Error**: #EF4444 (RGB: 239, 68, 68) - Error status
+- **Neutral**: #6B7280 (RGB: 107, 114, 128) - Neutral text
 
-#### 背景色
+#### Background Colors
 - **Background**: #F8FAFC (RGB: 248, 250, 252)
 - **Card Background**: #FFFFFF (RGB: 255, 255, 255)
 - **Sidebar Background**: #F1F5F9 (RGB: 241, 245, 249)
 
-### 2.2 渐变色
-- **主要渐变**: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%)
-- **卡片悬停**: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%)
-- **成功渐变**: linear-gradient(135deg, #10B981 0%, #34D399 100%)
+### 2.2 Gradients
+- **Primary Gradient**: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%)
+- **Card Hover**: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%)
+- **Success Gradient**: linear-gradient(135deg, #10B981 0%, #34D399 100%)
 
-### 2.3 文字色彩
-- **主要文本**: #1F2937 (RGB: 31, 41, 55)
-- **次要文本**: #6B7280 (RGB: 107, 114, 128)
-- **辅助文本**: #9CA3AF (RGB: 156, 163, 175)
-- **反转文本**: #FFFFFF (RGB: 255, 255, 255)
+### 2.3 Text Colors
+- **Primary Text**: #1F2937 (RGB: 31, 41, 55)
+- **Secondary Text**: #6B7280 (RGB: 107, 114, 128)
+- **Auxiliary Text**: #9CA3AF (RGB: 156, 163, 175)
+- **Inverted Text**: #FFFFFF (RGB: 255, 255, 255)
 
-## 3. 布局设计
+## 3. Layout Design
 
-### 3.1 全屏看板布局
+### 3.1 Full-screen Kanban Layout
 
-#### 顶部导航栏 (Header)
-- **高度**: 64px
-- **背景**: 白色，底部1px边框 #E5E7EB
-- **内容**: Logo、导航菜单、用户头像、通知按钮
+#### Top Navigation Bar (Header)
+- **Height**: 64px
+- **Background**: White, bottom 1px border #E5E7EB
+- **Content**: Logo, navigation menu, user avatar, notification button
 
-#### 侧边栏 (Sidebar)
-- **宽度**: 280px (展开) / 64px (收起)
-- **背景**: #F1F5F9
-- **收缩动画**: 300ms ease-in-out
-- **功能**: 项目切换、看板列表、用户设置
+#### Sidebar
+- **Width**: 280px (expanded) / 64px (collapsed)
+- **Background**: #F1F5F9
+- **Collapse Animation**: 300ms ease-in-out
+- **Function**: Project switching, board list, user settings
 
-#### 主看板区域 (Main Board)
-- **最小列数**: 3列
-- **最大列数**: 8列 (自适应)
-- **列间距**: 24px
-- **卡片间距**: 16px
+#### Main Board Area (Main Board)
+- **Minimum Columns**: 3 columns
+- **Maximum Columns**: 8 columns (adaptive)
+- **Column Spacing**: 24px
+- **Card Spacing**: 16px
 
-#### 列设计
-- **宽度**: 等宽铺满，自动计算
-- **最小宽度**: 280px
-- **背景**: 白色
-- **圆角**: 8px
-- **阴影**: 0 1px 3px rgba(0, 0, 0, 0.1)
+#### Column Design
+- **Width**: Equal width filling, auto-calculation
+- **Minimum Width**: 280px
+- **Background**: White
+- **Border Radius**: 8px
+- **Shadow**: 0 1px 3px rgba(0, 0, 0, 0.1)
 
-### 3.2 卡片组件
-- **高度**: 自适应内容
-- **最小高度**: 80px
-- **圆角**: 8px
-- **背景**: 白色
-- **边框**: 1px solid #E5E7EB
-- **悬停效果**: 轻微上移 + 阴影加深
+### 3.2 Card Component
+- **Height**: Adaptive content
+- **Minimum Height**: 80px
+- **Border Radius**: 8px
+- **Background**: White
+- **Border**: 1px solid #E5E7EB
+- **Hover Effect**: Slight upward movement + shadow deepening
 
-## 4. 响应式设计
+## 4. Responsive Design
 
-### 4.1 断点设置
+### 4.1 Breakpoint Settings
 ```css
-/* 移动设备 */
+/* Mobile Devices */
 @media (max-width: 768px) { }
 
-/* 平板设备 */
+/* Tablet Devices */
 @media (min-width: 769px) and (max-width: 1024px) { }
 
-/* 桌面设备 */
+/* Desktop Devices */
 @media (min-width: 1025px) { }
 
-/* 大屏桌面 */
+/* Large Desktop */
 @media (min-width: 1440px) { }
 ```
 
-### 4.2 移动端适配 (≤768px)
+### 4.2 Mobile Adaptation (≤768px)
 
-#### 布局调整
-- **隐藏侧边栏**: 改为下拉菜单或滑动抽屉
-- **列布局**: 改为水平滑动单列显示
-- **卡片尺寸**: 适配触摸操作，最小点击区域 44px
-- **导航**: 底部Tab导航
+#### Layout Adjustments
+- **Hide Sidebar**: Changed to dropdown menu or sliding drawer
+- **Column Layout**: Changed to horizontal scrolling single column display
+- **Card Size**: Adapted for touch operations, minimum click area 44px
+- **Navigation**: Bottom Tab navigation
 
-#### 交互优化
-- **拖拽**: 触摸友好的拖拽手势
-- **手势**: 支持滑动、长按等移动端手势
-- **输入**: 弹出的全屏输入框
+#### Interaction Optimization
+- **Drag and Drop**: Touch-friendly drag gestures
+- **Gestures**: Support swipe, long press and other mobile gestures
+- **Input**: Full-screen input popup
 
-### 4.3 桌面端优化 (≥1025px)
+### 4.3 Desktop Optimization (≥1025px)
 
-#### 布局特色
-- **多列显示**: 充分利用屏幕宽度
-- **快捷键**: 支持键盘快捷操作
-- **拖拽增强**: 精确的鼠标拖拽
-- **悬停效果**: 丰富的鼠标悬停反馈
+#### Layout Features
+- **Multi-column Display**: Make full use of screen width
+- **Keyboard Shortcuts**: Support keyboard shortcuts
+- **Enhanced Drag and Drop**: Precise mouse drag and drop
+- **Hover Effects**: Rich mouse hover feedback
 
-#### 功能增强
-- **快捷菜单**: 右键菜单支持
-- **批量操作**: 支持多选和批量拖拽
-- **预览功能**: 悬停显示详细预览
+#### Feature Enhancement
+- **Context Menu**: Right-click menu support
+- **Batch Operations**: Support multi-select and batch drag and drop
+- **Preview Function**: Hover to show detailed preview
 
-### 4.4 自适应算法
+### 4.4 Adaptive Algorithm
 
-#### 列数计算
+#### Column Count Calculation
 ```javascript
-// 计算最优列数的伪代码
+// Pseudo code for calculating optimal column count
 function calculateColumns(containerWidth) {
   const columnWidth = 280;
   const gap = 24;
@@ -145,72 +145,72 @@ function calculateColumns(containerWidth) {
 }
 ```
 
-#### 卡片密度
-- **紧凑模式**: 减少间距，显示更多内容
-- **舒适模式**: 增加间距，提升阅读体验
-- **自动模式**: 根据屏幕尺寸自动调整
+#### Card Density
+- **Compact Mode**: Reduce spacing, display more content
+- **Comfortable Mode**: Increase spacing, enhance reading experience
+- **Auto Mode**: Automatically adjust based on screen size
 
-## 5. 交互设计规范
+## 5. Interaction Design Specification
 
-### 5.1 拖拽交互
+### 5.1 Drag and Drop Interaction
 
-#### 拖拽状态
-- **空闲**: 常规显示
-- **拖拽开始**: 卡片半透明，轻微缩放 (scale: 0.95)
-- **拖拽中**: 卡片跟随鼠标，显示拖拽阴影
-- **放置区域**: 目标区域高亮显示
-- **释放**: 平滑移动到目标位置
+#### Drag States
+- **Idle**: Normal display
+- **Drag Start**: Card semi-transparent, slight scale (scale: 0.95)
+- **Dragging**: Card follows mouse, shows drag shadow
+- **Drop Zone**: Target area highlighted
+- **Release**: Smooth movement to target position
 
-#### 拖拽反馈
-- **视觉反馈**: 边框高亮、阴影变化
-- **音效反馈**: 可选的拖拽音效
-- **触觉反馈**: 移动端震动反馈
+#### Drag Feedback
+- **Visual Feedback**: Border highlight, shadow changes
+- **Sound Feedback**: Optional drag sound effects
+- **Haptic Feedback**: Mobile vibration feedback
 
-### 5.2 动画规范
+### 5.2 Animation Standards
 
-#### 缓动函数
-- **默认**: cubic-bezier(0.4, 0.0, 0.2, 1) - 流畅自然
-- **快速**: cubic-bezier(0.0, 0.0, 0.2, 1) - 快速响应
-- **弹性**: cubic-bezier(0.68, -0.55, 0.265, 1.55) - 弹性效果
+#### Easing Functions
+- **Default**: cubic-bezier(0.4, 0.0, 0.2, 1) - smooth and natural
+- **Fast**: cubic-bezier(0.0, 0.0, 0.2, 1) - quick response
+- **Elastic**: cubic-bezier(0.68, -0.55, 0.265, 1.55) - elastic effect
 
-#### 动画时长
-- **快速**: 150ms (按钮点击、简单状态切换)
-- **标准**: 300ms (页面切换、卡片移动)
-- **慢速**: 500ms (复杂布局变化、模态框)
+#### Animation Duration
+- **Quick**: 150ms (button clicks, simple state changes)
+- **Standard**: 300ms (page transitions, card movements)
+- **Slow**: 500ms (complex layout changes, modals)
 
-#### 关键动画
-- **页面进入**: fadeIn + slideUp (300ms)
-- **卡片出现**: scaleIn + fadeIn (200ms)
-- **拖拽移动**: transform移动 (即时响应)
-- **加载状态**: pulse效果 (无限循环)
+#### Key Animations
+- **Page Entry**: fadeIn + slideUp (300ms)
+- **Card Appearance**: scaleIn + fadeIn (200ms)
+- **Drag Movement**: transform movement (instant response)
+- **Loading State**: pulse effect (infinite loop)
 
-### 5.3 用户反馈
+### 5.3 User Feedback
 
-#### 成功反馈
-- **颜色**: 绿色 #10B981
-- **图标**: ✅ 勾号图标
-- **动画**: 成功提示从下往上滑入
-- **自动消失**: 3秒后自动隐藏
+#### Success Feedback
+- **Color**: Green #10B981
+- **Icon**: ✅ Checkmark icon
+- **Animation**: Success prompt slides in from bottom
+- **Auto Dismiss**: Auto-hide after 3 seconds
 
-#### 错误反馈
-- **颜色**: 红色 #EF4444
-- **图标**: ❌ 叉号图标
-- **动画**: 震动效果 (移动端)
-- **持续时间**: 直到用户关闭
+#### Error Feedback
+- **Color**: Red #EF4444
+- **Icon**: ❌ Cross icon
+- **Animation**: Shake effect (mobile)
+- **Duration**: Until user closes
 
-#### 警告反馈
-- **颜色**: 橙色 #F59E0B
-- **图标**: ⚠️ 警告图标
-- **动画**: 闪烁效果
-- **交互**: 可点击查看详情
+#### Warning Feedback
+- **Color**: Orange #F59E0B
+- **Icon**: ⚠️ Warning icon
+- **Animation**: Blinking effect
+- **Interaction**: Clickable to view details
 
-## 6. 组件设计规范
+## 6. Component Design Specification
 
-### 6.1 按钮组件
+### 6.1 Button Components
 
-#### 主要按钮 (Primary Button)
+#### Primary Button
 ```css
-/* 默认状态 */
+/* Default State */
 background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
 color: white;
 border: none;
@@ -218,17 +218,17 @@ border-radius: 8px;
 padding: 12px 24px;
 font-weight: 600;
 
-/* 悬停状态 */
+/* Hover State */
 background: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
 transform: translateY(-1px);
 box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 
-/* 点击状态 */
+/* Click State */
 transform: translateY(0);
 box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
 ```
 
-#### 次要按钮 (Secondary Button)
+#### Secondary Button
 ```css
 background: white;
 color: #3B82F6;
@@ -237,12 +237,12 @@ border-radius: 8px;
 padding: 12px 24px;
 font-weight: 600;
 
-/* 悬停状态 */
+/* Hover State */
 background: #E0F2FE;
 transform: translateY(-1px);
 ```
 
-#### 文字按钮 (Text Button)
+#### Text Button
 ```css
 background: transparent;
 color: #3B82F6;
@@ -251,13 +251,13 @@ border-radius: 6px;
 padding: 8px 16px;
 font-weight: 500;
 
-/* 悬停状态 */
+/* Hover State */
 background: #E0F2FE;
 ```
 
-### 6.2 卡片组件
+### 6.2 Card Components
 
-#### 任务卡片 (Task Card)
+#### Task Card
 ```css
 background: white;
 border: 1px solid #E5E7EB;
@@ -266,37 +266,37 @@ padding: 16px;
 margin-bottom: 12px;
 transition: all 0.2s ease;
 
-/* 悬停效果 */
+/* Hover Effect */
 transform: translateY(-2px);
 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 border-color: #3B82F6;
 
-/* 拖拽状态 */
+/* Drag State */
 opacity: 0.8;
 transform: rotate(2deg) scale(0.95);
 ```
 
-#### 卡片内容结构
+#### Card Content Structure
 ```
 ┌─────────────────────────────────┐
-│ [优先级标签] 任务标题            │
+│ [Priority Label] Task Title     │
 │                                 │
-│ 📝 任务描述内容...              │
+│ 📝 Task Description Content...  │
 │                                 │
-│ 👤 负责人    🏷️ 标签1, 标签2   │
-│ 📅 截止日期                     │
+│ 👤 Assignee    🏷️ Tag1, Tag2   │
+│ 📅 Due Date                     │
 └─────────────────────────────────┘
 ```
 
-### 6.3 模态框组件
+### 6.3 Modal Components
 
-#### 基础模态框
+#### Basic Modal
 ```css
-/* 背景遮罩 */
+/* Background Overlay */
 background: rgba(0, 0, 0, 0.5);
 backdrop-filter: blur(4px);
 
-/* 模态框主体 */
+/* Modal Body */
 background: white;
 border-radius: 12px;
 box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
@@ -305,19 +305,19 @@ width: 90%;
 max-height: 80vh;
 overflow-y: auto;
 
-/* 入场动画 */
+/* Entry Animation */
 animation: modalSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 ```
 
-#### 表单模态框
-- **标题**: 24px 字体，加粗
-- **输入框**: 圆角8px，边框 #D1D5DB，聚焦时边框 #3B82F6
-- **按钮组**: 右对齐，主要按钮优先
-- **验证反馈**: 错误状态红色边框 + 提示文字
+#### Form Modal
+- **Title**: 24px font, bold
+- **Input Fields**: Rounded 8px, border #D1D5DB, focus border #3B82F6
+- **Button Group**: Right-aligned, primary button priority
+- **Validation Feedback**: Error state red border + hint text
 
-### 6.4 输入框组件
+### 6.4 Input Components
 
-#### 文本输入框
+#### Text Input
 ```css
 border: 2px solid #E5E7EB;
 border-radius: 8px;
@@ -325,307 +325,310 @@ padding: 12px 16px;
 font-size: 16px;
 transition: border-color 0.2s ease;
 
-/* 聚焦状态 */
+/* Focus State */
 border-color: #3B82F6;
 box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 
-/* 错误状态 */
+/* Error State */
 border-color: #EF4444;
 ```
 
-#### 搜索框
-- **图标**: 左侧搜索图标
-- **占位符**: "搜索任务、标签、成员..."
-- **清除按钮**: 输入内容时显示清除图标
-- **搜索建议**: 下拉显示搜索历史和建议
+#### Search Box
+- **Icon**: Search icon on left
+- **Placeholder**: "Search tasks, tags, members..."
+- **Clear Button**: Show clear icon when content is entered
+- **Search Suggestions**: Dropdown showing search history and suggestions
 
-### 6.5 导航组件
+### 6.5 Navigation Components
 
-#### 面包屑导航
+#### Breadcrumb Navigation
 ```css
 font-size: 14px;
 color: #6B7280;
 margin-bottom: 16px;
 
-/* 当前页面 */
+/* Current Page */
 color: #1F2937;
 font-weight: 600;
 
-/* 分隔符 */
+/* Separator */
 color: #D1D5DB;
 margin: 0 8px;
 ```
 
-#### Tab导航
+#### Tab Navigation
 ```css
 border-bottom: 2px solid #E5E7EB;
 margin-bottom: 24px;
 
-/* Tab项 */
+/* Tab Item */
 padding: 12px 16px;
 color: #6B7280;
 border-bottom: 2px solid transparent;
 transition: all 0.2s ease;
 
-/* 激活状态 */
+/* Active State */
 color: #3B82F6;
 border-bottom-color: #3B82F6;
 font-weight: 600;
 ```
 
-## 7. 用户体验流程设计
+## 7. User Experience Process Design
 
-### 7.1 用户注册与登录流程
+### 7.1 User Registration and Login Process
 
-#### 注册流程
+#### Registration Process
 ```
-首页 → 点击"注册" → 邮箱/用户名输入 → 邮箱验证 → 设置密码 → 
-完善个人信息 → 选择团队类型 → 引导创建首个看板 → 进入主界面
-```
-
-**设计要点**:
-- **简化注册**: 支持邮箱快速注册
-- **即时验证**: 实时验证邮箱格式和密码强度
-- **视觉引导**: 新手引导动画展示核心功能
-- **跳过机制**: 部分信息可在使用过程中完善
-
-#### 登录流程
-```
-登录页 → 输入凭据 → 记住我选项 → 登录 → 跳转至上次访问页面
+Homepage → Click "Register" → Email/Username Input → Email Verification → 
+Set Password → Complete Personal Info → Select Team Type → 
+Guide to Create First Board → Enter Main Interface
 ```
 
-**安全特性**:
-- **自动登录**: 7天内免登录
-- **双因素认证**: 可选的2FA支持
-- **社交登录**: 支持Google/GitHub快速登录
-- **密码找回**: 邮箱/手机号找回密码
+**Design Points**:
+- **Simplified Registration**: Support quick email registration
+- **Instant Verification**: Real-time verification of email format and password strength
+- **Visual Guidance**: Newbie guide animation showing core features
+- **Skip Mechanism**: Some information can be completed during usage
 
-### 7.2 创建看板流程
-
-#### 首次创建
+#### Login Process
 ```
-主界面 → "创建看板"按钮 → 看板信息设置 → 选择模板 → 
-设置列类型 → 邀请成员 → 完成创建 → 进入看板
+Login Page → Input Credentials → Remember Me Option → Login → 
+Redirect to Last Visited Page
 ```
 
-**创建表单字段**:
-- **看板名称**: 必填，最多50字符
-- **看板描述**: 选填，最多200字符
-- **隐私设置**: 公开/私有/团队可见
-- **模板选择**: 空看板/敏捷开发/内容创作/通用
-- **列设置**: 待办/进行中/已完成 等默认列
+**Security Features**:
+- **Auto Login**: 7-day login-free
+- **Two-factor Authentication**: Optional 2FA support
+- **Social Login**: Support Google/GitHub quick login
+- **Password Recovery**: Email/phone number password recovery
 
-#### 快速创建
-- **一键创建**: 基于默认模板快速创建
-- **复制看板**: 复制现有看板结构
-- **导入数据**: 从Excel/Trello等导入任务
+### 7.2 Create Board Process
 
-### 7.3 任务管理流程
-
-#### 创建任务
+#### First Creation
 ```
-看板 → 点击"+ 添加任务" → 任务详情编辑 → 
-保存 → 任务出现在相应列中
+Main Interface → "Create Board" Button → Board Info Settings → 
+Select Template → Set Column Types → Invite Members → 
+Complete Creation → Enter Board
 ```
 
-**任务创建方式**:
-- **快速创建**: 点击列底部的"+"号
-- **详细创建**: 右键菜单 → 新建任务
-- **批量创建**: 支持批量导入任务
-- **模板创建**: 基于任务模板创建
+**Create Form Fields**:
+- **Board Name**: Required, max 50 characters
+- **Board Description**: Optional, max 200 characters
+- **Privacy Settings**: Public/Private/Team Visible
+- **Template Selection**: Empty Board/Agile Development/Content Creation/General
+- **Column Settings**: Todo/In Progress/Done and other default columns
 
-#### 编辑任务
-```
-点击任务卡片 → 打开任务详情 → 编辑信息 → 
-保存更改 → 实时同步更新
-```
+#### Quick Creation
+- **One-click Creation**: Quick creation based on default template
+- **Copy Board**: Copy existing board structure
+- **Import Data**: Import tasks from Excel/Trello, etc.
 
-**可编辑信息**:
-- 基本信息: 标题、描述、优先级
-- 人员分配: 负责人、协助者
-- 时间管理: 开始日期、截止日期
-- 分类标签: 任务类型、标签分类
-- 附件文件: 支持图片、文档上传
-- 子任务: 创建和管理子任务
+### 7.3 Task Management Process
 
-#### 任务移动
+#### Create Task
 ```
-拖拽任务卡片 → 移动到目标列 → 释放 → 
-任务状态更新 → 触发通知
+Board → Click "+ Add Task" → Task Details Edit → 
+Save → Task Appears in Corresponding Column
 ```
 
-**移动规则**:
-- **权限检查**: 检查用户是否有权限移动任务
-- **状态验证**: 验证移动是否合理
-- **依赖处理**: 提示相关任务依赖关系
-- **自动通知**: 通知相关成员任务状态变更
+**Task Creation Methods**:
+- **Quick Creation**: Click "+" at bottom of column
+- **Detailed Creation**: Right-click menu → New Task
+- **Batch Creation**: Support batch import tasks
+- **Template Creation**: Create based on task template
 
-### 7.4 团队协作流程
-
-#### 成员邀请
+#### Edit Task
 ```
-看板设置 → 成员管理 → 邀请成员 → 
-输入邮箱 → 发送邀请 → 成员接受邀请 → 加入看板
+Click Task Card → Open Task Details → Edit Information → 
+Save Changes → Real-time Sync Update
 ```
 
-**邀请方式**:
-- **邮箱邀请**: 发送邀请邮件
-- **链接分享**: 生成分享链接
-- **批量导入**: 批量邀请多个成员
-- **角色设置**: 管理员/编辑者/查看者权限
+**Editable Information**:
+- Basic info: Title, Description, Priority
+- Personnel assignment: Assignee, Collaborators
+- Time management: Start date, Due date
+- Classification tags: Task type, Tag classification
+- Attachment files: Support image, document upload
+- Sub-tasks: Create and manage sub-tasks
 
-#### 权限管理
-- **看板拥有者**: 完整权限，可转让
-- **管理员**: 管理看板设置和成员
-- **编辑者**: 可编辑任务和创建看板
-- **查看者**: 只读权限
-
-### 7.5 搜索与筛选流程
-
-#### 全局搜索
+#### Task Movement
 ```
-任意页面 → Ctrl+K / 点击搜索框 → 
-输入关键词 → 实时显示结果 → 点击进入
+Drag Task Card → Move to Target Column → Release → 
+Task Status Update → Trigger Notification
 ```
 
-**搜索功能**:
-- **智能搜索**: 支持任务名称、描述、标签搜索
-- **搜索建议**: 实时显示相关建议
-- **搜索历史**: 保存最近搜索记录
-- **高级筛选**: 按状态、负责人、日期筛选
+**Movement Rules**:
+- **Permission Check**: Check if user has permission to move task
+- **Status Validation**: Verify if movement is reasonable
+- **Dependency Handling**: Prompt related task dependencies
+- **Auto Notification**: Notify relevant members of task status changes
 
-#### 看板筛选
+### 7.4 Team Collaboration Process
+
+#### Member Invitation
 ```
-看板 → 筛选按钮 → 设置筛选条件 → 
-应用筛选 → 查看筛选结果 → 清除筛选
+Board Settings → Member Management → Invite Members → 
+Input Email → Send Invitation → Member Accept Invitation → Join Board
 ```
 
-**筛选维度**:
-- **任务状态**: 待办/进行中/已完成
-- **优先级**: 低/中/高/紧急
-- **负责人**: 特定成员或未分配
-- **标签**: 特定标签分类
-- **时间范围**: 创建时间/截止时间
+**Invitation Methods**:
+- **Email Invitation**: Send invitation email
+- **Link Sharing**: Generate share link
+- **Batch Import**: Batch invite multiple members
+- **Role Settings**: Admin/Editor/Viewer permissions
 
-## 8. 性能优化
+#### Permission Management
+- **Board Owner**: Full permissions, can transfer
+- **Admin**: Manage board settings and members
+- **Editor**: Can edit tasks and create boards
+- **Viewer**: Read-only permissions
 
-### 8.1 加载优化
-- **懒加载**: 任务卡片懒加载，减少初始加载时间
-- **虚拟滚动**: 大量任务时使用虚拟滚动
-- **图片优化**: WebP格式，响应式图片
-- **代码分割**: 按路由分割代码包
+### 7.5 Search and Filter Process
 
-### 8.2 交互优化
-- **防抖处理**: 搜索输入防抖，300ms延迟
-- **节流处理**: 拖拽事件节流，提升性能
-- **预加载**: 预加载用户可能访问的看板
-- **缓存策略**: 合理缓存用户数据和设置
+#### Global Search
+```
+Any Page → Ctrl+K / Click Search Box → 
+Input Keywords → Real-time Display Results → Click to Enter
+```
 
-## 9. 可访问性设计
+**Search Functions**:
+- **Smart Search**: Support task name, description, tag search
+- **Search Suggestions**: Display relevant suggestions in real-time
+- **Search History**: Save recent search records
+- **Advanced Filter**: Filter by status, assignee, date
 
-### 9.1 视觉无障碍
-- **对比度**: 确保文字与背景对比度 ≥ 4.5:1
-- **色彩辅助**: 不仅依赖颜色传达信息
-- **字体大小**: 支持用户调整字体大小
-- **动画控制**: 提供减少动画的选项
+#### Board Filter
+```
+Board → Filter Button → Set Filter Conditions → 
+Apply Filter → View Filter Results → Clear Filter
+```
 
-### 9.2 键盘导航
-- **Tab导航**: 完整的键盘Tab导航
-- **快捷键**: 常用操作的快捷键支持
-- **焦点管理**: 清晰的焦点指示器
-- **快捷菜单**: 支持键盘操作的上下文菜单
+**Filter Dimensions**:
+- **Task Status**: Todo/In Progress/Completed
+- **Priority**: Low/Medium/High/Urgent
+- **Assignee**: Specific member or unassigned
+- **Tags**: Specific tag classifications
+- **Time Range**: Creation time/Due date
 
-### 9.3 屏幕阅读器支持
-- **语义化HTML**: 使用正确的HTML标签
-- **ARIA标签**: 适当的ARIA标签和属性
-- **替代文本**: 图片和图标提供alt文本
-- **状态描述**: 任务状态变化的语音描述
+## 8. Performance Optimization
 
-## 10. 设计交付规范
+### 8.1 Loading Optimization
+- **Lazy Loading**: Task card lazy loading, reduce initial loading time
+- **Virtual Scrolling**: Use virtual scrolling for large number of tasks
+- **Image Optimization**: WebP format, responsive images
+- **Code Splitting**: Split code packages by route
 
-### 10.1 图标规范
-- **风格**: 线性图标，2px线宽
-- **尺寸**: 16px, 20px, 24px, 32px
-- **颜色**: 继承父元素颜色或指定颜色
-- **命名**: 使用语义化命名，如 `icon-add-task.svg`
+### 8.2 Interaction Optimization
+- **Debounce Processing**: Search input debounce, 300ms delay
+- **Throttle Processing**: Drag event throttling, improve performance
+- **Preloading**: Preload boards users might access
+- **Caching Strategy**: Reasonably cache user data and settings
 
-### 10.2 字体规范
-- **中文字体**: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei"
-- **英文字体**: "SF Pro Display", "Segoe UI", "Roboto"
-- **字体大小**: 12px, 14px, 16px, 18px, 24px, 32px
-- **字重**: 400 (Regular), 500 (Medium), 600 (Semibold), 700 (Bold)
+## 9. Accessibility Design
 
-### 10.3 间距规范
-- **基础单位**: 8px
-- **常用间距**: 4px, 8px, 16px, 24px, 32px, 48px, 64px
-- **组件间距**: 
-  - 卡片间距: 16px
-  - 列表项间距: 12px
-  - 按钮间距: 12px
-  - 表单字段间距: 16px
+### 9.1 Visual Accessibility
+- **Contrast**: Ensure text and background contrast ratio ≥ 4.5:1
+- **Color Assistance**: Don't rely solely on color to convey information
+- **Font Size**: Support user font size adjustment
+- **Animation Control**: Provide option to reduce animations
 
-### 10.4 阴影规范
+### 9.2 Keyboard Navigation
+- **Tab Navigation**: Complete keyboard Tab navigation
+- **Keyboard Shortcuts**: Support keyboard shortcuts for common operations
+- **Focus Management**: Clear focus indicators
+- **Context Menu**: Support keyboard-operated context menus
+
+### 9.3 Screen Reader Support
+- **Semantic HTML**: Use correct HTML tags
+- **ARIA Labels**: Appropriate ARIA labels and attributes
+- **Alternative Text**: Provide alt text for images and icons
+- **State Description**: Voice description of task status changes
+
+## 10. Design Delivery Specifications
+
+### 10.1 Icon Specifications
+- **Style**: Line icons, 2px stroke width
+- **Sizes**: 16px, 20px, 24px, 32px
+- **Colors**: Inherit parent element color or specified color
+- **Naming**: Use semantic naming, e.g., `icon-add-task.svg`
+
+### 10.2 Font Specifications
+- **Chinese Fonts**: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei"
+- **English Fonts**: "SF Pro Display", "Segoe UI", "Roboto"
+- **Font Sizes**: 12px, 14px, 16px, 18px, 24px, 32px
+- **Font Weights**: 400 (Regular), 500 (Medium), 600 (Semibold), 700 (Bold)
+
+### 10.3 Spacing Specifications
+- **Base Unit**: 8px
+- **Common Spacing**: 4px, 8px, 16px, 24px, 32px, 48px, 64px
+- **Component Spacing**: 
+  - Card spacing: 16px
+  - List item spacing: 12px
+  - Button spacing: 12px
+  - Form field spacing: 16px
+
+### 10.4 Shadow Specifications
 ```css
-/* 卡片阴影 */
+/* Card Shadow */
 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
-/* 悬浮阴影 */
+/* Hover Shadow */
 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 
-/* 模态框阴影 */
+/* Modal Shadow */
 box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 
-/* 按钮按压阴影 */
+/* Button Press Shadow */
 box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
 ```
 
-## 11. 开发实施建议
+## 11. Development Implementation Suggestions
 
-### 11.1 技术栈推荐
-- **前端框架**: React 18+ / Vue 3+
-- **UI组件库**: Ant Design / Element Plus
-- **状态管理**: Redux / Vuex / Zustand
-- **动画库**: Framer Motion / Vue Transition
-- **样式方案**: CSS Modules / Styled Components / Tailwind CSS
+### 11.1 Technology Stack Recommendations
+- **Frontend Framework**: React 18+ / Vue 3+
+- **UI Component Library**: Ant Design / Element Plus
+- **State Management**: Redux / Vuex / Zustand
+- **Animation Library**: Framer Motion / Vue Transition
+- **Styling Solution**: CSS Modules / Styled Components / Tailwind CSS
 
-### 11.2 开发流程
-1. **设计评审**: UI/UX设计完成后进行开发评审
-2. **组件开发**: 按组件规范开发基础组件
-3. **页面集成**: 组合组件形成完整页面
-4. **交互测试**: 完整测试所有交互流程
-5. **性能优化**: 性能测试和优化
-6. **无障碍测试**: 可访问性测试
+### 11.2 Development Process
+1. **Design Review**: Development review after UI/UX design completion
+2. **Component Development**: Develop basic components according to component specifications
+3. **Page Integration**: Combine components to form complete pages
+4. **Interaction Testing**: Test all interaction processes completely
+5. **Performance Optimization**: Performance testing and optimization
+6. **Accessibility Testing**: Accessibility testing
 
-### 11.3 质量保证
-- **设计还原度**: 确保UI还原设计稿 ≥ 95%
-- **跨浏览器兼容**: 支持主流浏览器最新两个版本
-- **响应式测试**: 在各种设备尺寸下测试
-- **性能指标**: 首屏加载 < 3s，交互响应 < 100ms
-- **用户体验**: 关键操作路径流畅无阻
-
----
-
-## 附录
-
-### A. 快捷键列表
-- `Ctrl+N`: 创建新任务
-- `Ctrl+Shift+N`: 创建新看板
-- `Ctrl+K`: 全局搜索
-- `Ctrl+/: 显示快捷键帮助
-- `Delete`: 删除选中任务
-- `Space`: 快速查看任务详情
-
-### B. 错误状态码
-- `E001`: 网络连接错误
-- `E002`: 权限不足
-- `E003`: 数据保存失败
-- `E004`: 文件上传失败
-
-### C. 设计变更日志
-- v1.0 (2025-11-29): 初始版本，包含完整的UI/UX设计规范
+### 11.3 Quality Assurance
+- **Design Fidelity**: Ensure UI matches design mockups ≥ 95%
+- **Cross-browser Compatibility**: Support latest two versions of mainstream browsers
+- **Responsive Testing**: Test on various device sizes
+- **Performance Metrics**: First screen loading < 3s, interaction response < 100ms
+- **User Experience**: Key operation paths are smooth and unobstructed
 
 ---
 
-**设计师**: UI/UX团队  
-**最后更新**: 2025-11-29  
-**版本**: v1.0
+## Appendix
+
+### A. Keyboard Shortcuts List
+- `Ctrl+N`: Create new task
+- `Ctrl+Shift+N`: Create new board
+- `Ctrl+K`: Global search
+- `Ctrl+/: Show shortcuts help
+- `Delete`: Delete selected task
+- `Space`: Quick view task details
+
+### B. Error Status Codes
+- `E001`: Network connection error
+- `E002`: Insufficient permissions
+- `E003`: Data save failed
+- `E004`: File upload failed
+
+### C. Design Change Log
+- v1.0 (2025-11-29): Initial version, containing complete UI/UX design specifications
+
+---
+
+**Designer**: UI/UX Team  
+**Last Updated**: 2025-11-29  
+**Version**: v1.0

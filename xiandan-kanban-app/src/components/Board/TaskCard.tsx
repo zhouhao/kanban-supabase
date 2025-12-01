@@ -26,9 +26,9 @@ const priorityColors = {
 };
 
 const priorityLabels = {
-  low: '低',
-  medium: '中',
-  high: '高',
+  low: 'Low',
+  medium: 'Medium',
+  high: 'High',
 };
 
 export const TaskCard = ({ task, onEdit, onDelete, onOpenDetails }: TaskCardProps) => {
@@ -57,6 +57,8 @@ export const TaskCard = ({ task, onEdit, onDelete, onOpenDetails }: TaskCardProp
       style={style}
       {...attributes}
       {...listeners}
+      role="button"
+      tabIndex={0}
       className={`bg-white rounded-lg p-4 shadow-soft hover:shadow-medium transition-all cursor-move border border-neutral-200 hover:border-primary-300 group ${
         task.is_completed ? 'opacity-75' : ''
       }`}
@@ -91,9 +93,10 @@ export const TaskCard = ({ task, onEdit, onDelete, onOpenDetails }: TaskCardProp
                   setShowMenu(false);
                 }}
                 className="w-full px-4 py-2 text-left text-sm hover:bg-neutral-50 flex items-center gap-2 text-neutral-700"
+                aria-label="Edit"
               >
                 <Edit2 className="w-4 h-4" />
-                编辑
+                Edit
               </button>
               <button
                 onClick={(e) => {
@@ -102,9 +105,10 @@ export const TaskCard = ({ task, onEdit, onDelete, onOpenDetails }: TaskCardProp
                   setShowMenu(false);
                 }}
                 className="w-full px-4 py-2 text-left text-sm hover:bg-neutral-50 flex items-center gap-2 text-danger"
+                aria-label="Delete"
               >
                 <Trash2 className="w-4 h-4" />
-                删除
+                Delete
               </button>
             </div>
           )}
@@ -121,7 +125,7 @@ export const TaskCard = ({ task, onEdit, onDelete, onOpenDetails }: TaskCardProp
       {/* Priority Badge */}
       <div className="mb-3">
         <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium border ${priorityColors[task.priority]}`}>
-          优先级: {priorityLabels[task.priority]}
+          {priorityLabels[task.priority]}
         </span>
       </div>
 
@@ -131,7 +135,7 @@ export const TaskCard = ({ task, onEdit, onDelete, onOpenDetails }: TaskCardProp
           {task.due_date && (
             <div className={`flex items-center gap-1 ${isOverdue ? 'text-danger' : ''}`}>
               <Calendar className="w-3.5 h-3.5" />
-              {new Date(task.due_date).toLocaleDateString('zh-CN')}
+              {new Date(task.due_date).toLocaleDateString('en-US')}
             </div>
           )}
         </div>
@@ -153,7 +157,7 @@ export const TaskCard = ({ task, onEdit, onDelete, onOpenDetails }: TaskCardProp
         <div className="flex items-center gap-2 text-xs">
           <Clock className="w-3.5 h-3.5 text-neutral-400" />
           <span className="text-neutral-500">
-            创建于 {new Date(task.created_at).toLocaleDateString('zh-CN')}
+            Created on {new Date(task.created_at).toLocaleDateString('en-US')}
           </span>
         </div>
       </div>

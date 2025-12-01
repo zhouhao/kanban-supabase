@@ -1,7 +1,7 @@
 -- Migration: create_core_tables
 -- Created at: 1764397628
 
--- 创建用户资料表
+-- Create user profiles table
 CREATE TABLE IF NOT EXISTS user_profiles (
   id UUID PRIMARY KEY,
   email TEXT NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS user_profiles (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 创建看板表
+-- Create boards table
 CREATE TABLE IF NOT EXISTS boards (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS boards (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 创建看板成员表
+-- Create board members table
 CREATE TABLE IF NOT EXISTS board_members (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   board_id UUID NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS board_members (
   UNIQUE(board_id, user_id)
 );
 
--- 创建列配置表
+-- Create columns configuration table
 CREATE TABLE IF NOT EXISTS columns (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   board_id UUID NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS columns (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 创建任务表
+-- Create tasks table
 CREATE TABLE IF NOT EXISTS tasks (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   board_id UUID NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS tasks (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 创建任务标签表
+-- Create task tags table
 CREATE TABLE IF NOT EXISTS task_tags (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   task_id UUID NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS task_tags (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 创建提醒设置表
+-- Create reminders settings table
 CREATE TABLE IF NOT EXISTS reminders (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   task_id UUID NOT NULL,
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS reminders (
   sent_at TIMESTAMP WITH TIME ZONE
 );
 
--- 创建任务活动日志表
+-- Create task activities log table
 CREATE TABLE IF NOT EXISTS task_activities (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   task_id UUID NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS task_activities (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 创建邮件发送记录表
+-- Create email logs table
 CREATE TABLE IF NOT EXISTS email_logs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   recipient_email TEXT NOT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS email_logs (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 创建索引
+-- Create indexes
 CREATE INDEX IF NOT EXISTS idx_boards_user_id ON boards(user_id);
 CREATE INDEX IF NOT EXISTS idx_board_members_board_id ON board_members(board_id);
 CREATE INDEX IF NOT EXISTS idx_board_members_user_id ON board_members(user_id);
@@ -127,7 +127,7 @@ CREATE INDEX IF NOT EXISTS idx_task_activities_task_id ON task_activities(task_i
 CREATE INDEX IF NOT EXISTS idx_task_activities_user_id ON task_activities(user_id);
 CREATE INDEX IF NOT EXISTS idx_email_logs_recipient ON email_logs(recipient_email, created_at);
 
--- 创建更新时间自动更新触发器
+-- Create auto-update trigger for updated_at column
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-咸蛋快板 (Xiandan Kanban) is a web-based Kanban board management application built with React, TypeScript, and Supabase. The application enables users to create multiple boards, manage tasks across columns, and receive email reminders.
+Xiandan Kanban is a web-based Kanban board management application built with React, TypeScript, and Supabase. The application enables users to create multiple boards, manage tasks across columns, and receive email reminders.
 
 **Working Directory**: The main application is located in `xiandan-kanban/xiandan-kanban-app/`
 
@@ -227,8 +227,8 @@ No test files currently exist in the repository. When adding tests:
 ## Documentation
 
 Technical documentation is in `docs/`:
-- `tech_architecture.md` - Full technical architecture (Chinese)
-- `feature_requirements.md` - Feature specifications (Chinese)
+- `tech_architecture.md` - Full technical architecture
+- `feature_requirements.md` - Feature specifications
 - `database_api_design.md` - Database and API design
 - `ui_ux_design.md` - UI/UX guidelines
 - `email_stats_system.md` - Email reminder system design

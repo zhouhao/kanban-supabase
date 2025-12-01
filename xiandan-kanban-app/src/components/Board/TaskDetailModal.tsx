@@ -24,9 +24,9 @@ const priorityColors = {
 };
 
 const priorityLabels = {
-  low: '低',
-  medium: '中',
-  high: '高',
+  low: 'Low',
+  medium: 'Medium',
+  high: 'High',
 };
 
 export const TaskDetailModal = ({ task, onClose }: TaskDetailModalProps) => {
@@ -42,7 +42,7 @@ export const TaskDetailModal = ({ task, onClose }: TaskDetailModalProps) => {
   useEffect(() => {
     fetchComments(task.id);
     fetchReminders(task.id);
-  }, [task.id]);
+  }, [task.id, fetchComments, fetchReminders]);
 
   const handleAddComment = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,7 +61,7 @@ export const TaskDetailModal = ({ task, onClose }: TaskDetailModalProps) => {
   };
 
   const handleDeleteReminder = async (reminderId: string) => {
-    if (window.confirm('确定要删除此提醒吗？')) {
+    if (window.confirm('Are you sure you want to delete this reminder?')) {
       await deleteReminder(reminderId);
     }
   };
@@ -77,13 +77,13 @@ export const TaskDetailModal = ({ task, onClose }: TaskDetailModalProps) => {
             <h2 className="text-2xl font-semibold text-neutral-900 mb-2">{task.title}</h2>
             <div className="flex items-center gap-3 flex-wrap">
               <span className={`inline-flex items-center px-3 py-1 rounded text-sm font-medium border ${priorityColors[task.priority]}`}>
-                优先级: {priorityLabels[task.priority]}
+                Priority: {priorityLabels[task.priority]}
               </span>
               {task.due_date && (
                 <div className={`flex items-center gap-1 text-sm ${isOverdue ? 'text-danger' : 'text-neutral-600'}`}>
                   <Calendar className="w-4 h-4" />
-                  截止: {new Date(task.due_date).toLocaleDateString('zh-CN')}
-                  {isOverdue && <span className="ml-1 text-danger font-medium">(已逾期)</span>}
+                  Due: {new Date(task.due_date).toLocaleDateString('en-US')}
+                  {isOverdue && <span className="ml-1 text-danger font-medium">(Overdue)</span>}
                 </div>
               )}
             </div>
@@ -100,9 +100,9 @@ export const TaskDetailModal = ({ task, onClose }: TaskDetailModalProps) => {
         <div className="p-6">
           {/* Description */}
           <div className="mb-6">
-            <h3 className="text-sm font-semibold text-neutral-700 mb-2">描述</h3>
+            <h3 className="text-sm font-semibold text-neutral-700 mb-2">Description</h3>
             <p className="text-neutral-600 whitespace-pre-wrap">
-              {task.description || '暂无描述'}
+              {task.description || 'No description'}
             </p>
           </div>
 
@@ -110,23 +110,23 @@ export const TaskDetailModal = ({ task, onClose }: TaskDetailModalProps) => {
           <div className="mb-6 p-4 bg-neutral-50 rounded-lg">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-neutral-500">状态:</span>
+                <span className="text-neutral-500">Status:</span>
                 <span className="ml-2 text-neutral-900 font-medium">
-                  {task.is_completed ? '已完成' : '进行中'}
+                  {task.is_completed ? 'Completed' : 'In Progress'}
                   
                   
                 </span>
               </div>
               <div>
-                <span className="text-neutral-500">创建时间:</span>
+                <span className="text-neutral-500">Created:</span>
                 <span className="ml-2 text-neutral-900">
-                  {new Date(task.created_at).toLocaleString('zh-CN')}
+                  {new Date(task.created_at).toLocaleString('en-US')}
                 </span>
               </div>
               <div>
-                <span className="text-neutral-500">更新时间:</span>
+                <span className="text-neutral-500">Updated:</span>
                 <span className="ml-2 text-neutral-900">
-                  {new Date(task.updated_at).toLocaleString('zh-CN')}
+                  {new Date(task.updated_at).toLocaleString('en-US')}
                 </span>
               </div>
             </div>
@@ -145,7 +145,7 @@ export const TaskDetailModal = ({ task, onClose }: TaskDetailModalProps) => {
               >
                 <div className="flex items-center gap-2">
                   <MessageCircle className="w-4 h-4" />
-                  评论 ({taskComments.length})
+                  Comments ({taskComments.length})
                 </div>
               </button>
               <button
@@ -158,7 +158,7 @@ export const TaskDetailModal = ({ task, onClose }: TaskDetailModalProps) => {
               >
                 <div className="flex items-center gap-2">
                   <Bell className="w-4 h-4" />
-                  提醒 ({taskReminders.length})
+                  Reminders ({taskReminders.length})
                 </div>
               </button>
             </div>
@@ -173,12 +173,12 @@ export const TaskDetailModal = ({ task, onClose }: TaskDetailModalProps) => {
                     <p className="text-neutral-900 mb-2">{comment.content}</p>
                     <div className="flex items-center gap-2 text-xs text-neutral-500">
                       <Clock className="w-3 h-3" />
-                      {new Date(comment.created_at).toLocaleString('zh-CN')}
+                      {new Date(comment.created_at).toLocaleString('en-US')}
                     </div>
                   </div>
                 ))}
                 {taskComments.length === 0 && (
-                  <p className="text-center text-neutral-400 py-8">暂无评论</p>
+                  <p className="text-center text-neutral-400 py-8">No comments yet</p>
                 )}
               </div>
 
@@ -188,7 +188,7 @@ export const TaskDetailModal = ({ task, onClose }: TaskDetailModalProps) => {
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   className="flex-1 px-4 py-3 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                  placeholder="添加评论..."
+                  placeholder="Add a comment..."
                 />
                 <button
                   type="submit"
@@ -211,10 +211,10 @@ export const TaskDetailModal = ({ task, onClose }: TaskDetailModalProps) => {
                       <Bell className="w-4 h-4 text-primary-500" />
                       <div>
                         <p className="text-neutral-900 font-medium">
-                          {new Date(reminder.reminder_time).toLocaleString('zh-CN')}
+                          {new Date(reminder.reminder_time).toLocaleString('en-US')}
                         </p>
                         <p className="text-xs text-neutral-500">
-                          {reminder.is_sent ? '已发送' : '待发送'}
+                          {reminder.is_sent ? 'Sent' : 'Pending'}
                         </p>
                       </div>
                     </div>
@@ -227,7 +227,7 @@ export const TaskDetailModal = ({ task, onClose }: TaskDetailModalProps) => {
                   </div>
                 ))}
                 {taskReminders.length === 0 && (
-                  <p className="text-center text-neutral-400 py-8">暂无提醒</p>
+                  <p className="text-center text-neutral-400 py-8">No reminders yet</p>
                 )}
               </div>
 
@@ -244,7 +244,7 @@ export const TaskDetailModal = ({ task, onClose }: TaskDetailModalProps) => {
                   className="bg-primary-500 hover:bg-primary-600 text-white px-4 py-3 rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Plus className="w-4 h-4" />
-                  添加
+                  Add
                 </button>
               </form>
             </div>

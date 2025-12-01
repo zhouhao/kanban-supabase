@@ -1,7 +1,7 @@
 -- Migration: create_task_comments_and_reminders
 -- Created at: 1764399316
 
--- 创建任务评论表
+-- Create task comments table
 CREATE TABLE IF NOT EXISTS public.task_comments (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   task_id UUID NOT NULL REFERENCES public.tasks(id) ON DELETE CASCADE,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS public.task_comments (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 创建任务提醒表
+-- Create task reminders table
 CREATE TABLE IF NOT EXISTS public.task_reminders (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   task_id UUID NOT NULL REFERENCES public.tasks(id) ON DELETE CASCADE,
@@ -21,18 +21,18 @@ CREATE TABLE IF NOT EXISTS public.task_reminders (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 创建索引
+-- Create indexes
 CREATE INDEX IF NOT EXISTS idx_task_comments_task_id ON public.task_comments(task_id);
 CREATE INDEX IF NOT EXISTS idx_task_comments_user_id ON public.task_comments(user_id);
 CREATE INDEX IF NOT EXISTS idx_task_reminders_task_id ON public.task_reminders(task_id);
 CREATE INDEX IF NOT EXISTS idx_task_reminders_user_id ON public.task_reminders(user_id);
 CREATE INDEX IF NOT EXISTS idx_task_reminders_time ON public.task_reminders(reminder_time, is_sent);
 
--- 启用RLS
+-- Enable RLS
 ALTER TABLE public.task_comments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.task_reminders ENABLE ROW LEVEL SECURITY;
 
--- 创建RLS策略
+-- Create RLS policies
 CREATE POLICY "Users can view task comments" ON public.task_comments
   FOR SELECT USING (true);
 

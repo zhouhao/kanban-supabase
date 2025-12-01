@@ -242,7 +242,7 @@ export const useBoardStore = create<BoardState>((set, get) => ({
   },
 
   subscribeToColumns: (boardId: string) => {
-    // 取消订阅之前的channel
+    // Unsubscribe from previous channel
     get().unsubscribeFromColumns();
 
     const channel = supabase

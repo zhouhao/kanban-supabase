@@ -26,7 +26,7 @@ export const CreateColumnModal = ({ boardId, column, onClose }: CreateColumnModa
     setError('');
 
     if (!name.trim()) {
-      setError('请输入列名称');
+      setError('Please enter column name');
       return;
     }
 
@@ -43,7 +43,7 @@ export const CreateColumnModal = ({ boardId, column, onClose }: CreateColumnModa
       });
       
       if (!result) {
-        setError('创建列失败');
+        setError('Failed to create column');
         return;
       }
     }
@@ -56,7 +56,7 @@ export const CreateColumnModal = ({ boardId, column, onClose }: CreateColumnModa
       <div className="bg-white rounded-2xl shadow-large max-w-md w-full p-6 animate-fade-in">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold text-neutral-900">
-            {column ? '编辑列' : '创建新列'}
+            {column ? 'Edit Column' : 'Create New Column'}
           </h2>
           <button
             onClick={onClose}
@@ -69,14 +69,14 @@ export const CreateColumnModal = ({ boardId, column, onClose }: CreateColumnModa
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-2">
-              列名称 <span className="text-danger">*</span>
+              Column Name <span className="text-danger">*</span>
             </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-3 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-              placeholder="例如：待处理、进行中、已完成"
+              placeholder="e.g., To Do, In Progress, Done"
               disabled={loading}
               autoFocus
             />
@@ -84,7 +84,7 @@ export const CreateColumnModal = ({ boardId, column, onClose }: CreateColumnModa
 
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-2">
-              颜色
+              Color
             </label>
             <div className="flex gap-2 flex-wrap">
               {['#3B82F6', '#F59E0B', '#10B981', '#EF4444', '#8B5CF6', '#EC4899', '#6B7280', '#14B8A6'].map((c) => (
@@ -115,7 +115,7 @@ export const CreateColumnModal = ({ boardId, column, onClose }: CreateColumnModa
               className="flex-1 px-4 py-3 border border-neutral-200 text-neutral-700 rounded-lg hover:bg-neutral-50 transition-colors font-medium"
               disabled={loading}
             >
-              取消
+              Cancel
             </button>
             <button
               type="submit"
@@ -125,10 +125,10 @@ export const CreateColumnModal = ({ boardId, column, onClose }: CreateColumnModa
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  {column ? '更新中...' : '创建中...'}
+                  {column ? 'Updating...' : 'Creating...'}
                 </>
               ) : (
-                column ? '更新列' : '创建列'
+                <>{column ? 'Update Column' : 'Create Column'}</>
               )}
             </button>
           </div>

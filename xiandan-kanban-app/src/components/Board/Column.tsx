@@ -27,7 +27,9 @@ export const Column = ({
 }: ColumnProps) => {
   const [showMenu, setShowMenu] = useState(false);
   const { tasks } = useTaskStore();
-  const columnTasks = tasks.filter(task => task.column_id === column.id);
+  const columnTasks = tasks
+    .filter(task => task.column_id === column.id)
+    .sort((a, b) => a.position - b.position);
 
   const { setNodeRef } = useDroppable({
     id: column.id,
@@ -64,9 +66,10 @@ export const Column = ({
                   setShowMenu(false);
                 }}
                 className="w-full px-4 py-2 text-left text-sm hover:bg-neutral-50 flex items-center gap-2 text-neutral-700"
+                aria-label="Edit"
               >
                 <Edit2 className="w-4 h-4" />
-                编辑
+                Edit
               </button>
               <button
                 onClick={() => {
@@ -74,9 +77,10 @@ export const Column = ({
                   setShowMenu(false);
                 }}
                 className="w-full px-4 py-2 text-left text-sm hover:bg-neutral-50 flex items-center gap-2 text-danger"
+                aria-label="Delete"
               >
                 <Trash2 className="w-4 h-4" />
-                删除
+                Delete
               </button>
             </div>
           )}
@@ -104,7 +108,7 @@ export const Column = ({
         
         {columnTasks.length === 0 && (
           <div className="text-center py-8 text-neutral-400 text-sm">
-            暂无任务
+            No tasks yet
           </div>
         )}
         </div>
@@ -115,7 +119,7 @@ export const Column = ({
           className="mt-4 w-full bg-white hover:bg-neutral-50 border-2 border-dashed border-neutral-300 hover:border-primary-400 text-neutral-600 hover:text-primary-600 font-medium py-2.5 rounded-lg transition-all flex items-center justify-center gap-2"
         >
           <Plus className="w-5 h-5" />
-          添加任务
+          Add Task
         </button>
       </div>
     </div>

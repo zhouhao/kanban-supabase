@@ -5,7 +5,7 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-// 数据库类型定义
+// Database type definitions
 export interface UserProfile {
   id: string
   email: string

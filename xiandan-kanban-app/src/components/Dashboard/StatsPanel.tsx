@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { 
   BarChart, 
   Bar, 
@@ -13,8 +13,8 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import { TrendingUp, CheckCircle, Clock, AlertCircle } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
-import { useAuthStore } from '../../stores/authStore';
+import { supabase } from '@/lib/supabase.ts';
+import { useAuthStore } from '@/stores/authStore.ts';
 
 interface TaskStats {
   total: number;
@@ -60,18 +60,12 @@ export const StatsPanel = () => {
   const [boardStats, setBoardStats] = useState<BoardStats[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (user) {
-      fetchStats();
-    }
-  }, [user]);
-
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     if (!user) return;
     
     setLoading(true);
     try {
-      // 获取用户的所有看板
+      // Get all user's boards
       const { data: boards } = await supabase
         .from('boards')
         .select('id, name')
@@ -84,7 +78,7 @@ export const StatsPanel = () => {
 
       const boardIds = boards.map(b => b.id);
 
-      // 获取所有任务
+      // Get all tasks
       const { data: tasks } = await supabase
         .from('tasks')
         .select('*')
@@ -94,7 +88,7 @@ export const StatsPanel = () => {
       if (tasks) {
         const now = new Date();
         
-        // 任务状态统计
+        // Task status statistics
         const completed = tasks.filter(t => t.is_completed).length;
         const inProgress = tasks.filter(t => !t.is_completed).length;
         const overdue = tasks.filter(t => 
@@ -108,14 +102,14 @@ export const StatsPanel = () => {
           overdue,
         });
 
-        // 优先级统计
+        // Priority statistics
         const high = tasks.filter(t => t.priority === 'high' && !t.is_completed).length;
         const medium = tasks.filter(t => t.priority === 'medium' && !t.is_completed).length;
         const low = tasks.filter(t => t.priority === 'low' && !t.is_completed).length;
 
         setPriorityStats({ high, medium, low });
 
-        // 每个看板的任务数统计
+        // Task count statistics for each board
         const boardTaskCounts = boards.map(board => ({
           id: board.id,
           name: board.name,
@@ -125,22 +119,28 @@ export const StatsPanel = () => {
         setBoardStats(boardTaskCounts);
       }
     } catch (error) {
-      console.error('获取统计数据失败:', error);
+      console.error('Failed to fetch statistics:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchStats();
+    }
+  }, [user, fetchStats]);
 
   const statusData = [
-    { name: '已完成', value: taskStats.completed, color: COLORS.completed },
-    { name: '进行中', value: taskStats.inProgress, color: COLORS.inProgress },
-    { name: '已逾期', value: taskStats.overdue, color: COLORS.overdue },
+    { name: 'Completed', value: taskStats.completed, color: COLORS.completed },
+    { name: 'In Progress', value: taskStats.inProgress, color: COLORS.inProgress },
+    { name: 'Overdue', value: taskStats.overdue, color: COLORS.overdue },
   ].filter(item => item.value > 0);
 
   const priorityData = [
-    { name: '高', value: priorityStats.high, fill: COLORS.high },
-    { name: '中', value: priorityStats.medium, fill: COLORS.medium },
-    { name: '低', value: priorityStats.low, fill: COLORS.low },
+    { name: 'High', value: priorityStats.high, fill: COLORS.high },
+    { name: 'Medium', value: priorityStats.medium, fill: COLORS.medium },
+    { name: 'Low', value: priorityStats.low, fill: COLORS.low },
   ].filter(item => item.value > 0);
 
   if (loading) {
@@ -148,7 +148,7 @@ export const StatsPanel = () => {
       <div className="flex items-center justify-center py-16">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-neutral-600">加载统计数据...</p>
+          <p className="text-neutral-600">Loading statistics...</p>
         </div>
       </div>
     );
@@ -159,10 +159,10 @@ export const StatsPanel = () => {
       <div className="text-center py-16">
         <AlertCircle className="w-16 h-16 text-neutral-300 mx-auto mb-4" />
         <h3 className="text-lg font-semibold text-neutral-900 mb-2">
-          暂无数据
+          No Data
         </h3>
         <p className="text-neutral-600">
-          创建看板并添加任务后，这里将显示统计信息
+          Statistics will be displayed here after creating boards and adding tasks
         </p>
       </div>
     );
@@ -170,12 +170,12 @@ export const StatsPanel = () => {
 
   return (
     <div className="space-y-6">
-      {/* 概览卡片 */}
+      {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white rounded-xl p-6 shadow-soft">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-neutral-600 mb-1">总任务</p>
+              <p className="text-sm text-neutral-600 mb-1">Total Tasks</p>
               <p className="text-3xl font-bold text-neutral-900">{taskStats.total}</p>
             </div>
             <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
@@ -187,7 +187,7 @@ export const StatsPanel = () => {
         <div className="bg-white rounded-xl p-6 shadow-soft">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-neutral-600 mb-1">已完成</p>
+              <p className="text-sm text-neutral-600 mb-1">Completed</p>
               <p className="text-3xl font-bold text-green-600">{taskStats.completed}</p>
             </div>
             <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -207,7 +207,7 @@ export const StatsPanel = () => {
         <div className="bg-white rounded-xl p-6 shadow-soft">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-neutral-600 mb-1">进行中</p>
+              <p className="text-sm text-neutral-600 mb-1">In Progress</p>
               <p className="text-3xl font-bold text-blue-600">{taskStats.inProgress}</p>
             </div>
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -219,7 +219,7 @@ export const StatsPanel = () => {
         <div className="bg-white rounded-xl p-6 shadow-soft">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-neutral-600 mb-1">已逾期</p>
+              <p className="text-sm text-neutral-600 mb-1">Overdue</p>
               <p className="text-3xl font-bold text-red-600">{taskStats.overdue}</p>
             </div>
             <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
@@ -229,12 +229,12 @@ export const StatsPanel = () => {
         </div>
       </div>
 
-      {/* 图表区域 */}
+      {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* 任务状态分布 */}
+        {/* Task Status Distribution */}
         {statusData.length > 0 && (
           <div className="bg-white rounded-xl p-6 shadow-soft">
-            <h3 className="text-lg font-semibold text-neutral-900 mb-4">任务状态分布</h3>
+            <h3 className="text-lg font-semibold text-neutral-900 mb-4">Task Status Distribution</h3>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -257,10 +257,10 @@ export const StatsPanel = () => {
           </div>
         )}
 
-        {/* 优先级分布 */}
+        {/* Priority Distribution */}
         {priorityData.length > 0 && (
           <div className="bg-white rounded-xl p-6 shadow-soft">
-            <h3 className="text-lg font-semibold text-neutral-900 mb-4">待办任务优先级</h3>
+            <h3 className="text-lg font-semibold text-neutral-900 mb-4">Pending Task Priority</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={priorityData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -274,10 +274,10 @@ export const StatsPanel = () => {
         )}
       </div>
 
-      {/* 看板任务分布 */}
+      {/* Board Task Distribution */}
       {boardStats.length > 0 && (
         <div className="bg-white rounded-xl p-6 shadow-soft">
-          <h3 className="text-lg font-semibold text-neutral-900 mb-4">各看板任务数量</h3>
+          <h3 className="text-lg font-semibold text-neutral-900 mb-4">Task Count by Board</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={boardStats}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -285,7 +285,7 @@ export const StatsPanel = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="taskCount" fill="#0087FF" name="任务数" />
+              <Bar dataKey="taskCount" fill="#0087FF" name="Task Count" />
             </BarChart>
           </ResponsiveContainer>
         </div>

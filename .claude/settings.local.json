@@ -11,7 +11,12 @@
       "Bash(pnpm lint:*)",
       "Bash(pnpm build:*)",
       "Skill(superpowers:brainstorming)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(pnpm test:coverage:*)",
+      "Bash(npm test:*)",
+      "Bash(npm test:run:*)",
+      "Bash(npx vitest run)",
+      "Bash(./node_modules/.bin/vitest run:*)"
     ],
     "deny": [],
     "ask": []

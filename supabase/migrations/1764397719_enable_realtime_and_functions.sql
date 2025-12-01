@@ -1,13 +1,13 @@
 -- Migration: enable_realtime_and_functions
 -- Created at: 1764397719
 
--- 启用实时订阅
+-- Enable real-time subscriptions
 ALTER PUBLICATION supabase_realtime ADD TABLE boards;
 ALTER PUBLICATION supabase_realtime ADD TABLE columns;
 ALTER PUBLICATION supabase_realtime ADD TABLE tasks;
 ALTER PUBLICATION supabase_realtime ADD TABLE task_activities;
 
--- 创建看板统计函数
+-- Create board statistics function
 CREATE OR REPLACE FUNCTION get_board_stats(board_uuid UUID)
 RETURNS JSON AS $$
 DECLARE
@@ -36,7 +36,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- 创建初始化用户资料函数
+-- Create user profile initialization function
 CREATE OR REPLACE FUNCTION create_user_profile()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -50,12 +50,12 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- 创建触发器：当新用户注册时自动创建资料
+-- Create trigger: automatically create profile when new user registers
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION create_user_profile();
 
--- 创建默认看板函数
+-- Create default board function
 CREATE OR REPLACE FUNCTION create_default_board(user_uuid UUID)
 RETURNS UUID AS $$
 DECLARE
@@ -64,22 +64,22 @@ DECLARE
   col_id_2 UUID;
   col_id_3 UUID;
 BEGIN
-  -- 创建默认看板
+  -- Create default board
   INSERT INTO boards (user_id, name, description, color)
   VALUES (
     user_uuid,
-    '我的第一个看板',
-    '开始使用咸蛋快板管理你的任务',
+    'My First Board',
+    'Start managing your tasks with Xiandan Kanban',
     '#3B82F6'
   )
   RETURNING id INTO board_id;
   
-  -- 创建默认三列
+  -- Create default three columns
   INSERT INTO columns (board_id, name, color, position)
   VALUES 
-    (board_id, '待办', '#94A3B8', 0),
-    (board_id, '进行中', '#3B82F6', 1),
-    (board_id, '已完成', '#10B981', 2)
+    (board_id, 'Todo', '#94A3B8', 0),
+    (board_id, 'In Progress', '#3B82F6', 1),
+    (board_id, 'Done', '#10B981', 2)
   RETURNING id INTO col_id_1, col_id_2, col_id_3;
   
   RETURN board_id;

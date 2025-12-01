@@ -17,14 +17,14 @@ module.exports = {
 		},
 		extend: {
 			colors: {
-				// 淡蓝色主题色系
+				// Light blue theme color system
 				primary: {
 					50: '#E6F3FF',
 					100: '#CCE7FF',
 					200: '#99CFFF',
 					300: '#66B7FF',
 					400: '#339FFF',
-					500: '#0087FF', // 主色
+					500: '#0087FF', // Main color
 					600: '#006CD9',
 					700: '#0051B3',
 					800: '#00368C',

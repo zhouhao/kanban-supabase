@@ -1,4 +1,4 @@
-# 咸蛋快板 (Xiandan Kanban)
+# Xiandan Kanban
 
 [![Unit Tests](https://github.com/zhouhao/kanban-supabase/actions/workflows/test.yml/badge.svg)](https://github.com/zhouhao/kanban-supabase/actions/workflows/test.yml)
 [![codecov](https://codecov.io/github/zhouhao/kanban-supabase/graph/badge.svg?token=ZC3Y0S3KES)](https://codecov.io/github/zhouhao/kanban-supabase)
@@ -294,8 +294,8 @@ pnpm install
 ## Documentation
 
 Additional documentation is available in the `docs/` directory:
-- Technical Architecture (Chinese)
-- Feature Requirements (Chinese)
+- Technical Architecture
+- Feature Requirements
 - Database & API Design
 - UI/UX Guidelines
 - Email System Design

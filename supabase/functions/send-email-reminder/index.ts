@@ -19,25 +19,25 @@ serve(async (req) => {
 
     const { task_id, recipient_email, task_title, due_date } = await req.json()
 
-    // 记录邮件发送日志
+    // Record email sending log
     const { error: logError } = await supabase
       .from('email_logs')
       .insert({
         recipient_email,
-        subject: `任务提醒: ${task_title}`,
+        subject: `Task Reminder: ${task_title}`,
         template_name: 'task_reminder',
         status: 'sent',
         sent_at: new Date().toISOString()
       })
 
     if (logError) {
-      console.error('记录邮件日志失败:', logError)
+      console.error('Failed to record email log:', logError)
     }
 
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: '邮件提醒已发送',
+        message: 'Email reminder sent successfully',
         task_id,
         recipient: recipient_email
       }),
@@ -47,7 +47,7 @@ serve(async (req) => {
       }
     )
   } catch (error) {
-    console.error('发送邮件提醒失败:', error)
+    console.error('Failed to send email reminder:', error)
     return new Response(
       JSON.stringify({ error: error.message }),
       { 
