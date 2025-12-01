@@ -65,18 +65,20 @@
 - **Cache**: Supabase built-in Redis (sessions, rate limiting)
 
 ### 3.2 Backend Architecture Design
-```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Frontend App  │────│   Supabase API   │────│   PostgreSQL    │
-│   (React)       │    │   (Auto API)     │    │   (Main DB)     │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
-         │                       │                       │
-         │                       │                       │
-         ▼                       ▼                       ▼
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│  Edge Functions │    │   Supabase Auth  │    │   Supabase      │
-│  (Business Logic)│    │   (Auth & AuthZ) │    │   Realtime      │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
+```mermaid
+graph TB
+    FrontendApp["Frontend App<br/>(React)"]
+    SupabaseAPI["Supabase API<br/>(Auto API)"]
+    PostgreSQL["PostgreSQL<br/>(Main DB)"]
+    EdgeFunctions["Edge Functions<br/>(Business Logic)"]
+    SupabaseAuth["Supabase Auth<br/>(Auth & AuthZ)"]
+    SupabaseRealtime["Supabase<br/>Realtime"]
+    
+    FrontendApp <--> SupabaseAPI
+    SupabaseAPI <--> PostgreSQL
+    FrontendApp --> EdgeFunctions
+    FrontendApp --> SupabaseAuth
+    FrontendApp --> SupabaseRealtime
 ```
 
 ### 3.3 Database Design

@@ -38,16 +38,20 @@ To ensure development efficiency, system performance, and user experience, we ha
 
 Adopts a modern web application architecture with front-end and back-end separation. The back-end service is completely based on the Supabase BaaS platform, and the front-end interacts with the back-end through APIs.
 
-```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Frontend (React)  │────│ Supabase API/SDK │────│  PostgreSQL DB  │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
-         │                       │                       │
-         ▼                       ▼                       ▼
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│ Edge Functions  │    │  Supabase Auth   │    │ Supabase Realtime│
-│  (Business Logic) │    │   (User Auth)     │    │  (Real-time Sync) │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
+```mermaid
+graph TB
+    Frontend["Frontend<br/>(React)"]
+    SupabaseAPI["Supabase API/SDK"]
+    PostgreSQL["PostgreSQL DB"]
+    EdgeFunctions["Edge Functions<br/>(Business Logic)"]
+    SupabaseAuth["Supabase Auth<br/>(User Auth)"]
+    SupabaseRealtime["Supabase Realtime<br/>(Real-time Sync)"]
+    
+    Frontend <--> SupabaseAPI
+    SupabaseAPI <--> PostgreSQL
+    Frontend --> EdgeFunctions
+    SupabaseAPI --> SupabaseAuth
+    PostgreSQL --> SupabaseRealtime
 ```
 
 ### 2.2 Frontend Technology Stack

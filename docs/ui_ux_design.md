@@ -277,15 +277,23 @@ transform: rotate(2deg) scale(0.95);
 ```
 
 #### Card Content Structure
-```
-┌─────────────────────────────────┐
-│ [Priority Label] Task Title     │
-│                                 │
-│ 📝 Task Description Content...  │
-│                                 │
-│ 👤 Assignee    🏷️ Tag1, Tag2   │
-│ 📅 Due Date                     │
-└─────────────────────────────────┘
+```mermaid
+graph TB
+    Card["Task Card"]
+    Card --> Header["[Priority Label] Task Title"]
+    Card --> Description["📝 Task Description Content..."]
+    Card --> Meta["Meta Information"]
+    Meta --> Assignee["👤 Assignee"]
+    Meta --> Tags["🏷️ Tag1, Tag2"]
+    Meta --> DueDate["📅 Due Date"]
+    
+    style Card fill:#fff,stroke:#E5E7EB,stroke-width:2px
+    style Header fill:#f9fafb,stroke:none
+    style Description fill:#f9fafb,stroke:none
+    style Meta fill:#f9fafb,stroke:none
+    style Assignee fill:#e0f2fe,stroke:none
+    style Tags fill:#e0f2fe,stroke:none
+    style DueDate fill:#e0f2fe,stroke:none
 ```
 
 ### 6.3 Modal Components
