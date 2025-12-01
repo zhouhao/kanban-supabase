@@ -152,26 +152,26 @@ Database design is based on PostgreSQL, fully utilizing its features. All tables
 
 ### 4.1 Core Table Structure (ERD)
 
-```
-+---------------+      +-------------------+      +----------------+
-|    users      |----<|  board_members    |>----|     boards     |
-+---------------+      +-------------------+      +----------------+
-      |                                                  |
-      |                                                  |
-      v                                                  v
-+---------------+      +-------------------+      +----------------+
-| project_members |      |   task_members    |      |     columns    |
-+---------------+      +-------------------+      +----------------+
-                               |                        |
-                               v                        v
-                         +---------------+      +----------------+
-                         |     tasks     |----<|   attachments  |
-                         +---------------+      +----------------+
-                               |
-                               v
-                         +---------------+
-                         |   activities  |
-                         +---------------+
+```mermaid
+graph TB
+    users[users]
+    board_members[board_members]
+    boards[boards]
+    project_members[project_members]
+    task_members[task_members]
+    columns[columns]
+    tasks[tasks]
+    attachments[attachments]
+    activities[activities]
+    
+    users -->|1:N| board_members
+    board_members -->|N:1| boards
+    users -->|1:N| project_members
+    boards -->|1:N| columns
+    task_members -->|N:1| tasks
+    columns -->|1:N| tasks
+    tasks -->|1:N| attachments
+    tasks -->|1:N| activities
 ```
 
 ### 4.2 Main Table Definitions
