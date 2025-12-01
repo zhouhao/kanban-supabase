@@ -320,40 +320,58 @@ CREATE TABLE user_stats (
 ## 3. Table Relationships and Foreign Key Constraints
 
 ### 3.1 Relationship Diagram
-```
-users
-├── user_profiles (1:1)
-├── workspace_members (1:N)
-├── board_members (1:N)
-├── task_members (1:N)
-├── comments (1:N)
-├── attachments (1:N)
-├── activity_logs (1:N)
-└── notifications (1:N)
-
-workspaces
-├── workspace_members (1:N)
-├── boards (1:N)
-└── user_stats (1:N)
-
-boards
-├── board_members (1:N)
-├── columns (1:N)
-├── board_templates (1:N)
-└── board_stats (1:N)
-
-columns
-└── tasks (1:N)
-
-tasks
-├── comments (1:N)
-├── attachments (1:N)
-├── task_label_associations (1:N)
-├── task_members (1:N)
-└── activity_logs (1:N)
-
-task_labels
-└── task_label_associations (1:N)
+```mermaid
+graph TD
+    users[users]
+    user_profiles[user_profiles]
+    workspace_members[workspace_members]
+    board_members[board_members]
+    task_members[task_members]
+    comments[comments]
+    attachments[attachments]
+    activity_logs[activity_logs]
+    notifications[notifications]
+    
+    workspaces[workspaces]
+    user_stats[user_stats]
+    
+    boards[boards]
+    board_templates[board_templates]
+    board_stats[board_stats]
+    
+    columns[columns]
+    tasks[tasks]
+    
+    task_labels[task_labels]
+    task_label_associations[task_label_associations]
+    
+    users -->|1:1| user_profiles
+    users -->|1:N| workspace_members
+    users -->|1:N| board_members
+    users -->|1:N| task_members
+    users -->|1:N| comments
+    users -->|1:N| attachments
+    users -->|1:N| activity_logs
+    users -->|1:N| notifications
+    
+    workspaces -->|1:N| workspace_members
+    workspaces -->|1:N| boards
+    workspaces -->|1:N| user_stats
+    
+    boards -->|1:N| board_members
+    boards -->|1:N| columns
+    boards -->|1:N| board_templates
+    boards -->|1:N| board_stats
+    
+    columns -->|1:N| tasks
+    
+    tasks -->|1:N| comments
+    tasks -->|1:N| attachments
+    tasks -->|1:N| task_label_associations
+    tasks -->|1:N| task_members
+    tasks -->|1:N| activity_logs
+    
+    task_labels -->|1:N| task_label_associations
 ```
 
 ### 3.2 Key Constraints

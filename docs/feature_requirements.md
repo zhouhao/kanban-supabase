@@ -38,14 +38,25 @@
 Based on Supabase's email authentication system, supporting user registration, login, password reset, and other functions.
 
 ### Business Process Diagram
-```
-User Visit → Display Login/Registration Page → Choose Login/Registration
-                                    ↓
-Registration Process: Email Verification → Create User Profile → Auto Login
-                                    ↓
-Login Process: Email Verification → Get Token → Jump to Homepage
-                                    ↓
-Password Reset: Email Verification → Reset Password → Re-login
+```mermaid
+flowchart TD
+    A[User Visit] --> B[Display Login/Registration Page]
+    B --> C[Choose Login/Registration]
+    C --> D[Registration Process]
+    C --> E[Login Process]
+    C --> F[Password Reset]
+    
+    D --> D1[Email Verification]
+    D1 --> D2[Create User Profile]
+    D2 --> D3[Auto Login]
+    
+    E --> E1[Email Verification]
+    E1 --> E2[Get Token]
+    E2 --> E3[Jump to Homepage]
+    
+    F --> F1[Email Verification]
+    F1 --> F2[Reset Password]
+    F2 --> F3[Re-login]
 ```
 
 ### Feature Requirements
@@ -130,14 +141,26 @@ CREATE TABLE user_preferences (
 Support multi-board management, each board contains multiple columns (task status columns), providing drag and drop reordering functionality.
 
 ### Business Process Diagram
-```
-User Entry → Display Board List → Select Board → Enter Board View
-                                      ↓
-Create Board: Set Name/Color → Default Three Columns → Board Creation Complete
-                                      ↓
-Manage Columns: Add Column → Set Column Name/Color → Save Column Configuration
-                                      ↓
-Reorder: Drag Column → Update Column Order → Save New Order
+```mermaid
+flowchart TD
+    A[User Entry] --> B[Display Board List]
+    B --> C[Select Board]
+    C --> D[Enter Board View]
+    
+    B --> E[Create Board]
+    E --> E1[Set Name/Color]
+    E1 --> E2[Default Three Columns]
+    E2 --> E3[Board Creation Complete]
+    
+    D --> F[Manage Columns]
+    F --> F1[Add Column]
+    F1 --> F2[Set Column Name/Color]
+    F2 --> F3[Save Column Configuration]
+    
+    D --> G[Reorder]
+    G --> G1[Drag Column]
+    G1 --> G2[Update Column Order]
+    G2 --> G3[Save New Order]
 ```
 
 ### Feature Requirements
@@ -256,16 +279,32 @@ CREATE TABLE board_members (
 Complete task CRUD operations, supporting drag and drop movement, task reminder settings, and other core functions.
 
 ### Business Process Diagram
-```
-User Enters Board → Display Task List → Task Operations
-                                    ↓
-Create Task: Fill Form → Select Column → Create Task → Display in Column
-                                    ↓
-Edit Task: Click Edit → Modify Info → Save Changes → Update Display
-                                    ↓
-Move Task: Drag to Target Column → Update Status → Auto Save
-                                    ↓
-Delete Task: Confirm Deletion → Remove Task → Update Statistics
+```mermaid
+flowchart TD
+    A[User Enters Board] --> B[Display Task List]
+    B --> C[Task Operations]
+    
+    C --> D[Create Task]
+    D --> D1[Fill Form]
+    D1 --> D2[Select Column]
+    D2 --> D3[Create Task]
+    D3 --> D4[Display in Column]
+    
+    C --> E[Edit Task]
+    E --> E1[Click Edit]
+    E1 --> E2[Modify Info]
+    E2 --> E3[Save Changes]
+    E3 --> E4[Update Display]
+    
+    C --> F[Move Task]
+    F --> F1[Drag to Target Column]
+    F1 --> F2[Update Status]
+    F2 --> F3[Auto Save]
+    
+    C --> G[Delete Task]
+    G --> G1[Confirm Deletion]
+    G1 --> G2[Remove Task]
+    G2 --> G3[Update Statistics]
 ```
 
 ### Feature Requirements
@@ -403,12 +442,22 @@ CREATE TABLE task_activities (
 Automated email reminder system, supporting scheduled sending, templated emails, personalized content.
 
 ### Business Process Diagram
-```
-Background Task → Check Reminder Time → Generate Email Content → Send Email
-                                           ↓
-Email Template: Task Details → Reminder Content → Personalization → Format as HTML
-                                           ↓
-Send Record: Record Send Status → Failed Retry → Success Confirmation
+```mermaid
+flowchart TD
+    A[Background Task] --> B[Check Reminder Time]
+    B --> C[Generate Email Content]
+    C --> D[Send Email]
+    
+    C --> E[Email Template]
+    E --> E1[Task Details]
+    E1 --> E2[Reminder Content]
+    E2 --> E3[Personalization]
+    E3 --> E4[Format as HTML]
+    
+    D --> F[Send Record]
+    F --> F1[Record Send Status]
+    F1 --> F2[Failed Retry]
+    F2 --> F3[Success Confirmation]
 ```
 
 ### Feature Requirements
@@ -577,12 +626,23 @@ serve(async (req) => {
 Provide board-level and global data statistics to help users understand work efficiency and task progress.
 
 ### Business Process Diagram
-```
-Data Collection → Real-time Statistics → Cache Results → Display Charts
-                                     ↓
-User View: Board Statistics → Task Completion Rate → Time Trends → Efficiency Analysis
-                                     ↓
-Global Statistics: User Activity → Collaboration Efficiency → Project Progress → Data Export
+```mermaid
+flowchart TD
+    A[Data Collection] --> B[Real-time Statistics]
+    B --> C[Cache Results]
+    C --> D[Display Charts]
+    
+    B --> E[User View]
+    E --> E1[Board Statistics]
+    E1 --> E2[Task Completion Rate]
+    E2 --> E3[Time Trends]
+    E3 --> E4[Efficiency Analysis]
+    
+    B --> F[Global Statistics]
+    F --> F1[User Activity]
+    F1 --> F2[Collaboration Efficiency]
+    F2 --> F3[Project Progress]
+    F3 --> F4[Data Export]
 ```
 
 ### Feature Requirements

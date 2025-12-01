@@ -12,15 +12,28 @@ Xiandan Kanban board application's email reminders and statistics system aims to
 - System health monitoring
 
 ### 1.2 Technical Architecture
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Frontend App  │    │   Supabase      │    │   External Services │
-│   (React)       │◄──►│   Database      │◄──►│   (Email Service) │
-│                 │    │                 │    │                 │
-│ - Stats Dashboard │    │ - PostgreSQL    │    │ - Email API     │
-│ - Chart Display   │    │ - Cron Jobs     │    │ - Notification Service │
-│ - Config Management│    │ - Edge Functions│    │ - Monitoring Service │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
+```mermaid
+graph LR
+    subgraph Frontend["Frontend App (React)"]
+        Dashboard[Stats Dashboard]
+        Charts[Chart Display]
+        Config[Config Management]
+    end
+    
+    subgraph Supabase["Supabase"]
+        PostgreSQL[PostgreSQL]
+        CronJobs[Cron Jobs]
+        EdgeFunctions[Edge Functions]
+    end
+    
+    subgraph External["External Services"]
+        EmailAPI[Email API]
+        NotificationService[Notification Service]
+        MonitoringService[Monitoring Service]
+    end
+    
+    Frontend <--> Supabase
+    Supabase <--> External
 ```
 
 ## 2. Scheduled Task Implementation Plan (Supabase Cron Jobs)
