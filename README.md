@@ -76,6 +76,7 @@ Create a `.env` file in the project root:
 ```env
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
 ```
 
 To get these credentials:
@@ -214,6 +215,7 @@ Optimized build without debug attributes
 3. Add environment variables:
    - `VITE_SUPABASE_URL`
    - `VITE_SUPABASE_ANON_KEY`
+   - `VITE_SUPABASE_PUBLISHABLE_KEY`
 4. Deploy
 
 ### Alternative: Netlify, Cloudflare Pages
@@ -242,6 +244,7 @@ supabase functions deploy
 |----------|-------------|----------|
 | `VITE_SUPABASE_URL` | Your Supabase project URL | Yes |
 | `VITE_SUPABASE_ANON_KEY` | Your Supabase anonymous key | Yes |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Your Supabase publishable key | Yes |
 
 ## Browser Support
 
