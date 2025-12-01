@@ -369,9 +369,13 @@ export const useTaskStore = create<TaskState>((set, get) => ({
           if (payload.eventType === 'INSERT') {
             const newTask = payload.new as Task;
             if (!newTask.is_deleted) {
-              set(state => ({
-                tasks: [...state.tasks, newTask],
-              }));
+              set(state => {
+                // Prevent duplicates from optimistic updates
+                const exists = state.tasks.some(t => t.id === newTask.id);
+                return {
+                  tasks: exists ? state.tasks : [...state.tasks, newTask],
+                };
+              });
             }
           } else if (payload.eventType === 'UPDATE') {
             const updatedTask = payload.new as Task;
