@@ -1,18 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Loader2 } from 'lucide-react';
-import { useBoardStore } from '../../stores/boardStore';
+import { useBoardStore, Board } from '../../stores/boardStore';
 import { useAuthStore } from '../../stores/authStore';
 
 interface CreateBoardModalProps {
+  board?: Board | null;
   onClose: () => void;
 }
 
-export const CreateBoardModal = ({ onClose }: CreateBoardModalProps) => {
+export const CreateBoardModal = ({ board, onClose }: CreateBoardModalProps) => {
   const { user } = useAuthStore();
-  const { createBoard, loading } = useBoardStore();
+  const { createBoard, updateBoard, deleteBoard, loading } = useBoardStore();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (board) {
+      setName(board.name);
+      setDescription(board.description || '');
+    }
+  }, [board]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,6 +28,16 @@ export const CreateBoardModal = ({ onClose }: CreateBoardModalProps) => {
 
     if (!name.trim()) {
       setError('Please enter board name');
+      return;
+    }
+
+    if (board) {
+      // Update existing board
+      await updateBoard(board.id, {
+        name: name.trim(),
+        description: description.trim() || null,
+      });
+      onClose();
       return;
     }
 
@@ -41,11 +59,21 @@ export const CreateBoardModal = ({ onClose }: CreateBoardModalProps) => {
     }
   };
 
+  const handleDelete = async () => {
+    if (!board) return;
+    if (window.confirm(`Are you sure you want to delete the board "${board.name}"? This action cannot be undone.`)) {
+      await deleteBoard(board.id);
+      onClose();
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-2xl shadow-large max-w-md w-full p-6 animate-fade-in">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold text-neutral-900">Create New Board</h2>
+          <h2 className="text-xl font-semibold text-neutral-900">
+            {board ? 'Edit Board' : 'Create New Board'}
+          </h2>
           <button
             onClick={onClose}
             className="p-1 hover:bg-neutral-100 rounded transition-colors"
@@ -91,6 +119,16 @@ export const CreateBoardModal = ({ onClose }: CreateBoardModalProps) => {
           )}
 
           <div className="flex gap-3 pt-4">
+            {board && (
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="px-4 py-3 border border-danger text-danger rounded-lg hover:bg-danger-light transition-colors font-medium"
+                disabled={loading}
+              >
+                Delete
+              </button>
+            )}
             <button
               type="button"
               onClick={onClose}
@@ -107,10 +145,10 @@ export const CreateBoardModal = ({ onClose }: CreateBoardModalProps) => {
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Creating...
+                  {board ? 'Updating...' : 'Creating...'}
                 </>
               ) : (
-                'Create Board'
+                <>{board ? 'Update Board' : 'Create Board'}</>
               )}
             </button>
           </div>

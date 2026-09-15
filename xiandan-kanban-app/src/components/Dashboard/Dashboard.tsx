@@ -9,15 +9,16 @@ import {
   User
 } from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
-import { useBoardStore } from '../../stores/boardStore';
+import { useBoardStore, Board } from '../../stores/boardStore';
 import { CreateBoardModal } from './CreateBoardModal';
 import { StatsPanel } from './StatsPanel';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
   const { user, signOut } = useAuthStore();
-  const { boards, fetchBoards, deleteBoard } = useBoardStore();
+  const { boards, fetchBoards } = useBoardStore();
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [editingBoard, setEditingBoard] = useState<Board | null>(null);
   const [activeTab, setActiveTab] = useState<'boards' | 'stats'>('boards');
 
   useEffect(() => {
@@ -33,12 +34,6 @@ export const Dashboard = () => {
   const handleSignOut = async () => {
     await signOut();
     navigate('/login');
-  };
-
-  const handleDeleteBoard = async (boardId: string, boardName: string) => {
-    if (window.confirm(`Are you sure you want to delete the board "${boardName}"? This action cannot be undone.`)) {
-      await deleteBoard(boardId);
-    }
   };
 
   return (
@@ -135,12 +130,12 @@ export const Dashboard = () => {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleDeleteBoard(board.id, board.name);
+                        setEditingBoard(board);
                       }}
-                      className="opacity-0 group-hover:opacity-100 p-1 hover:bg-danger-light rounded transition-all"
-                      aria-label="Delete"
+                      className="opacity-0 group-hover:opacity-100 p-1 hover:bg-neutral-100 rounded transition-all"
+                      aria-label="Edit board"
                     >
-                      <Settings className="w-4 h-4 text-neutral-500 hover:text-danger" />
+                      <Settings className="w-4 h-4 text-neutral-500 hover:text-primary-600" />
                     </button>
                   </div>
                   
@@ -189,9 +184,12 @@ export const Dashboard = () => {
         )}
       </main>
 
-      {/* Create Board Modal */}
+      {/* Create/Edit Board Modal */}
       {showCreateModal && (
         <CreateBoardModal onClose={() => setShowCreateModal(false)} />
+      )}
+      {editingBoard && (
+        <CreateBoardModal board={editingBoard} onClose={() => setEditingBoard(null)} />
       )}
     </div>
   );

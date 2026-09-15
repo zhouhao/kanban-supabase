@@ -52,6 +52,8 @@ describe('Dashboard', () => {
   const mockSignOut = vi.fn()
   const mockFetchBoards = vi.fn()
   const mockDeleteBoard = vi.fn()
+  const mockUpdateBoard = vi.fn()
+  const mockCreateBoard = vi.fn()
 
   beforeEach(() => {
     vi.clearAllMocks()
@@ -65,6 +67,9 @@ describe('Dashboard', () => {
       boards: mockBoards,
       fetchBoards: mockFetchBoards,
       deleteBoard: mockDeleteBoard,
+      updateBoard: mockUpdateBoard,
+      createBoard: mockCreateBoard,
+      loading: false,
     } as any)
   })
 
@@ -162,15 +167,26 @@ describe('Dashboard', () => {
     expect(screen.getByText('Project Board')).toBeInTheDocument()
   })
 
-  it('should delete board with confirmation', async () => {
+  it('should open edit modal when clicking the board settings button', () => {
+    renderDashboard()
+
+    const editButtons = screen.getAllByRole('button', { name: /Edit board/i })
+    fireEvent.click(editButtons[0])
+
+    expect(screen.getByText('Edit Board')).toBeInTheDocument()
+  })
+
+  it('should delete board with confirmation from the edit modal', async () => {
     global.confirm = vi.fn(() => true)
     mockDeleteBoard.mockResolvedValue(undefined)
 
     renderDashboard()
 
-    // Find delete button (may need to adjust selector based on actual implementation)
-    const deleteButtons = screen.getAllByRole('button', { name: /Delete/i })
-    fireEvent.click(deleteButtons[0])
+    const editButtons = screen.getAllByRole('button', { name: /Edit board/i })
+    fireEvent.click(editButtons[0])
+
+    const deleteButton = screen.getByRole('button', { name: /^Delete$/i })
+    fireEvent.click(deleteButton)
 
     await waitFor(() => {
       expect(global.confirm).toHaveBeenCalled()
@@ -183,8 +199,11 @@ describe('Dashboard', () => {
 
     renderDashboard()
 
-    const deleteButtons = screen.getAllByRole('button', { name: /Delete/i })
-    fireEvent.click(deleteButtons[0])
+    const editButtons = screen.getAllByRole('button', { name: /Edit board/i })
+    fireEvent.click(editButtons[0])
+
+    const deleteButton = screen.getByRole('button', { name: /^Delete$/i })
+    fireEvent.click(deleteButton)
 
     await waitFor(() => {
       expect(global.confirm).toHaveBeenCalled()
