@@ -17,7 +17,8 @@
       "Bash(npm test:run:*)",
       "Bash(npx vitest run)",
       "Bash(./node_modules/.bin/vitest run:*)",
-      "Skill(superpowers:systematic-debugging)"
+      "Skill(superpowers:systematic-debugging)",
+      "Bash(rtk git *)"
     ],
     "deny": [],
     "ask": []
