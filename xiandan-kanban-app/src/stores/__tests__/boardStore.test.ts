@@ -449,6 +449,64 @@ describe('boardStore', () => {
     })
   })
 
+  describe('reorderColumns', () => {
+    const columns: Column[] = [
+      {
+        id: 'col-1',
+        board_id: 'board-1',
+        name: 'To Do',
+        color: '#3B82F6',
+        position: 0,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+      },
+      {
+        id: 'col-2',
+        board_id: 'board-1',
+        name: 'Done',
+        color: '#10B981',
+        position: 1,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+      },
+    ]
+
+    it('should persist new positions in the given order', async () => {
+      useBoardStore.setState({ columns })
+
+      const mockFrom = vi.fn(() => ({
+        update: vi.fn().mockReturnThis(),
+        eq: vi.fn().mockResolvedValue({ error: null }),
+      }))
+      vi.mocked(supabase.from).mockImplementation(mockFrom as any)
+
+      const store = useBoardStore.getState()
+      await store.reorderColumns([columns[1], columns[0]])
+
+      const state = useBoardStore.getState()
+      expect(state.columns.find(c => c.id === 'col-2')?.position).toBe(0)
+      expect(state.columns.find(c => c.id === 'col-1')?.position).toBe(1)
+      expect(state.error).toBe(null)
+    })
+
+    it('should revert to previous order on persistence error', async () => {
+      useBoardStore.setState({ columns })
+
+      const mockFrom = vi.fn(() => ({
+        update: vi.fn().mockReturnThis(),
+        eq: vi.fn().mockResolvedValue({ error: { message: 'Reorder failed' } }),
+      }))
+      vi.mocked(supabase.from).mockImplementation(mockFrom as any)
+
+      const store = useBoardStore.getState()
+      await store.reorderColumns([columns[1], columns[0]])
+
+      const state = useBoardStore.getState()
+      expect(state.columns).toEqual(columns)
+      expect(state.error).toBe('Reorder failed')
+    })
+  })
+
   describe('subscribeToColumns', () => {
     it('should subscribe to realtime column updates', () => {
       const mockChannel = {

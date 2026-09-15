@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { arrayMove } from '@dnd-kit/sortable';
+import { arrayMove, horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable';
 import { Plus, ArrowLeft } from 'lucide-react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Column } from './Column';
@@ -14,7 +14,7 @@ import { TaskDetailModal } from './TaskDetailModal';
 export const BoardView = () => {
   const { boardId } = useParams<{ boardId: string }>();
   const navigate = useNavigate();
-  const { boards, columns, fetchBoard, fetchColumns, deleteColumn, subscribeToColumns, unsubscribeFromColumns, loading } = useBoardStore();
+  const { boards, columns, fetchBoard, fetchColumns, deleteColumn, reorderColumns, subscribeToColumns, unsubscribeFromColumns, loading } = useBoardStore();
   const { tasks, fetchAllTasksForBoard, moveTask, deleteTask, subscribeToTasks, unsubscribeFromTasks } = useTaskStore();
 
   const [showColumnModal, setShowColumnModal] = useState(false);
@@ -86,6 +86,14 @@ export const BoardView = () => {
     setActiveTask(null);
 
     if (!over || active.id === over.id) return;
+
+    if (active.data.current?.type === 'column') {
+      const oldIndex = boardColumns.findIndex(c => `column-${c.id}` === active.id);
+      const newIndex = boardColumns.findIndex(c => `column-${c.id}` === over.id);
+      if (oldIndex === -1 || newIndex === -1) return;
+      await reorderColumns(arrayMove(boardColumns, oldIndex, newIndex));
+      return;
+    }
 
     const activeTask = tasks.find(t => t.id === active.id);
     const overTask = tasks.find(t => t.id === over.id);
@@ -221,19 +229,21 @@ export const BoardView = () => {
       <div className="flex-1 overflow-x-auto overflow-y-hidden p-6">
         <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
           <div className="flex gap-4 h-full">
-            {boardColumns.map((column) => (
-              <Column
-                key={column.id}
-                column={column}
-                onEditColumn={handleEditColumn}
-                onDeleteColumn={handleDeleteColumn}
-                onCreateTask={handleCreateTask}
-                onEditTask={handleEditTask}
-                onDeleteTask={handleDeleteTask}
-                onOpenTaskDetails={handleOpenTaskDetails}
-              />
-            ))}
-            
+            <SortableContext items={boardColumns.map(c => `column-${c.id}`)} strategy={horizontalListSortingStrategy}>
+              {boardColumns.map((column) => (
+                <Column
+                  key={column.id}
+                  column={column}
+                  onEditColumn={handleEditColumn}
+                  onDeleteColumn={handleDeleteColumn}
+                  onCreateTask={handleCreateTask}
+                  onEditTask={handleEditTask}
+                  onDeleteTask={handleDeleteTask}
+                  onOpenTaskDetails={handleOpenTaskDetails}
+                />
+              ))}
+            </SortableContext>
+
             {boardColumns.length === 0 && (
               <div className="flex items-center justify-center w-full">
                 <div className="text-center">

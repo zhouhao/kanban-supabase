@@ -40,6 +40,7 @@ interface BoardState {
   createColumn: (column: Omit<Column, 'id' | 'created_at' | 'updated_at'>) => Promise<Column | null>;
   updateColumn: (id: string, updates: Partial<Column>) => Promise<void>;
   deleteColumn: (id: string) => Promise<void>;
+  reorderColumns: (reorderedColumns: Column[]) => Promise<void>;
 
   // Realtime
   subscribeToColumns: (boardId: string) => void;
@@ -238,6 +239,28 @@ export const useBoardStore = create<BoardState>((set, get) => ({
       }));
     } catch (error: any) {
       set({ error: error.message, loading: false });
+    }
+  },
+
+  reorderColumns: async (reorderedColumns) => {
+    const previousColumns = get().columns;
+    const updated = reorderedColumns.map((c, index) => ({ ...c, position: index }));
+
+    // Optimistic update
+    set(state => ({
+      columns: state.columns.map(c => updated.find(u => u.id === c.id) || c),
+    }));
+
+    try {
+      const results = await Promise.all(
+        updated.map((c, index) =>
+          supabase.from('columns').update({ position: index }).eq('id', c.id)
+        )
+      );
+      const firstError = results.find(r => r.error)?.error;
+      if (firstError) throw firstError;
+    } catch (error: any) {
+      set({ columns: previousColumns, error: error.message });
     }
   },
 
